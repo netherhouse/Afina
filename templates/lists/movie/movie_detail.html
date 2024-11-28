@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %} Movie {% endblock %}
+
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+  <h1>
+    {{ newspaper.title }}
+    <a href="{% url 'lists:movie-delete' pk=movie.id %}" class="btn btn-danger link-to-page">
+      Delete
+    </a>
+    <a href="{% url 'lists:movie-update' pk=movie.id %}" class="btn btn-secondary link-to-page">
+      Update
+    </a>
+  </h1>
+  <h4>
+    Name: {{ movie.name }}
+  </h4>
+  <h4>
+    Rate: {{ movie.rate }}
+  </h4>
+  <h4>
+    Status: {{ movie.status }}
+  </h4>
+  <hr>
+  <h4>Description:</h4>
+  <p class="lead">
+    {{ movie.description }}
+  </p>
+{% endblock %}
