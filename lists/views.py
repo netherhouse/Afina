@@ -11,6 +11,7 @@ def index(request):
     return render(request, "lists/index.html")
 
 
+# region ---------- Movie Views  ----------
 class MovieListView(generic.ListView):
     model = Movie
     context_object_name = "movie_list"
@@ -29,3 +30,31 @@ class MovieListView(generic.ListView):
         if form.is_valid():
             return queryset.filter(name__icontains=form.cleaned_data["name"])
         return queryset
+
+
+class MovieCreateView(generic.CreateView):
+    model = Movie
+    fields = "__all__"
+    success_url = reverse_lazy("lists:movie-list")
+    template_name = "lists/movie/movie_form.html"
+
+
+class MovieDetailView(generic.DetailView):
+    model = Movie
+    template_name = "lists/movie/movie_detail.html"
+
+
+class MovieUpdateView(generic.UpdateView):
+    model = Movie
+    fields = "__all__"
+    success_url = reverse_lazy("lists:movie-list")
+    template_name = "lists/movie/movie_form.html"
+
+
+class MovieDeleteView(generic.DeleteView):
+    model = Movie
+    success_url = reverse_lazy("lists:movie-list")
+    template_name = "lists/movie/movie_confirm_delete.html"
+
+
+# endregion ---------- Topic Views  ----------
