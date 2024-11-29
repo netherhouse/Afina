@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import generic
 
-from lists.forms import MovieSearchForm
+from lists.forms import NameSearchForm
 from lists.models import Movie, Game
 
 
@@ -20,12 +20,12 @@ class MovieListView(generic.ListView):
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(MovieListView, self).get_context_data(**kwargs)
         name = self.request.GET.get("name", "")
-        context["search_form"] = MovieSearchForm(initial={"name": name})
+        context["search_form"] = NameSearchForm(initial={"name": name})
         return context
 
     def get_queryset(self):
         queryset = Movie.objects.all()
-        form = MovieSearchForm(self.request.GET)
+        form = NameSearchForm(self.request.GET)
         if form.is_valid():
             return queryset.filter(name__icontains=form.cleaned_data["name"])
         return queryset
@@ -59,6 +59,9 @@ class MovieDeleteView(generic.DeleteView):
 # endregion ---------- Movie Views  ----------
 
 # region ---------- Game Views  ----------
+from django.db.models import Case, When, IntegerField
+
+
 class GameListView(generic.ListView):
     model = Game
     context_object_name = "game_list"
@@ -67,15 +70,38 @@ class GameListView(generic.ListView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(GameListView, self).get_context_data(**kwargs)
+
+        sort_by = self.request.GET.get("sort", "status_priority")
+        context["sort_by"] = sort_by
+
         name = self.request.GET.get("name", "")
-        context["search_form"] = MovieSearchForm(initial={"name": name})
+        context["search_form"] = NameSearchForm(initial={"name": name})
+
         return context
 
     def get_queryset(self):
-        queryset = Movie.objects.all()
-        form = MovieSearchForm(self.request.GET)
+        queryset = Game.objects.all()
+
+        form = NameSearchForm(self.request.GET)
         if form.is_valid():
-            return queryset.filter(name__icontains=form.cleaned_data["name"])
+            queryset = queryset.filter(name__icontains=form.cleaned_data["name"])
+
+        queryset = queryset.annotate(
+            status_priority=Case(
+                When(status="active", then=1),
+                When(status="pending", then=2),
+                When(status="completed", then=3),
+                default=4,
+                output_field=IntegerField(),
+            )
+        )
+
+        sort_by = self.request.GET.get("sort", "status_priority")
+
+        valid_sort_fields = ["status_priority", "name", "id", "coop"]
+        if sort_by in valid_sort_fields:
+            queryset = queryset.order_by(sort_by)
+
         return queryset
 
 
