@@ -8,6 +8,7 @@ class StatusChoices(models.TextChoices):
     COMPLETED = "completed", "Completed"
 
 
+# CRUD +
 class Movie(models.Model):
     name = models.CharField(
         max_length=255
@@ -33,6 +34,7 @@ class Movie(models.Model):
         return self.name
 
 
+# CRUD -
 class Game(models.Model):
     KOOP_CHOICES = [
         ('solo', 'Solo'),
@@ -71,6 +73,7 @@ class Game(models.Model):
         return self.name
 
 
+# CRUD -
 class Event(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField(blank=True, null=True)
@@ -81,6 +84,7 @@ class Event(models.Model):
         return self.name
 
 
+# CRUD -
 class Idea(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField(blank=True, null=True)
@@ -94,6 +98,7 @@ class Idea(models.Model):
         return self.name
 
 
+# CRUD -
 class Desire(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField(blank=True, null=True)
@@ -102,12 +107,14 @@ class Desire(models.Model):
     link = models.URLField(blank=True, null=True)
 
 
+# CRUD -
 class Goal(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField(blank=True, null=True)
     status = models.BooleanField(default=False)
 
 
+# CRUD -
 class SubTask(models.Model):
     name = models.CharField(max_length=255)
     status = models.BooleanField(default=False)
