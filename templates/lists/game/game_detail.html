@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %} Game {% endblock %}
+
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+  <h1>
+    {{ newspaper.title }}
+    <a href="{% url 'lists:game-delete' pk=game.id %}" class="btn btn-danger link-to-page">
+      Delete
+    </a>
+    <a href="{% url 'lists:game-update' pk=game.id %}" class="btn btn-secondary link-to-page">
+      Update
+    </a>
+  </h1>
+  <h4>
+    Name: "{{ game.name }}"
+  </h4>
+  <h4>
+    Status: {{ game.status }}
+  </h4>
+  <h4>
+    Players: {{ game.coop }}
+  </h4>
+  <h4>
+    Rate:
+    {% if game.rate %}
+      {{ game.rate }}
+    {% else %}
+      No rating yet
+    {% endif %}
+  </h4>
+  <hr>
+  <h4>Description:</h4>
+  <p class="lead">
+    {{ game.description }}
+  </p>
+  <h4>Review:</h4>
+  <p class="lead">
+    {{ game.review }}
+  </p>
+{% endblock %}
