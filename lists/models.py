@@ -18,7 +18,8 @@ class Movie(models.Model):
         null=True
     )
     rate = models.IntegerField(
-        null = True,
+        null=True,
+        blank=True,
         validators=[
             MinValueValidator(1),
             MaxValueValidator(5)
@@ -54,6 +55,7 @@ class Game(models.Model):
     )
     rate = models.IntegerField(
         null=True,
+        blank=True,
         validators=[
             MinValueValidator(1),
             MaxValueValidator(5)
