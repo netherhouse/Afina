@@ -35,7 +35,7 @@ class Movie(models.Model):
         return self.name
 
 
-# CRUD -
+# CRUD +
 class Game(models.Model):
     KOOP_CHOICES = [
         ('solo', 'Solo'),
@@ -108,6 +108,9 @@ class Desire(models.Model):
     price = models.FloatField(blank=True, null=True)
     link = models.URLField(blank=True, null=True)
 
+    def __str__(self):
+        return self.name
+
 
 # CRUD -
 class Goal(models.Model):
@@ -115,9 +118,15 @@ class Goal(models.Model):
     description = models.TextField(blank=True, null=True)
     status = models.BooleanField(default=False)
 
+    def __str__(self):
+        return self.name
+
 
 # CRUD -
 class SubTask(models.Model):
     name = models.CharField(max_length=255)
     status = models.BooleanField(default=False)
     goal = models.ForeignKey(Goal, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name
