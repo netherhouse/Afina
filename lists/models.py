@@ -129,4 +129,4 @@ class SubTask(models.Model):
     goal = models.ForeignKey(Goal, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.name
+        return f"[{self.goal.id}] {self.name}"
