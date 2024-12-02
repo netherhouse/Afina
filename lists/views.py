@@ -1,9 +1,10 @@
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import generic
+from django.db.models import Case, When, IntegerField
 
-from lists.forms import NameSearchForm
-from lists.models import Movie, Game
+from lists.forms import NameSearchForm, EventForm
+from lists.models import Movie, Game, Event
 
 
 def index(request):
@@ -54,14 +55,10 @@ class MovieDeleteView(generic.DeleteView):
     model = Movie
     success_url = reverse_lazy("lists:movie-list")
     template_name = "lists/movie/movie_confirm_delete.html"
-
-
 # endregion ---------- Movie Views  ----------
 
+
 # region ---------- Game Views  ----------
-from django.db.models import Case, When, IntegerField
-
-
 class GameListView(generic.ListView):
     model = Game
     context_object_name = "game_list"
@@ -128,4 +125,56 @@ class GameDeleteView(generic.DeleteView):
     model = Game
     success_url = reverse_lazy("lists:game-list")
     template_name = "lists/game/game_confirm_delete.html"
+# endregion ---------- Game Views  ----------
+
+
+# region ---------- Event Views  ----------
+class EventListView(generic.ListView):
+    model = Event
+    context_object_name = "event_list"
+    template_name = "lists/event/event_list.html"
+    paginate_by = 10
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(EventListView, self).get_context_data(**kwargs)
+
+        sort_by = self.request.GET.get("sort", "status_priority")
+        context["sort_by"] = sort_by
+
+        name = self.request.GET.get("name", "")
+        context["search_form"] = NameSearchForm(initial={"name": name})
+
+        return context
+
+    def get_queryset(self):
+        queryset = Event.objects.all()
+        form = NameSearchForm(self.request.GET)
+        if form.is_valid():
+            return queryset.filter(name__icontains=form.cleaned_data["name"])
+        return queryset
+
+
+class EventCreateView(generic.CreateView):
+    model = Event
+    form_class = EventForm
+    success_url = reverse_lazy("lists:event-list")
+    template_name = "lists/event/event_form.html"
+
+
+class EventDetailView(generic.DetailView):
+    model = Event
+    template_name = "lists/event/event_detail.html"
+
+
+class EventUpdateView(generic.UpdateView):
+    model = Event
+    fields = "__all__"
+    success_url = reverse_lazy("lists:event-list")
+    template_name = "lists/event/event_form.html"
+
+
+class EventDeleteView(generic.DeleteView):
+    model = Event
+    success_url = reverse_lazy("lists:event-list")
+    template_name = "lists/event/event_confirm_delete.html"
 # endregion ---------- Game Views  ----------
