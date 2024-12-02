@@ -2,6 +2,8 @@ from django import forms
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm
 
+from lists.models import Event
+
 
 class NameSearchForm(forms.Form):
     name = forms.CharField(
@@ -12,3 +14,12 @@ class NameSearchForm(forms.Form):
             attrs={"placeholder": "Search by name"}
         )
     )
+
+
+class EventForm(forms.ModelForm):
+    class Meta:
+        model = Event
+        fields = "__all__"
+        widgets = {
+            'date': forms.DateInput(attrs={'type': 'date'}),
+        }
