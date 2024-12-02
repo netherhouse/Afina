@@ -75,7 +75,7 @@ class Game(models.Model):
         return self.name
 
 
-# CRUD -
+# CRUD +
 class Event(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField(blank=True, null=True)
