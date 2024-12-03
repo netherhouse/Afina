@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %} Desire {% endblock %}
+
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+  <h1>
+    {{ newspaper.title }}
+    <a href="{% url 'lists:desire-delete' pk=desire.id %}" class="btn btn-danger link-to-page">
+      Delete
+    </a>
+    <a href="{% url 'lists:desire-update' pk=desire.id %}" class="btn btn-secondary link-to-page">
+      Update
+    </a>
+  </h1>
+  <h4>
+    Name: {{ desire.name }}
+  </h4>
+  <h4>
+    Price: {{ desire.price }}
+  </h4>
+  <h4>
+    Link: <a href="{{ desire.link }}">Link</a>
+  </h4>
+  <h4>
+    Status: {{ desire.status }}
+  </h4>
+  <hr>
+  <h4>Description:</h4>
+  <p class="lead">
+    {{ desire.description }}
+  </p>
+{% endblock %}
