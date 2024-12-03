@@ -6,11 +6,10 @@ from lists.views import (
     GameListView, GameCreateView, GameDetailView, GameUpdateView, GameDeleteView,
     EventListView, EventCreateView, EventDetailView, EventUpdateView, EventDeleteView,
     IdeaListView, IdeaCreateView, IdeaDetailView, IdeaUpdateView, IdeaDeleteView,
+    DesireListView, DesireCreateView, DesireDetailView, DesireUpdateView, DesireDeleteView,
 )
 
 app_name = "lists"
-
-
 
 
 urlpatterns = [
@@ -47,5 +46,13 @@ urlpatterns = [
     path("ideas/<int:pk>/", IdeaDetailView.as_view(), name="idea-detail"),
     path("ideas/<int:pk>/update/", IdeaUpdateView.as_view(), name="idea-update"),
     path("ideas/<int:pk>/delete/", IdeaDeleteView.as_view(), name="idea-delete"),
+    # idea
+
+    # region ---------- Desire Views  ----------
+    path("desires/", DesireListView.as_view(), name="desire-list"),
+    path("desires/create/", DesireCreateView.as_view(), name="desire-create"),
+    path("desires/<int:pk>/", DesireDetailView.as_view(), name="desire-detail"),
+    path("desires/<int:pk>/update/", DesireUpdateView.as_view(), name="desire-update"),
+    path("desires/<int:pk>/delete/", DesireDeleteView.as_view(), name="desire-delete"),
     # idea
 ]
