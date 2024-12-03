@@ -4,6 +4,7 @@ from django.views import generic
 from django.db.models import Case, When, IntegerField
 
 from lists.forms import NameSearchForm, EventForm
+from lists.mixins import SearchFormMixin, NameSearchMixin
 from lists.models import Movie, Game, Event, Idea
 
 
@@ -13,6 +14,8 @@ def index(request):
 
 # region ---------- Movie Views  ----------
 class MovieListView(
+    SearchFormMixin,
+    NameSearchMixin,
     generic.ListView,
 ):
     model = Movie
@@ -122,29 +125,15 @@ class GameDeleteView(generic.DeleteView):
 
 
 # region ---------- Event Views  ----------
-class EventListView(generic.ListView):
+class EventListView(
+    SearchFormMixin,
+    NameSearchMixin,
+    generic.ListView
+):
     model = Event
     context_object_name = "event_list"
     template_name = "lists/event/event_list.html"
     paginate_by = 10
-
-    def get_context_data(self, *, object_list=None, **kwargs):
-        context = super(EventListView, self).get_context_data(**kwargs)
-
-        sort_by = self.request.GET.get("sort", "status_priority")
-        context["sort_by"] = sort_by
-
-        name = self.request.GET.get("name", "")
-        context["search_form"] = NameSearchForm(initial={"name": name})
-
-        return context
-
-    def get_queryset(self):
-        queryset = Event.objects.all()
-        form = NameSearchForm(self.request.GET)
-        if form.is_valid():
-            return queryset.filter(name__icontains=form.cleaned_data["name"])
-        return queryset
 
 
 class EventCreateView(generic.CreateView):
@@ -176,29 +165,15 @@ class EventDeleteView(generic.DeleteView):
 
 
 # region ---------- Idea Views  ----------
-class IdeaListView(generic.ListView):
+class IdeaListView(
+    SearchFormMixin,
+    NameSearchMixin,
+    generic.ListView
+):
     model = Idea
     context_object_name = "idea_list"
     template_name = "lists/idea/idea_list.html"
     paginate_by = 10
-
-    def get_context_data(self, *, object_list=None, **kwargs):
-        context = super(IdeaListView, self).get_context_data(**kwargs)
-
-        sort_by = self.request.GET.get("sort", "status_priority")
-        context["sort_by"] = sort_by
-
-        name = self.request.GET.get("name", "")
-        context["search_form"] = NameSearchForm(initial={"name": name})
-
-        return context
-
-    def get_queryset(self):
-        queryset = Idea.objects.all()
-        form = NameSearchForm(self.request.GET)
-        if form.is_valid():
-            return queryset.filter(name__icontains=form.cleaned_data["name"])
-        return queryset
 
 
 class IdeaCreateView(generic.CreateView):
