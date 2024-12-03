@@ -5,7 +5,7 @@ from django.db.models import Case, When, IntegerField
 
 from lists.forms import NameSearchForm, EventForm
 from lists.mixins import SearchFormMixin, NameSearchMixin
-from lists.models import Movie, Game, Event, Idea
+from lists.models import Movie, Game, Event, Idea, Desire
 
 
 def index(request):
@@ -199,4 +199,42 @@ class IdeaDeleteView(generic.DeleteView):
     model = Idea
     success_url = reverse_lazy("lists:idea-list")
     template_name = "lists/idea/idea_confirm_delete.html"
+# endregion
+
+
+# region ---------- Desire Views  ----------
+class DesireListView(
+    SearchFormMixin,
+    NameSearchMixin,
+    generic.ListView
+):
+    model = Desire
+    context_object_name = "desire_list"
+    template_name = "lists/desire/desire_list.html"
+    paginate_by = 10
+
+
+class DesireCreateView(generic.CreateView):
+    model = Desire
+    fields = "__all__"
+    success_url = reverse_lazy("lists:desire-list")
+    template_name = "lists/desire/desire_form.html"
+
+
+class DesireDetailView(generic.DetailView):
+    model = Desire
+    template_name = "lists/desire/desire_detail.html"
+
+
+class DesireUpdateView(generic.UpdateView):
+    model = Desire
+    fields = "__all__"
+    success_url = reverse_lazy("lists:desire-list")
+    template_name = "lists/desire/desire_form.html"
+
+
+class DesireDeleteView(generic.DeleteView):
+    model = Desire
+    success_url = reverse_lazy("lists:desire-list")
+    template_name = "lists/desire/desire_confirm_delete.html"
 # endregion
