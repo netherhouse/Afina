@@ -25,7 +25,8 @@ INSTALLED_APPS = [
     "crispy_bootstrap5",
 
     # apps
-    'lists',
+    "lists",
+    "finances"
 ]
 
 MIDDLEWARE = [
