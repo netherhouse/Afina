@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% load custom_filters %}
+{% load static %}
+
+{% block title %} Tables {% endblock %}
+
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+  <div class="py-3">
+    <div class="d-flex justify-content-between w-100 flex-wrap">
+      <div class="mb-3 mb-lg-0">
+        <h1 class="h4">Idea list</h1>
+      </div>
+      <div>
+        <a href="{% url 'lists:idea-create' %}" class="btn btn-primary link-to-page">
+          Create
+        </a>
+      </div>
+    </div>
+  </div>
+
+  {% include "includes/search_form.html" %}
+
+  <div class="card border-0 shadow mb-4">
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-centered table-nowrap mb-0 rounded">
+          <thead class="thead-light">
+          <tr>
+            <th class="border-0 rounded-start">ID</th>
+            <th class="border-0">Name</th>
+            <th class="border-0">Description</th>
+            <th class="border-0 rounded-end">Status</th>
+          </tr>
+          </thead>
+          <tbody>
+          {% for movie in movie_list %}
+            <tr>
+              <td>
+                <a href="#">{{ idea.id }}</a>
+              </td>
+              <td>
+                <a href="#">{{ idea.name }}</a>
+              </td>
+              <td>
+                <a href="#">{{ idea.description|truncate_words }}</a>
+              </td>
+              <td>
+                {{ idea.status }}
+              </td>
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}
