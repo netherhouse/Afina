@@ -5,10 +5,13 @@ from lists.views import (
     MovieListView, MovieCreateView, MovieUpdateView, MovieDeleteView, MovieDetailView,
     GameListView, GameCreateView, GameDetailView, GameUpdateView, GameDeleteView,
     EventListView, EventCreateView, EventDetailView, EventUpdateView, EventDeleteView,
-
+    IdeaListView, IdeaCreateView, IdeaDetailView, IdeaUpdateView, IdeaDeleteView,
 )
 
 app_name = "lists"
+
+
+
 
 urlpatterns = [
     path('index/', index, name='index'),
@@ -31,10 +34,18 @@ urlpatterns = [
     # endregion
 
     # region ---------- Game Views  ----------
-    path("event/", EventListView.as_view(), name="event-list"),
-    path("event/create/", EventCreateView.as_view(), name="event-create"),
-    path("event/<int:pk>/", EventDetailView.as_view(), name="event-detail"),
-    path("event/<int:pk>/update/", EventUpdateView.as_view(), name="event-update"),
-    path("event/<int:pk>/delete/", EventDeleteView.as_view(), name="event-delete"),
+    path("events/", EventListView.as_view(), name="event-list"),
+    path("events/create/", EventCreateView.as_view(), name="event-create"),
+    path("events/<int:pk>/", EventDetailView.as_view(), name="event-detail"),
+    path("events/<int:pk>/update/", EventUpdateView.as_view(), name="event-update"),
+    path("events/<int:pk>/delete/", EventDeleteView.as_view(), name="event-delete"),
     # endregion
+
+    # region ---------- Idea Views  ----------
+    path("ideas/", IdeaListView.as_view(), name="idea-list"),
+    path("ideas/create/", IdeaCreateView.as_view(), name="idea-create"),
+    path("ideas/<int:pk>/", IdeaDetailView.as_view(), name="idea-detail"),
+    path("ideas/<int:pk>/update/", IdeaUpdateView.as_view(), name="idea-update"),
+    path("ideas/<int:pk>/delete/", IdeaDeleteView.as_view(), name="idea-delete"),
+    # idea
 ]
