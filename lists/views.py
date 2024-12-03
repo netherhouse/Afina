@@ -4,7 +4,7 @@ from django.views import generic
 from django.db.models import Case, When, IntegerField
 
 from lists.forms import NameSearchForm, EventForm
-from lists.models import Movie, Game, Event
+from lists.models import Movie, Game, Event, Idea
 
 
 def index(request):
@@ -12,24 +12,13 @@ def index(request):
 
 
 # region ---------- Movie Views  ----------
-class MovieListView(generic.ListView):
+class MovieListView(
+    generic.ListView,
+):
     model = Movie
     context_object_name = "movie_list"
     template_name = "lists/movie/movie_list.html"
     paginate_by = 10
-
-    def get_context_data(self, *, object_list=None, **kwargs):
-        context = super(MovieListView, self).get_context_data(**kwargs)
-        name = self.request.GET.get("name", "")
-        context["search_form"] = NameSearchForm(initial={"name": name})
-        return context
-
-    def get_queryset(self):
-        queryset = Movie.objects.all()
-        form = NameSearchForm(self.request.GET)
-        if form.is_valid():
-            return queryset.filter(name__icontains=form.cleaned_data["name"])
-        return queryset
 
 
 class MovieCreateView(generic.CreateView):
@@ -55,7 +44,9 @@ class MovieDeleteView(generic.DeleteView):
     model = Movie
     success_url = reverse_lazy("lists:movie-list")
     template_name = "lists/movie/movie_confirm_delete.html"
-# endregion ---------- Movie Views  ----------
+
+
+# endregion
 
 
 # region ---------- Game Views  ----------
@@ -125,7 +116,9 @@ class GameDeleteView(generic.DeleteView):
     model = Game
     success_url = reverse_lazy("lists:game-list")
     template_name = "lists/game/game_confirm_delete.html"
-# endregion ---------- Game Views  ----------
+
+
+# endregion
 
 
 # region ---------- Event Views  ----------
@@ -177,4 +170,58 @@ class EventDeleteView(generic.DeleteView):
     model = Event
     success_url = reverse_lazy("lists:event-list")
     template_name = "lists/event/event_confirm_delete.html"
-# endregion ---------- Game Views  ----------
+
+
+# endregion
+
+
+# region ---------- Idea Views  ----------
+class IdeaListView(generic.ListView):
+    model = Idea
+    context_object_name = "idea_list"
+    template_name = "lists/idea/idea_list.html"
+    paginate_by = 10
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(IdeaListView, self).get_context_data(**kwargs)
+
+        sort_by = self.request.GET.get("sort", "status_priority")
+        context["sort_by"] = sort_by
+
+        name = self.request.GET.get("name", "")
+        context["search_form"] = NameSearchForm(initial={"name": name})
+
+        return context
+
+    def get_queryset(self):
+        queryset = Idea.objects.all()
+        form = NameSearchForm(self.request.GET)
+        if form.is_valid():
+            return queryset.filter(name__icontains=form.cleaned_data["name"])
+        return queryset
+
+
+class IdeaCreateView(generic.CreateView):
+    model = Idea
+    fields = "__all__"
+    success_url = reverse_lazy("lists:idea-list")
+    template_name = "lists/idea/idea_form.html"
+
+
+class IdeaDetailView(generic.DetailView):
+    model = Idea
+    template_name = "lists/idea/idea_detail.html"
+
+
+class IdeaUpdateView(generic.UpdateView):
+    model = Idea
+    fields = "__all__"
+    success_url = reverse_lazy("lists:idea-list")
+    template_name = "lists/idea/idea_form.html"
+
+
+class IdeaDeleteView(generic.DeleteView):
+    model = Idea
+    success_url = reverse_lazy("lists:idea-list")
+    template_name = "lists/idea/idea_confirm_delete.html"
+# endregion
