@@ -86,7 +86,7 @@ class Event(models.Model):
         return self.name
 
 
-# CRUD -
+# CRUD +
 class Idea(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField(blank=True, null=True)
@@ -100,7 +100,7 @@ class Idea(models.Model):
         return self.name
 
 
-# CRUD -
+# CRUD +
 class Desire(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField(blank=True, null=True)
