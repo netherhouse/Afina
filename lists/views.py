@@ -9,7 +9,7 @@ from lists.models import Movie, Game, Event, Idea, Desire
 
 
 def index(request):
-    return render(request, "lists/index.html")
+    return render(request, "index.html")
 
 
 # region ---------- Movie Views  ----------
