@@ -20,7 +20,7 @@ class MonoBankAPI:
         self.mono_token = mono_token
         self.iban_list = iban_list
 
-    def mono_get_client_info(self):
+    def get_wallets(self):
         try:
             res = requests.get(
                 "https://api.monobank.ua/personal/client-info",
@@ -42,7 +42,7 @@ class MonoBankAPI:
             print("Exception (Monobank client info):", e)
             return None
 
-    def mono_set_webhook(self, webhook_url: str):
+    def set_webhook(self, webhook_url: str):
         try:
             data = requests.post(
                 "https://api.monobank.ua/personal/webhook",
@@ -54,7 +54,7 @@ class MonoBankAPI:
             print("Exception (Monobank webhook):", e)
             return False
 
-    def mono_get_extract(self, account_id: str, from_timestamp: int):
+    def get_extract(self, account_id: str, from_timestamp: int):
         try:
             res = requests.get(
                 f"https://api.monobank.ua/personal/statement/{account_id}/{from_timestamp}",
@@ -68,7 +68,7 @@ class MonoBankAPI:
 
 class NBUAPI:
     @staticmethod
-    def get_nbu_rates():
+    def get_rates():
         try:
             rates = ""
             for currency_code, currency_data in currencies.items():
@@ -102,7 +102,7 @@ class CurrencyAPI:
             print("Exception (convert currency):", e)
             return None
 
-    def coinlayer_get_cryptocurrency(self):
+    def get_cryptocurrency(self):
         try:
             res = requests.get(
                 f"http://api.coinlayer.com/live?access_key={self.token}"
@@ -122,5 +122,5 @@ if __name__ == "__main__":
     mono_token = os.getenv("monobankToken")
     iban_list = os.getenv("IBANs").split(",")
     bank_api = MonoBankAPI(mono_token=mono_token, iban_list=iban_list)
-    print(bank_api.mono_get_client_info())
+    print(bank_api.get_wallets())
 
