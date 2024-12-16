@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load custom_filters %}
+{% load static %}
+
+{% block title %} Tables {% endblock %}
+
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+  <div>
+    Wallets:
+    <br>
+    {% for wallet, money in monobank_wallets.items %}
+      {{ wallet }} : {{ money }}
+      <br>
+    {% endfor %}
+  </div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}
