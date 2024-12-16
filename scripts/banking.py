@@ -29,7 +29,6 @@ def get_rates():
     except Exception as e:
         print("Exception (find):", e)
         pass
-
 # endregion API bank.gov.ua
 
 
