@@ -17,6 +17,15 @@
     {% endfor %}
   </div>
 
+  <div>
+    Rates:
+    <br>
+    {% for currency, rate in nbu_rates.items %}
+      {{ currency }} : {{ rate }}
+      <br>
+    {% endfor %}
+  </div>
+
 {% endblock content %}
 
 <!-- Specific Page JS goes HERE  -->
