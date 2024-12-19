@@ -70,19 +70,20 @@ class NBUAPI:
     @staticmethod
     def get_rates():
         try:
-            rates = ""
-            for currency_code, currency_data in currencies.items():
+            rates = {}
+            for currency_code in currencies.keys():
                 res = requests.get(
                     "https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange",
                     params={"valcode": currency_code, "json": ""}
                 )
                 data = res.json()
                 if data:
-                    rates += f"{currency_data['flag']} {currency_data['symbol']} {data[0]['cc']}: {round(data[0]['rate'], 2)}\n"
+                    rates[currency_code] = round(data[0]["rate"], 2)
             return rates
         except Exception as e:
             print("Exception (NBU rates):", e)
             return None
+
 
 
 class CurrencyAPI:
