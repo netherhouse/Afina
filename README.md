@@ -1,5 +1,9 @@
 # Personal Assistant
 
+Services:
+- Finances (MonoBank API, NBU API) 
+- Lists 
+
 ## Instalation
 
 #### Manual
