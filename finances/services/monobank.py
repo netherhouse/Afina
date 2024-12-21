@@ -85,17 +85,17 @@ class NBUAPI:
             return None
 
 
-
 class CurrencyAPI:
     def __init__(self):
-        self.token = os.getenv("apilayerToken")
+        self.apilayer_token = os.getenv("apilayerToken")
+        self.coinlayer_token = os.getenv("coinlayerToken")
 
     def convert_currency(self, cur_to, cur_from, amount):
         try:
             res = requests.get(
                 "https://api.apilayer.com/currency_data/convert",
                 params={"to": cur_to, "from": cur_from, "amount": amount},
-                headers={"apikey": self.token}
+                headers={"apikey": self.apilayer_token}
             )
             data = res.json()
             return data["result"]
@@ -103,16 +103,17 @@ class CurrencyAPI:
             print("Exception (convert currency):", e)
             return None
 
-    def get_cryptocurrency(self):
+    def get_cryptorates(self):
         try:
             res = requests.get(
-                f"http://api.coinlayer.com/live?access_key={self.token}"
+                f"http://api.coinlayer.com/live?access_key={self.coinlayer_token}",
             )
             data = res.json()
-            cryptocurrencies = ""
+            print(data)
+            cryptocurrencies = {}
             for i in data["rates"]:
                 if i in cryptocurrencies_list:
-                    cryptocurrencies += f"{i} = {round(data['rates'][i], 2)} USD\n"
+                    cryptocurrencies[i] = round(data["rates"][i], 2)
             return cryptocurrencies
         except Exception as e:
             print("Exception (coinlayer):", e)
