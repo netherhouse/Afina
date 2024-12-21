@@ -26,6 +26,15 @@
     {% endfor %}
   </div>
 
+   <div>
+    Crypto Rates:
+    <br>
+    {% for currency, rate in crypto_rates.items %}
+      {{ currency }} : {{ rate }} €
+      <br>
+    {% endfor %}
+  </div>
+
 {% endblock content %}
 
 <!-- Specific Page JS goes HERE  -->
