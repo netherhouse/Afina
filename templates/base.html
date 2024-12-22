@@ -7,17 +7,14 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 
   <title>
-    Newspaper Agency {% block title %}{% endblock %}
+    Afina {% block title %}{% endblock %}
   </title>
 
   <link type="text/css" href="{% static 'assets/vendor/sweetalert2/dist/sweetalert2.min.css' %}" rel="stylesheet">
   <link type="text/css" href="{% static 'assets/vendor/notyf/notyf.min.css' %}" rel="stylesheet">
   <link type="text/css" href="{% static 'assets/css/volt.css' %}" rel="stylesheet">
   <link type="text/css" href="{% static 'assets/css/volt.css' %}" rel="stylesheet">
-  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-
-  <!-- Specific Page JS goes HERE  -->
-  {% block stylesheets %}{% endblock stylesheets %}
+  <link type="text/css" href="{% static 'css/styles.css' %}" rel="stylesheet">
 
 </head>
 <body>
@@ -26,7 +23,9 @@
 
 <main class="content">
 
-  {% block content %}{% endblock content %}
+  {% block content %}
+
+  {% endblock content %}
 
   {% block pagination %}
     {% include "includes/pagination.html" %}
