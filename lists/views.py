@@ -1,7 +1,11 @@
+import json
+
+from django.http import JsonResponse
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import generic
 from django.db.models import Case, When, IntegerField
+from django.views.decorators.csrf import csrf_exempt
 
 from lists.forms import NameSearchForm, EventForm
 from lists.mixins import SearchFormMixin, NameSearchMixin
@@ -237,4 +241,22 @@ class DesireDeleteView(generic.DeleteView):
     model = Desire
     success_url = reverse_lazy("lists:desire-list")
     template_name = "lists/desire/desire_confirm_delete.html"
+
+
+@csrf_exempt
+def desire_update_status(request, id):
+    if request.method == 'POST':
+        try:
+            print("here")
+            desire = Desire.objects.get(id=id)
+            data = json.loads(request.body)
+            new_status = data.get('status') == 'true'
+            desire.status = new_status
+            desire.save()
+            return JsonResponse({'success': True})
+        except Desire.DoesNotExist:
+            return JsonResponse({'success': False, 'error': 'Desire not found'})
+        except json.JSONDecodeError:
+            return JsonResponse({'success': False, 'error': 'Invalid JSON'})
+    return JsonResponse({'success': False, 'error': 'Invalid request method'})
 # endregion
