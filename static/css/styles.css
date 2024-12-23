@@ -2,7 +2,40 @@ body {
     margin-top: 20px;
 }
 
+td {
+    vertical-align: middle;
+    white-space: normal;
+    word-wrap: break-word;
+}
+
+table {
+    table-layout: auto;
+    width: 100%;
+}
+
 .link-to-page {
     float: right;
     margin: 0 2px 0 2px;
 }
+
+.status-btn {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+}
+
+.circle {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 1px solid grey;
+  border-radius: 50%;
+}
+
+.circle.filled {
+  background-color: #000;
+}
+
