@@ -19,23 +19,32 @@ table {
 }
 
 .status-btn {
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  width: 40px;
-  height: 40px;
-  padding: 0;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    padding: 0;
 }
 
 .circle {
-  display: inline-block;
-  width: 20px;
-  height: 20px;
-  border: 1px solid grey;
-  border-radius: 50%;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 1px solid grey;
+    border-radius: 50%;
 }
 
 .circle.filled {
-  background-color: #000;
+    background-color: #000;
 }
 
+
+.rounded-image {
+    width: 170px;
+    height: 170px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #000;
+    image-rendering: smooth;
+}
