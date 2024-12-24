@@ -1,6 +1,6 @@
 # Personal Assistant
 
-Services:
+## Features
 - Finances (MonoBank API, NBU API) 
 - Lists 
 
@@ -40,6 +40,5 @@ Lists service will be available at http://127.0.0.1:8000/
 
 ...
 
-## Features
-
-...
+## Demo
+![Screenshot.png](demo%2FScreenshot.png)
