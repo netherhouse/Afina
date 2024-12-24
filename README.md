@@ -24,9 +24,9 @@ pip install -r requirements.txt
 
 (create .env.sample to .env and populate it with all required data)
 
-python backend\manage.py migrate
-python backend\manage.py createsuperuser
-python backend\manage.py runserver
+python manage.py migrate
+python manage.py createsuperuser
+python manage.py runserver
 
 ```
 
