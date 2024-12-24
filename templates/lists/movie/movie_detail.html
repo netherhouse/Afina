@@ -22,7 +22,13 @@
     Rate: {{ movie.rate }}
   </h4>
   <h4>
-    Status: {{ movie.status }}
+    {% if movie.status == "pending" %}
+      Status: 🎬
+    {% elif movie.status == "active" %}
+      Status: 👀
+    {% else %}
+      Status: ✅
+    {% endif %}
   </h4>
   <hr>
   <h4>Description:</h4>
