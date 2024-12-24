@@ -22,7 +22,7 @@ venv\Scripts\activate
 
 pip install -r requirements.txt
 
-(create .env.sample to .env and populate it with all required data)
+(сopy .env.sample to .env and populate it with all required data)
 
 python manage.py migrate
 python manage.py createsuperuser
