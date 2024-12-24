@@ -1,10 +1,3 @@
-{% extends "base.html" %}
-{% load static %}
-
-{% block title %} Desire {% endblock %}
-
-{% block stylesheets %}{% endblock stylesheets %}
-
 {% block content %}
   <h1>
     <a href="{% url 'lists:desire-delete' pk=desire.id %}" class="btn btn-danger link-to-page">
@@ -40,3 +33,4 @@
     {{ desire.description }}
   </p>
 {% endblock %}
+
