@@ -7,7 +7,6 @@
 
 {% block content %}
   <h1>
-    {{ newspaper.title }}
     <a href="{% url 'lists:desire-delete' pk=desire.id %}" class="btn btn-danger link-to-page">
       Delete
     </a>
@@ -17,15 +16,23 @@
   </h1>
   <h4>
     Name: {{ desire.name }}
+    {% if desire.link %}
+      <a target="_blank" href="{{ desire.link }}">🔗</a>
+    {% else %}
+    {% endif %}
   </h4>
   <h4>
-    Price: {{ desire.price }}
+    {% if desire.price %}
+      Price: {{ desire.price }} €
+    {% else %}
+    {% endif %}
   </h4>
   <h4>
-    Link: <a href="{{ desire.link }}">Link</a>
-  </h4>
-  <h4>
-    Status: {{ desire.status }}
+    {% if desire.status %}
+      Status: ✔️
+    {% else %}
+      Status: 🛒
+    {% endif %}
   </h4>
   <hr>
   <h4>Description:</h4>
