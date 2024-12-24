@@ -40,16 +40,16 @@
           {% for movie in movie_list %}
             <tr>
               <td>
-                <a href="#">{{ movie.id }}</a>
+                <a href="{% url 'lists:movie-detail' movie.id %}">{{ movie.id }}</a>
               </td>
               <td>
-                <a href="#">{{ movie.name }}</a>
+                <a href="{% url 'lists:movie-detail' movie.id %}">{{ movie.name }}</a>
               </td>
               <td>
-                <a href="#">{{ movie.description|truncate_words }}</a>
+                <a href="{% url 'lists:movie-detail' movie.id %}">{{ movie.description|truncate_words }}</a>
               </td>
               <td>
-                <a href="#">{{ movie.rate }}</a>
+                <a href="{% url 'lists:movie-detail' movie.id %}">{{ movie.rate }}</a>
               </td>
               <td>
                 {{ movie.status }}
