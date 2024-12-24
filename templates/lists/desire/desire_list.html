@@ -36,41 +36,51 @@
           <tbody>
           {% for desire in desire_list %}
             <tr>
-              <td>
+
+              <td class="open-modal" data-url="{% url 'lists:desire-detail' desire.id %}">
                 <div class="d-flex align-items-center">
-                  <button
-                      class="status-btn border-0 bg-transparent"
-                      data-id="{{ desire.id }}"
-                      data-status="{{ desire.status }}"
-                  >
+                  <button class="status-btn border-0 bg-transparent" data-id="{{ desire.id }}"
+                          data-status="{{ desire.status }}">
                     {% if desire.status %}
                       <span class="circle filled"></span>
                     {% else %}
                       <span class="circle"></span>
                     {% endif %}
                   </button>
-                  <a href="{% url 'lists:desire-detail' desire.id %}" class="ml-2">{{ desire.name }}</a>
+                  <span class="ml-2">{{ desire.name }}</span>
                 </div>
               </td>
-              <td>
-                <a href="{% url 'lists:desire-detail' desire.id %}">{{ desire.description|truncate_words }}</a>
+
+              <td class="open-modal" data-url="{% url 'lists:desire-detail' desire.id %}">
+                {{ desire.description|truncate_words }}
               </td>
-              <td>
+
+              <td class="open-modal" data-url="{% url 'lists:desire-detail' desire.id %}">
                 {% if desire.price %}
-                  <a href="{% url 'lists:desire-detail' desire.id %}">{{ desire.price }} €</a>
+                  {{ desire.price }} €
                 {% else %}
-                  <a href="{% url 'lists:desire-detail' desire.id %}">——</a>
+                  ——
                 {% endif %}
               </td>
+
               <td>
                 {% if desire.link %}
                   <a target="_blank" href="{{ desire.link }}">🔗</a>
                 {% else %}
-                  <a href="#">——</a>
+                  ——
                 {% endif %}
               </td>
+
             </tr>
           {% endfor %}
+
+          <div id="modal" class="modal" style="display: none;">
+            <div class="modal-content">
+              <span class="close-modal">&times;</span>
+              <div id="modal-body"></div>
+            </div>
+          </div>
+
           </tbody>
         </table>
       </div>
@@ -79,7 +89,6 @@
 
 {% endblock content %}
 
-<!-- Specific Page JS goes HERE  -->
 {% block javascripts %}
   <script>
       function getCsrfToken() {
@@ -128,6 +137,33 @@
                           console.error('Error:', error);
                       });
               });
+          });
+      });
+  </script>
+
+  <script>
+      document.addEventListener('DOMContentLoaded', function () {
+          document.querySelectorAll('.open-modal').forEach(button => {
+              button.addEventListener('click', function () {
+                  const url = this.getAttribute('data-url');
+                  fetch(url)
+                      .then(response => response.text())
+                      .then(html => {
+                          document.getElementById('modal-body').innerHTML = html;
+                          document.getElementById('modal').style.display = 'flex';
+                      })
+                      .catch(error => console.error('Error:', error));
+              });
+          });
+
+          document.querySelector('.close-modal').addEventListener('click', function () {
+              document.getElementById('modal').style.display = 'none';
+          });
+
+          document.getElementById('modal').addEventListener('click', function (event) {
+              if (event.target === this) {
+                  this.style.display = 'none';
+              }
           });
       });
   </script>
