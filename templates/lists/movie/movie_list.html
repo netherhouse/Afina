@@ -31,7 +31,8 @@
           <tr>
             <th class="border-0 rounded-start">Name</th>
             <th class="border-0">Description</th>
-            <th class="border-0 rounded-end">Rate</th>
+            <th class="border-0">Rate</th>
+            <th class="border-0 rounded-end">Link</th>
           </tr>
           </thead>
           <tbody>
@@ -66,7 +67,15 @@
 
               <td class="open-modal" data-url="{% url 'lists:movie-detail' movie.id %}">
                 {% if movie.rate %}
-                  {{ movie.rate}}
+                  {{ movie.rate }}
+                {% else %}
+                  ——
+                {% endif %}
+              </td>
+
+              <td>
+                {% if movie.link %}
+                  <a target="_blank" href="{{ movie.link }}">🔗</a>
                 {% else %}
                   ——
                 {% endif %}

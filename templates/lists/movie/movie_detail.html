@@ -10,6 +10,10 @@
   </h1>
   <h4>
     Name: {{ movie.name }}
+    {% if movie.link %}
+      <a target="_blank" href="{{ movie.link }}">🔗</a>
+    {% else %}
+    {% endif %}
   </h4>
   <h4>
     {% if movie.rate %}
