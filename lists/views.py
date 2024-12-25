@@ -81,19 +81,9 @@ class GameListView(generic.ListView):
         if form.is_valid():
             queryset = queryset.filter(name__icontains=form.cleaned_data["name"])
 
-        queryset = queryset.annotate(
-            status_priority=Case(
-                When(status="active", then=1),
-                When(status="pending", then=2),
-                When(status="completed", then=3),
-                default=4,
-                output_field=IntegerField(),
-            )
-        )
+        sort_by = self.request.GET.get("sort", "status")
 
-        sort_by = self.request.GET.get("sort", "status_priority")
-
-        valid_sort_fields = ["status_priority", "name", "id", "coop"]
+        valid_sort_fields = ["status", "name", "id", "coop"]
         if sort_by in valid_sort_fields:
             queryset = queryset.order_by(sort_by)
 
