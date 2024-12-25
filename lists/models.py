@@ -26,6 +26,7 @@ class Movie(models.Model):
         ]
     )
     status = models.BooleanField(default=False)
+    link = models.URLField(blank=True, null=True)
 
     def __str__(self):
         return self.name
