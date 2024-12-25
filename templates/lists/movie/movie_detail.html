@@ -1,10 +1,3 @@
-{% extends "base.html" %}
-{% load static %}
-
-{% block title %} Movie {% endblock %}
-
-{% block stylesheets %}{% endblock stylesheets %}
-
 {% block content %}
   <h1>
     {{ newspaper.title }}
@@ -19,19 +12,19 @@
     Name: {{ movie.name }}
   </h4>
   <h4>
-    Rate: {{ movie.rate }}
+    {% if movie.rate %}
+      Rate: {{ movie.rate }}
+    {% else %}
+    {% endif %}
   </h4>
   <h4>
-    {% if movie.status == "pending" %}
-      Status: 🎬
-    {% elif movie.status == "active" %}
-      Status: 👀
-    {% else %}
+    {% if movie.status %}
       Status: ✅
+    {% else %}
+      Status: 🎬
     {% endif %}
   </h4>
   <hr>
-  <h4>Description:</h4>
   <p class="lead">
     {{ movie.description }}
   </p>
