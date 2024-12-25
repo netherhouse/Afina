@@ -48,11 +48,7 @@ class Game(models.Model):
         blank=True,
         null=True
     )
-    status = models.CharField(
-        max_length=10,
-        choices=StatusChoices.choices,
-        default=StatusChoices.PENDING.value,
-    )
+    status = models.BooleanField(default=False)
     rate = models.IntegerField(
         null=True,
         blank=True,
