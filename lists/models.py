@@ -25,11 +25,7 @@ class Movie(models.Model):
             MaxValueValidator(5)
         ]
     )
-    status = models.CharField(
-        max_length=10,
-        choices=StatusChoices.choices,
-        default=StatusChoices.PENDING.value,
-    )
+    status = models.BooleanField(default=False)
 
     def __str__(self):
         return self.name
