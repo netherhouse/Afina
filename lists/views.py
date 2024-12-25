@@ -242,21 +242,34 @@ class DesireDeleteView(generic.DeleteView):
     success_url = reverse_lazy("lists:desire-list")
     template_name = "lists/desire/desire_confirm_delete.html"
 
+# endregion
+
 
 @csrf_exempt
-def desire_update_status(request, id):
+def update_status(request, model_name, id):
     if request.method == 'POST':
         try:
-            print("here")
-            desire = Desire.objects.get(id=id)
+            model = {
+                'desire': Desire,
+                'movie': Movie,
+                'game': Game,
+                'event': Event,
+                'idea': Idea,
+            }.get(model_name.lower())
+
+            if not model:
+                return JsonResponse({'success': False, 'error': 'Invalid model name'})
+
+            instance = model.objects.get(id=id)
             data = json.loads(request.body)
+
             new_status = data.get('status') == 'true'
-            desire.status = new_status
-            desire.save()
+            instance.status = new_status
+            instance.save()
+
             return JsonResponse({'success': True})
-        except Desire.DoesNotExist:
-            return JsonResponse({'success': False, 'error': 'Desire not found'})
+        except model.DoesNotExist:
+            return JsonResponse({'success': False, 'error': 'Object not found'})
         except json.JSONDecodeError:
             return JsonResponse({'success': False, 'error': 'Invalid JSON'})
     return JsonResponse({'success': False, 'error': 'Invalid request method'})
-# endregion

@@ -10,7 +10,8 @@ document.addEventListener("DOMContentLoaded", function () {
         button.addEventListener('click', function () {
             const circle = this.querySelector('.circle');
             const status = this.dataset.status === 'true';
-            const desireId = this.dataset.id;
+            const modelName = this.dataset.model;
+            const objectId = this.dataset.id;
 
             if (status) {
                 circle.classList.remove('filled');
@@ -20,7 +21,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 this.dataset.status = 'true';
             }
 
-            const updateStatusUrl = `${desireId}/update-status/`;
+            const updateStatusUrl = `/lists/${modelName}/${objectId}/update-status/`;
 
             fetch(updateStatusUrl, {
                 method: 'POST',
@@ -37,7 +38,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     if (data.success) {
                         console.log('Status updated successfully');
                     } else {
-                        console.error('Error updating status');
+                        console.error('Error updating status:', data.error);
                     }
                 })
                 .catch(error => {

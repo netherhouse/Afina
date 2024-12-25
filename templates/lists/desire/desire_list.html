@@ -39,8 +39,12 @@
 
               <td>
                 <div class="d-flex align-items-center">
-                  <button class="status-btn border-0 bg-transparent" data-id="{{ desire.id }}"
-                          data-status="{{ desire.status }}">
+                  <button
+                      class="status-btn border-0 bg-transparent"
+                      data-model="desire"
+                      data-id="{{ desire.id }}"
+                      data-status="{{ desire.status }}"
+                  >
                     {% if desire.status %}
                       <span class="circle filled"></span>
                     {% else %}
