@@ -86,11 +86,7 @@ class Event(models.Model):
 class Idea(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField(blank=True, null=True)
-    status = models.CharField(
-        max_length=10,
-        choices=StatusChoices.choices,
-        default=StatusChoices.PENDING.value,
-    )
+    status = models.BooleanField(default=False)
 
     def __str__(self):
         return self.name
