@@ -29,33 +29,58 @@
         <table class="table table-centered table-nowrap mb-0 rounded">
           <thead class="thead-light">
           <tr>
-            <th class="border-0 rounded-start">ID</th>
-            <th class="border-0">Name</th>
+            <th class="border-0 rounded-start">Name</th>
             <th class="border-0">Description</th>
-            <th class="border-0">Rate</th>
-            <th class="border-0 rounded-end">Status</th>
+            <th class="border-0 rounded-end">Rate</th>
           </tr>
           </thead>
           <tbody>
           {% for movie in movie_list %}
             <tr>
+
               <td>
-                <a href="{% url 'lists:movie-detail' movie.id %}">{{ movie.id }}</a>
+                <div class="d-flex align-items-center">
+                  <button
+                      class="status-btn border-0 bg-transparent"
+                      data-model="movie"
+                      data-id="{{ movie.id }}"
+                      data-status="{{ movie.status }}"
+                  >
+                    {% if movie.status %}
+                      <span class="circle filled"></span>
+                    {% else %}
+                      <span class="circle"></span>
+                    {% endif %}
+                  </button>
+                  <span
+                      data-url="{% url 'lists:movie-detail' movie.id %}"
+                      class="open-modal ml-2">
+                        {{ movie.name }}
+                  </span>
+                </div>
               </td>
-              <td>
-                <a href="{% url 'lists:movie-detail' movie.id %}">{{ movie.name }}</a>
+
+              <td class="open-modal" data-url="{% url 'lists:movie-detail' movie.id %}">
+                {{ movie.description|truncate_words }}
               </td>
-              <td>
-                <a href="{% url 'lists:movie-detail' movie.id %}">{{ movie.description|truncate_words }}</a>
-              </td>
-              <td>
-                <a href="{% url 'lists:movie-detail' movie.id %}">{{ movie.rate }}</a>
-              </td>
-              <td>
-                {{ movie.status }}
+
+              <td class="open-modal" data-url="{% url 'lists:movie-detail' movie.id %}">
+                {% if movie.rate %}
+                  {{ movie.rate}}
+                {% else %}
+                  ——
+                {% endif %}
               </td>
             </tr>
           {% endfor %}
+
+          <div id="modal" class="modal" style="display: none;">
+            <div class="modal-content">
+              <span class="close-modal">&times;</span>
+              <div id="modal-body"></div>
+            </div>
+          </div>
+
           </tbody>
         </table>
       </div>
@@ -64,5 +89,9 @@
 
 {% endblock content %}
 
-<!-- Specific Page JS goes HERE  -->
-{% block javascripts %}{% endblock javascripts %}
+{% block javascripts %}
+  <script src="{% static 'assets/js/button_status_toggle.js' %}"></script>
+  <script src="{% static 'assets/js/modal_handler.js' %}"></script>
+{% endblock javascripts %}
+
+
