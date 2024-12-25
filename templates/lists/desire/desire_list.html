@@ -37,7 +37,7 @@
           {% for desire in desire_list %}
             <tr>
 
-              <td class="open-modal" data-url="{% url 'lists:desire-detail' desire.id %}">
+              <td>
                 <div class="d-flex align-items-center">
                   <button class="status-btn border-0 bg-transparent" data-id="{{ desire.id }}"
                           data-status="{{ desire.status }}">
@@ -47,7 +47,11 @@
                       <span class="circle"></span>
                     {% endif %}
                   </button>
-                  <span class="ml-2">{{ desire.name }}</span>
+                  <span
+                      data-url="{% url 'lists:desire-detail' desire.id %}"
+                      class="open-modal ml-2">
+                        {{ desire.name }}
+                  </span>
                 </div>
               </td>
 
