@@ -22,6 +22,7 @@
   </div>
 
   {% include "includes/search_form.html" %}
+
   <div class="card border-0 shadow mb-4">
     <div class="card-body">
       <div class="table-responsive">
@@ -29,15 +30,9 @@
           <thead class="thead-light">
           <tr>
             <th class="border-0 rounded-start">
-              <a href="?sort=id">ID</a>
-            </th>
-            <th class="border-0">
               <a href="?sort=name">Name</a>
             </th>
             <th class="border-0">Description</th>
-            <th class="border-0">
-              <a href="?sort=status_priority">Status</a>
-            </th>
             <th class="border-0 rounded-end">
               <a href="?sort=coop">Coop</a>
             </th>
@@ -47,22 +42,50 @@
           {% for game in game_list %}
             <tr>
               <td>
-                <a href="#">{{ game.id }}</a>
+                <div class="d-flex align-items-center">
+                  <button
+                      class="status-btn border-0 bg-transparent"
+                      data-model="game"
+                      data-id="{{ game.id }}"
+                      data-status="{{ game.status }}"
+                  >
+                    {% if game.status %}
+                      <span class="circle filled"></span>
+                    {% else %}
+                      <span class="circle"></span>
+                    {% endif %}
+                  </button>
+                  <span
+                      data-url="{% url 'lists:game-detail' game.id %}"
+                      class="open-modal ml-2">
+                        {{ game.name }}
+                  </span>
+                </div>
               </td>
-              <td>
-                <a href="#">{{ game.name }}</a>
+
+              <td class="open-modal" data-url="{% url 'lists:game-detail' game.id %}">
+                {{ game.description|truncate_words }}
               </td>
-              <td>
-                <a href="#">{{ game.description|truncate_words }}</a>
-              </td>
-              <td>
-                <a href="#">{{ game.status }}</a>
-              </td>
-              <td>
-                {{ game.coop }}
+
+              <td class="open-modal" data-url="{% url 'lists:game-detail' game.id %}">
+                {% if game.coop == "solo" %}
+                  👤
+                {% elif game.coop == "double" %}
+                  👥
+                {% else %}
+                  👥+
+                {% endif %}
               </td>
             </tr>
           {% endfor %}
+
+          <div id="modal" class="modal" style="display: none;">
+            <div class="modal-content">
+              <span class="close-modal">&times;</span>
+              <div id="modal-body"></div>
+            </div>
+          </div>
+
           </tbody>
         </table>
       </div>
@@ -71,5 +94,9 @@
 
 {% endblock content %}
 
-<!-- Specific Page JS goes HERE  -->
-{% block javascripts %}{% endblock javascripts %}
+{% block javascripts %}
+  <script src="{% static 'assets/js/button_status_toggle.js' %}"></script>
+  <script src="{% static 'assets/js/modal_handler.js' %}"></script>
+{% endblock javascripts %}
+
+
