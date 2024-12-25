@@ -4,7 +4,6 @@ from django.http import JsonResponse
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import generic
-from django.db.models import Case, When, IntegerField
 from django.views.decorators.csrf import csrf_exempt
 
 from lists.forms import NameSearchForm, EventForm
