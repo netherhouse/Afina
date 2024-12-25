@@ -1,10 +1,3 @@
-{% extends "base.html" %}
-{% load static %}
-
-{% block title %} Event {% endblock %}
-
-{% block stylesheets %}{% endblock stylesheets %}
-
 {% block content %}
   <h1>
     {{ newspaper.title }}
@@ -19,7 +12,11 @@
     Name: "{{ event.name }}"
   </h4>
   <h4>
-    Status: {{ event.status }}
+    {% if event.status %}
+      Status: ✔️
+    {% else %}
+      Status: ⌛
+    {% endif %}
   </h4>
   <h4>
     Date: {{ event.date }}
@@ -27,6 +24,6 @@
   <hr>
   <h4>Description:</h4>
   <p class="lead">
-    {{ event.description }}
+    {{ event.description|linebreaksbr }}
   </p>
 {% endblock %}
