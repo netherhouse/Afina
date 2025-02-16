@@ -38,7 +38,7 @@ Lists service will be available at http://127.0.0.1:8000/
 
 ## Structure
 
-...
+![Screenshot_2.png](demo%2FScreenshot_2.png)
 
 ## Demo
 ![Screenshot.png](demo%2FScreenshot.png)
