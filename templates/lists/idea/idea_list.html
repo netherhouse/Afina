@@ -30,13 +30,13 @@
           <thead class="thead-light">
           <tr>
             <th class="border-0 rounded-start">Name</th>
-            <th class="border-0 rounded-end">Description</th>
+            <th class="border-0 td-desc rounded-end">Description</th>
           </tr>
           </thead>
           <tbody>
           {% for idea in idea_list %}
             <tr>
-              <td>
+              <td class="td-nowrap">
                 <div class="d-flex align-items-center">
                   <button
                       class="status-btn border-0 bg-transparent"
@@ -58,8 +58,8 @@
                 </div>
               </td>
 
-              <td class="open-modal" data-url="{% url 'lists:idea-detail' idea.id %}">
-                {{ idea.description|truncate_words }}
+              <td class="td-break open-modal" data-url="{% url 'lists:idea-detail' idea.id %}">
+                {{ idea.description }}
               </td>
             </tr>
           {% endfor %}
