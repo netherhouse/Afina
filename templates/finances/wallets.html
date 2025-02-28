@@ -4,21 +4,18 @@
 
 {% block title %} Tables {% endblock %}
 
-{% block stylesheets %}{% endblock stylesheets %}
-
 {% block content %}
-
-  <div>
-    Wallets:
+<div class="wallets-content">
+  <div class="block">
+    <div class="block-title">Wallets</div>
     <br>
     {% for wallet, money in monobank_wallets.items %}
-      {{ wallet }} : {{ money }}
-      <br>
+      {{ wallet }} : {{ money }}<br>
     {% endfor %}
   </div>
 
-  <div>
-    Rates:
+  <div class="block">
+    <div class="block-title">Rates</div>
     <br>
     {% for currency, rate in nbu_rates.items %}
       {{ currency }} : {{ rate }} ₴
@@ -26,15 +23,15 @@
     {% endfor %}
   </div>
 
-   <div>
-    Crypto Rates:
+   <div class="block">
+    <div class="block-title">Crypto Rates</div>
     <br>
     {% for currency, rate in crypto_rates.items %}
       {{ currency }} : {{ rate }} €
       <br>
     {% endfor %}
   </div>
-
+</div>
 {% endblock content %}
 
 <!-- Specific Page JS goes HERE  -->
