@@ -18235,11 +18235,6 @@ label {
   width: 120px;
   margin: 0; }
 
-.table td,
-.table th {
-  font-size: 0.875rem;
-  white-space: nowrap; }
-
 .table.user-table thead th {
   border-top: 0; }
 

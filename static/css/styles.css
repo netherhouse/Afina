@@ -2,15 +2,21 @@ body {
     margin-top: 20px;
 }
 
-td {
-    vertical-align: middle;
-    white-space: normal;
-    word-wrap: break-word;
+table {
+  width: 300px;
+  word-break: break-all;
 }
 
-table {
-    table-layout: auto;
-    width: 100%;
+.td-nowrap {
+  font-size: 0.875rem;
+  white-space: nowrap;
+}
+
+.td-break {
+  white-space: normal;
+  vertical-align: middle;
+  word-wrap: break-word;
+  word-break: break-all;
 }
 
 .link-to-page {
@@ -68,6 +74,7 @@ table {
     width: 60%;
     max-width: 800px;
 }
+
 .close-modal {
     float: right;
     cursor: pointer;
@@ -78,3 +85,53 @@ table {
     cursor: pointer;
     transition: background-color 0.2s ease;
 }
+
+
+/* Finances */
+
+.wallets-content {
+    display: flex;
+    flex-direction: inherit;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 20px;
+}
+
+.block {
+    background: #f9f9f9;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+    min-width: 250px;
+    text-align: left;
+}
+
+.block-title {
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+/* Finances END */
+
+/* Index */
+.index-ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.index-ul li {
+    margin-top: 3px;
+    font-size: 17px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: calc(50% - 5px);
+}
+
+/* Index END */
