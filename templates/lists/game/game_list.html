@@ -41,7 +41,7 @@
           <tbody>
           {% for game in game_list %}
             <tr>
-              <td>
+              <td class="td-nowrap">
                 <div class="d-flex align-items-center">
                   <button
                       class="status-btn border-0 bg-transparent"
@@ -63,11 +63,11 @@
                 </div>
               </td>
 
-              <td class="open-modal" data-url="{% url 'lists:game-detail' game.id %}">
-                {{ game.description|truncate_words }}
+              <td class="td-break open-modal" data-url="{% url 'lists:game-detail' game.id %}">
+                {{ game.description }}
               </td>
 
-              <td class="open-modal" data-url="{% url 'lists:game-detail' game.id %}">
+              <td class="td-nowrap open-modal" data-url="{% url 'lists:game-detail' game.id %}">
                 {% if game.coop == "solo" %}
                   👤
                 {% elif game.coop == "double" %}

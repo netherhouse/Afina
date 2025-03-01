@@ -7,16 +7,27 @@ table {
   word-break: break-all;
 }
 
+th {
+  font-size: 0.875rem;
+  white-space: nowrap;
+  vertical-align: middle;
+}
+
+
 .td-nowrap {
   font-size: 0.875rem;
   white-space: nowrap;
+  vertical-align: middle;
 }
 
 .td-break {
+  font-size: 0.875rem;
   white-space: normal;
   vertical-align: middle;
   word-wrap: break-word;
-  word-break: break-all;
+  hyphens: auto;
+  word-break: normal;
+  overflow-wrap: break-word;
 }
 
 .link-to-page {
@@ -89,7 +100,7 @@ table {
 
 /* Finances */
 
-.wallets-content {
+.card-content {
     display: flex;
     flex-direction: inherit;
     align-items: flex-start;

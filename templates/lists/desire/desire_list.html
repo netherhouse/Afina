@@ -37,7 +37,7 @@
           {% for desire in desire_list %}
             <tr>
 
-              <td>
+              <td class="td-nowrap">
                 <div class="d-flex align-items-center">
                   <button
                       class="status-btn border-0 bg-transparent"
@@ -59,11 +59,11 @@
                 </div>
               </td>
 
-              <td class="open-modal" data-url="{% url 'lists:desire-detail' desire.id %}">
-                {{ desire.description|truncate_words }}
+              <td class="td-break open-modal" data-url="{% url 'lists:desire-detail' desire.id %}">
+                {{ desire.description }}
               </td>
 
-              <td class="open-modal" data-url="{% url 'lists:desire-detail' desire.id %}">
+              <td class="td-nowrap open-modal" data-url="{% url 'lists:desire-detail' desire.id %}">
                 {% if desire.price %}
                   {{ desire.price }} €
                 {% else %}
@@ -71,7 +71,7 @@
                 {% endif %}
               </td>
 
-              <td>
+              <td class="td-nowrap">
                 {% if desire.link %}
                   <a target="_blank" href="{{ desire.link }}">🔗</a>
                 {% else %}

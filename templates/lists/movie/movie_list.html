@@ -39,7 +39,7 @@
           {% for movie in movie_list %}
             <tr>
 
-              <td>
+              <td class="td-nowrap">
                 <div class="d-flex align-items-center">
                   <button
                       class="status-btn border-0 bg-transparent"
@@ -61,11 +61,11 @@
                 </div>
               </td>
 
-              <td class="open-modal" data-url="{% url 'lists:movie-detail' movie.id %}">
-                {{ movie.description|truncate_words }}
+              <td class="td-break open-modal" data-url="{% url 'lists:movie-detail' movie.id %}">
+                {{ movie.description }}
               </td>
 
-              <td class="open-modal" data-url="{% url 'lists:movie-detail' movie.id %}">
+              <td class="td-nowrap open-modal" data-url="{% url 'lists:movie-detail' movie.id %}">
                 {% if movie.rate %}
                   {{ movie.rate }}
                 {% else %}
@@ -73,7 +73,7 @@
                 {% endif %}
               </td>
 
-              <td>
+              <td class="td-nowrap">
                 {% if movie.link %}
                   <a target="_blank" href="{{ movie.link }}">🔗</a>
                 {% else %}

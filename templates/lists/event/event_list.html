@@ -38,7 +38,7 @@
           {% for event in event_list %}
             <tr>
 
-              <td>
+              <td class="td-nowrap">
                 <div class="d-flex align-items-center">
                   <button
                       class="status-btn border-0 bg-transparent"
@@ -60,11 +60,11 @@
                 </div>
               </td>
 
-              <td class="open-modal" data-url="{% url 'lists:event-detail' event.id %}">
-                {{ event.description|truncate_words }}
+              <td class="td-break open-modal" data-url="{% url 'lists:event-detail' event.id %}">
+                {{ event.description }}
               </td>
 
-              <td class="open-modal" data-url="{% url 'lists:event-detail' event.id %}">
+              <td class="td-nowrap open-modal" data-url="{% url 'lists:event-detail' event.id %}">
                 {{ event.date }}
               </td>
 
