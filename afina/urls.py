@@ -6,8 +6,9 @@ from django.conf.urls.static import static
 from lists.views import index
 
 urlpatterns = [
-    path('', index, name='index'),
+    path('afina/', index, name='index'),
     path("admin/", admin.site.urls),
     path("lists/", include("lists.urls", namespace="lists")),
     path("finances/", include("finances.urls", namespace="finances")),
-] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    path("", include("website.urls", namespace="website")),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
