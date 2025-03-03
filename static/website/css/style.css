@@ -18,7 +18,30 @@
     15. Events Widget
     16. Discography Widget
     17. Responsive
+ */
 
+
+/*------------------------ 0 Color -------------------------------- */
+.estate figure .imgout .price, .site-btn, nav ul li a:after, .owl-theme .owl-controls .owl-page span, .skill-list .progress .percentage, ul.profile-information li:first-child:before{
+    background: #ffc500 !important;
+}
+
+
+ul.profile-information li:before{
+	border-color: #ffc500;
+}
+
+#portfolio .cbp-item .portfolio-image .icon i, #portfolio .cbp-item figure .icon i{
+    background: rgb(255, 197, 1);
+}
+
+#certificates .cbp-item .portfolio-image .icon i, #certificates .cbp-item figure .icon i {
+    background: rgb(255, 197, 1);
+}
+
+.tab.active a, #blog-post .post-list ul li a, #blog-post .post-comment ul li .comment-content a{
+	color: #ffb100;
+}
 /*------------------------ 1 Body and Core Css ------------------------*/
 
 :root {
