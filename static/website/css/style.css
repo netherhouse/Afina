@@ -22,16 +22,17 @@
 
 
 /*------------------------ 0 Color -------------------------------- */
-.estate figure .imgout .price, .site-btn, nav ul li a:after, .owl-theme .owl-controls .owl-page span, .skill-list .progress .percentage, ul.profile-information li:first-child:before{
+
+.estate figure .imgout .price, .site-btn, nav ul li a:after, .owl-theme .owl-controls .owl-page span, .skill-list .progress .percentage, ul.profile-information li:first-child:before {
     background: #ffc500 !important;
 }
 
 
-ul.profile-information li:before{
-	border-color: #ffc500;
+ul.profile-information li:before {
+    border-color: #ffc500;
 }
 
-#portfolio .cbp-item .portfolio-image .icon i, #portfolio .cbp-item figure .icon i{
+#portfolio .cbp-item .portfolio-image .icon i, #portfolio .cbp-item figure .icon i {
     background: rgb(255, 197, 1);
 }
 
@@ -39,14 +40,25 @@ ul.profile-information li:before{
     background: rgb(255, 197, 1);
 }
 
-.tab.active a, #blog-post .post-list ul li a, #blog-post .post-comment ul li .comment-content a{
-	color: #ffb100;
+.tab.active a, #blog-post .post-list ul li a, #blog-post .post-comment ul li .comment-content a {
+    color: #ffb100;
 }
+
 /*------------------------ 1 Body and Core Css ------------------------*/
 
 :root {
     --main-color: #151515;
     --text-color: #c9d3b3;
+    --border-color: #363408;
+    --second-color: rgb(28, 25, 25);
+}
+
+.google-map {
+    border-radius: 15px;
+}
+
+ul li a {
+    color: var(--text-color);
 }
 
 svg {
@@ -77,7 +89,7 @@ svg {
 
 body {
     background-color: #11232B;
-    background-image: url(../images/bg.jpg);
+    background-image: url(../images/bg.png);
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -92,11 +104,10 @@ body::before {
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: url(../images/bg.jpg);
+    background-image: url(../images/bg.png);
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    filter: blur(0.3px);
     z-index: -1;
 }
 
@@ -160,6 +171,7 @@ hr {
 }
 
 .site-btn {
+    color: black;
     font-size: 14px;
     font-weight: 500;
     border: 0;
@@ -369,8 +381,8 @@ h6 {
 
 .profile-image img {
     width: 100%;
-    border-radius: 150px;
-    border: 2px solid #363408;
+    border-radius: 100px;
+    border: 2px solid var(--border-color);
 }
 
 ul.profile-information {
@@ -400,9 +412,6 @@ ul.profile-information li span {
     font-size: 16px;
 }
 
-ul.profile-information li a {
-    color: var(--text-color);
-}
 
 ul.profile-information li:first-child {
     padding-top: 30px;
@@ -745,8 +754,8 @@ ul.timeline {
 }
 
 #portfolio .cbp-item-wrapper {
-    border: solid #363408 2px;
-    background-color: rgb(28, 25, 25);
+    border: solid var(--border-color) 2px;
+    background-color: var(--second-color);
     border-radius: 6px;
     -webkit-border-radius: 6px;
     -moz-border-radius: 6px;
@@ -771,6 +780,7 @@ ul.timeline {
 }
 
 #portfolio .cbp-item figure img, .work figure {
+    border: solid var(--border-color) 2px;
     border-radius: 8px;
     height: auto;
     display: block;
@@ -855,8 +865,8 @@ ul.timeline {
 }
 
 #certificates .cbp-item-wrapper {
-    border: solid #363408 2px;
-    background-color: rgb(28, 25, 25);
+    border: solid var(--border-color) 2.4px;
+    background-color: var(--second-color);
     border-radius: 6px;
     -webkit-border-radius: 6px;
     -moz-border-radius: 6px;
@@ -881,6 +891,7 @@ ul.timeline {
 }
 
 #certificates .cbp-item figure img, .work figure {
+    border: solid var(--border-color) 2px;
     border-radius: 8px;
     height: auto;
     display: block;
@@ -958,8 +969,10 @@ ul.timeline {
     width: 100%;
     height: 45px;
     border: 0;
-    color: #000;
-    border-bottom: solid 1px #dfdfdf;
+    background-color: var(--text-color);
+    color: var(--main-color);
+    border-bottom: solid 1px var(--second-color);
+    border-radius: 15px;
     font-size: 13px;
     padding-left: 10px;
     margin-bottom: 15px;
@@ -969,17 +982,30 @@ ul.timeline {
 .site-form .site-area {
     width: 100%;
     border: 0;
-    border-bottom: solid 1px #dfdfdf;
+    background-color: var(--text-color);
+    color: var(--main-color);
+    border-radius: 15px;
     font-size: 13px;
     padding: 20px 0 0 10px;
     min-height: 100px;
     margin-bottom: 15px;
+    resize: none;
+}
+
+.site-form .site-area::placeholder, .site-form .site-input::placeholder {
+    color: rgba(var(--main-color), 0.7);
+}
+
+.site-form .site-area:-webkit-autofill, .site-form .site-input:-webkit-autofill {
+    background-color: var(--text-color) !important;
+    color: var(--main-color) !important;
+    -webkit-box-shadow: 0 0 0px 1000px var(--text-color) inset !important;
 }
 
 .site-form .site-area {
     width: 100%;
     border: 0;
-    border-bottom: solid 1px #dfdfdf;
+    border-bottom: solid 1px var(--second-color);
     font-size: 13px;
     padding: 20px 0 0 10px;
     min-height: 100px;
@@ -991,12 +1017,12 @@ ul.timeline {
 .contact-info ul li {
     list-style: none;
     font-size: 14px;
-    color: #787878;
+    color: var(--text-color);
     line-height: 34px;
 }
 
 .contact-info ul li span {
-    color: #000;
+    color: var(--text-color);
 }
 
 .contact-map iframe {
