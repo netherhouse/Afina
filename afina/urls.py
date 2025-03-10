@@ -6,6 +6,7 @@ from django.conf.urls.static import static
 from lists.views import index
 
 urlpatterns = [
+    path("accounts/", include("django.contrib.auth.urls")),
     path('afina/', index, name='index'),
     path("admin/", admin.site.urls),
     path("lists/", include("lists.urls", namespace="lists")),
