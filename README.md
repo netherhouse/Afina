@@ -9,8 +9,8 @@
 #### Manual
 
 ```
-git clone https://github.com/haldaniko/Afina-TgAssistant.git
-cd Afina-TgAssistant
+git clone https://github.com/haldaniko/Afina-DjangoAssistant.git
+cd Afina-DjangoAssistant
 
 # on macOS
 python3 -m venv venv
