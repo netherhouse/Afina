@@ -1,6 +1,6 @@
 import React, { forwardRef, useImperativeHandle, useState } from 'react';
-import UserProfileWindow from '../Windows/UserProfileWindow';
-import MusicWindow from "../Windows/MusicWindow.jsx";
+import UserProfileWindow from '../Windows/UserProfileWindow/UserProfileWindow.jsx';
+import MusicWindow from "../Windows/MusicWindow/MusicWindow.jsx";
 
 const getRandomPosition = () => {
   const padding = 50;

@@ -1,5 +1,5 @@
 import React from 'react';
-import Window from '../Window/Window';
+import Window from '../../Window/Window';
 
 function MusicWindow({ id, visible, onClose, onMove, position }) {
   if (!visible) return null;
