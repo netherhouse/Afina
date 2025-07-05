@@ -1,6 +1,7 @@
 import React, { forwardRef, useImperativeHandle, useState } from 'react';
 import UserProfileWindow from '../Windows/UserProfileWindow/UserProfileWindow.jsx';
 import MusicWindow from "../Windows/MusicWindow/MusicWindow.jsx";
+import PomodoroWindow from "../Windows/PomodoroWindow/PomodoroWindow.jsx";
 
 const getRandomPosition = () => {
   const padding = 50;
@@ -21,7 +22,11 @@ const WindowManager = forwardRef((_, ref) => {
       visible: false,
       position: getRandomPosition(),
     },
-    // Добавлять другие окна по тому же шаблону
+    pomodoro: {
+      visible: false,
+      position: getRandomPosition(),
+    },
+    // other windows here
   });
 
   useImperativeHandle(ref, () => ({
@@ -66,6 +71,13 @@ const WindowManager = forwardRef((_, ref) => {
     onClose={handleClose}
     onMove={updatePosition}
     position={windowStates.music.position}
+  />
+  <PomodoroWindow
+    id="pomodoro"
+    visible={windowStates.pomodoro.visible}
+    onClose={handleClose}
+    onMove={updatePosition}
+    position={windowStates.pomodoro.position}
   />
 </>
   );

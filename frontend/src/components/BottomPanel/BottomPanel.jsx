@@ -25,7 +25,8 @@ function BottomPanel({ openWindow }) {
           <img src={playnextIconPath} alt="Next Song" width={18} height={18} />
         </div>
         <div className="bottom-panel__divider"></div>
-        <div className="bottom-panel__icon-button">
+        <div className="bottom-panel__icon-button"
+             onClick={() => openWindow('pomodoro')}>
           <img src={clockIconPath} alt="Clock" width={16} height={16} />
         </div>
       </div>
