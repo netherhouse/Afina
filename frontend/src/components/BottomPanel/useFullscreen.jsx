@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-export function useFullscreen() {
+export function UseFullscreen() {
   const [isFullscreen, setIsFullscreen] = useState(false);
 
   const toggleFullscreen = () => {

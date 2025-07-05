@@ -6,10 +6,13 @@ import fullscreenIconPath from '../../assets/buttons/full-screen.svg';
 import exitFullscreenIconPath from '../../assets/buttons/fullscreen-exit.svg';
 import userIconPath from '../../assets/buttons/user.svg';
 import clockIconPath from '../../assets/buttons/clock.svg';
-import { useFullscreen } from './useFullscreen';
+import { UseFullscreen } from './useFullscreen';
+import ShowTime from './showTime.jsx';
+
+
 
 function BottomPanel({ openWindow }) {
-  const { isFullscreen, toggleFullscreen } = useFullscreen();
+  const { isFullscreen, toggleFullscreen } = UseFullscreen();
 
   return (
     <div className="bottom-panel">
@@ -27,7 +30,7 @@ function BottomPanel({ openWindow }) {
       </div>
 
       <div className="bottom-panel__icons">
-        <span>3:58 PM</span>
+        <ShowTime />
         <div className="bottom-panel__divider"></div>
         <div className="bottom-panel__icon-button" onClick={() => openWindow('window-1')}>
           <img src={userIconPath} alt="Profile" width={18} height={18} />
