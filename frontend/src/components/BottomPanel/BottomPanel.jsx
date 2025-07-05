@@ -3,10 +3,14 @@ import './BottomPanel.css';
 import playIconPath from '../../assets/buttons/play.svg';
 import playnextIconPath from '../../assets/buttons/play-next.svg';
 import fullscreenIconPath from '../../assets/buttons/full-screen.svg';
+import exitFullscreenIconPath from '../../assets/buttons/fullscreen-exit.svg';
 import userIconPath from '../../assets/buttons/user.svg';
 import clockIconPath from '../../assets/buttons/clock.svg';
+import { useFullscreen } from './useFullscreen';
 
 function BottomPanel({ openWindow }) {
+  const { isFullscreen, toggleFullscreen } = useFullscreen();
+
   return (
     <div className="bottom-panel">
       <div className="bottom-panel__icons">
@@ -28,13 +32,17 @@ function BottomPanel({ openWindow }) {
         <div className="bottom-panel__icon-button" onClick={() => openWindow('window-1')}>
           <img src={userIconPath} alt="Profile" width={18} height={18} />
         </div>
-        <div className="bottom-panel__icon-button">
-          <img src={fullscreenIconPath} alt="Full Screen" width={18} height={18} />
+        <div className="bottom-panel__icon-button" onClick={toggleFullscreen}>
+          <img
+            src={isFullscreen ? exitFullscreenIconPath : fullscreenIconPath}
+            alt={isFullscreen ? 'Exit Full Screen' : 'Full Screen'}
+            width={18}
+            height={18}
+          />
         </div>
       </div>
     </div>
   );
 }
-
 
 export default BottomPanel;
