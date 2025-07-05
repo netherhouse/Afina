@@ -1,0 +1,28 @@
+.window {
+  backdrop-filter: blur(8px);
+  position: absolute;
+  width: 300px;
+  height: 200px;
+  background-color: rgba(38, 38, 38, 0.9);
+  border-radius: 8px;
+}
+
+.window-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background-color: #181818;
+  color: white;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+.window-header .minimize-button {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: white;
+  transition: color 0.3s;
+}
