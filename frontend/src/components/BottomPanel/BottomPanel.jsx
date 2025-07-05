@@ -17,7 +17,8 @@ function BottomPanel({ openWindow }) {
   return (
     <div className="bottom-panel">
       <div className="bottom-panel__icons">
-        <div className="bottom-panel__icon-button">
+        <div className="bottom-panel__icon-button"
+             onClick={() => openWindow('music-window')}>
           <img src={playIconPath} alt="Play music" width={18} height={18} />
         </div>
         <div className="bottom-panel__icon-button">
@@ -32,10 +33,12 @@ function BottomPanel({ openWindow }) {
       <div className="bottom-panel__icons">
         <ShowTime />
         <div className="bottom-panel__divider"></div>
-        <div className="bottom-panel__icon-button" onClick={() => openWindow('window-1')}>
+        <div className="bottom-panel__icon-button"
+             onClick={() => openWindow('user-profile-window')}>
           <img src={userIconPath} alt="Profile" width={18} height={18} />
         </div>
-        <div className="bottom-panel__icon-button" onClick={toggleFullscreen}>
+        <div className="bottom-panel__icon-button"
+             onClick={toggleFullscreen}>
           <img
             src={isFullscreen ? exitFullscreenIconPath : fullscreenIconPath}
             alt={isFullscreen ? 'Exit Full Screen' : 'Full Screen'}
