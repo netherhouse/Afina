@@ -11,14 +11,15 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px;
+  padding-left: 16px;
   background-color: #181818;
   color: white;
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
+  cursor: pointer;
 }
 
-.window-header .minimize-button {
+.window-header .close-button {
   background: none;
   border: none;
   font-size: 24px;

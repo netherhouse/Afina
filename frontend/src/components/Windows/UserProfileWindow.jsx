@@ -1,11 +1,17 @@
 import React from 'react';
 import Window from '../Window/Window';
 
-const UserProfileWindow = ({ id, onClose }) => {
+function UserProfileWindow({ id, visible, onClose, onMove, position }) {
+  if (!visible) return null;
+
   return (
-    <Window title="Профіль" id={id} onClose={onClose}>
+    <Window id={id}
+            title="Профіль"
+            onClose={onClose}
+            onMove={onMove}
+            position={position}>
     </Window>
   );
-};
+}
 
 export default UserProfileWindow;

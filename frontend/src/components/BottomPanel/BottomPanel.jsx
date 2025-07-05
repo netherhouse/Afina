@@ -18,7 +18,7 @@ function BottomPanel({ openWindow }) {
     <div className="bottom-panel">
       <div className="bottom-panel__icons">
         <div className="bottom-panel__icon-button"
-             onClick={() => openWindow('music-window')}>
+             onClick={() => openWindow('music')}>
           <img src={playIconPath} alt="Play music" width={18} height={18} />
         </div>
         <div className="bottom-panel__icon-button">
@@ -34,7 +34,7 @@ function BottomPanel({ openWindow }) {
         <ShowTime />
         <div className="bottom-panel__divider"></div>
         <div className="bottom-panel__icon-button"
-             onClick={() => openWindow('user-profile-window')}>
+             onClick={() => openWindow('user')}>
           <img src={userIconPath} alt="Profile" width={18} height={18} />
         </div>
         <div className="bottom-panel__icon-button"
