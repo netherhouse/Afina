@@ -1,15 +1,15 @@
-	/*
-  	Flaticon icon font: Flaticon
-  	Creation date: 22/06/2016 15:38
-  	*/
+    /*
+    Flaticon icon font: Flaticon
+    Creation date: 22/06/2016 15:38
+    */
 
-@font-face {
+    @font-face {
   font-family: "Flaticon";
-  src: url("./Flaticon.eot");
-  src: url("./Flaticon.eot?#iefix") format("embedded-opentype"),
-       url("./Flaticon.woff") format("woff"),
-       url("./Flaticon.ttf") format("truetype"),
-       url("./Flaticon.svg#Flaticon") format("svg");
+  src: url("Flaticon.eot");
+  src: url("Flaticon.eot?#iefix") format("embedded-opentype"),
+       url("Flaticon.woff") format("woff"),
+       url("Flaticon.ttf") format("truetype"),
+       url("Flaticon.svg#Flaticon") format("svg");
   font-weight: normal;
   font-style: normal;
 }
@@ -17,19 +17,26 @@
 @media screen and (-webkit-min-device-pixel-ratio:0) {
   @font-face {
     font-family: "Flaticon";
-    src: url("./Flaticon.svg#Flaticon") format("svg");
+    src: url("Flaticon.svg#Flaticon") format("svg");
   }
 }
 
-[class^="flaticon-"]:before, [class*=" flaticon-"]:before,
-[class^="flaticon-"]:after, [class*=" flaticon-"]:after {   
-  font-family: Flaticon;
-        font-size: 20px;
-font-style: normal;
-margin-left: 20px;
-}
+    .fi:before{
+        display: inline-block;
+  font-family: "Flaticon";
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  line-height: 1;
+  text-decoration: inherit;
+  text-rendering: optimizeLegibility;
+  text-transform: none;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  font-smoothing: antialiased;
+    }
 
-.flaticon-anesthesia:before { content: "\f100"; }
+    .flaticon-anesthesia:before { content: "\f100"; }
 .flaticon-antibiotic:before { content: "\f101"; }
 .flaticon-arm:before { content: "\f102"; }
 .flaticon-arm-1:before { content: "\f103"; }
@@ -199,3 +206,174 @@ margin-left: 20px;
 .flaticon-x-ray:before { content: "\f1a7"; }
 .flaticon-x-ray-1:before { content: "\f1a8"; }
 .flaticon-x-ray-2:before { content: "\f1a9"; }
+    
+    $font-Flaticon-anesthesia: "\f100";
+    $font-Flaticon-antibiotic: "\f101";
+    $font-Flaticon-arm: "\f102";
+    $font-Flaticon-arm-1: "\f103";
+    $font-Flaticon-articulation: "\f104";
+    $font-Flaticon-bacteria: "\f105";
+    $font-Flaticon-band-aid: "\f106";
+    $font-Flaticon-blood-sample: "\f107";
+    $font-Flaticon-blood-sample-1: "\f108";
+    $font-Flaticon-blood-transfusion: "\f109";
+    $font-Flaticon-bone: "\f10a";
+    $font-Flaticon-braces: "\f10b";
+    $font-Flaticon-braces-1: "\f10c";
+    $font-Flaticon-braces-2: "\f10d";
+    $font-Flaticon-brain: "\f10e";
+    $font-Flaticon-brain-1: "\f10f";
+    $font-Flaticon-brain-2: "\f110";
+    $font-Flaticon-brain-3: "\f111";
+    $font-Flaticon-breast: "\f112";
+    $font-Flaticon-breast-1: "\f113";
+    $font-Flaticon-breast-2: "\f114";
+    $font-Flaticon-breast-3: "\f115";
+    $font-Flaticon-breast-4: "\f116";
+    $font-Flaticon-breast-implant: "\f117";
+    $font-Flaticon-canine: "\f118";
+    $font-Flaticon-canine-1: "\f119";
+    $font-Flaticon-canine-2: "\f11a";
+    $font-Flaticon-canine-3: "\f11b";
+    $font-Flaticon-cardiogram: "\f11c";
+    $font-Flaticon-cardiogram-1: "\f11d";
+    $font-Flaticon-cardiogram-2: "\f11e";
+    $font-Flaticon-caries: "\f11f";
+    $font-Flaticon-caries-1: "\f120";
+    $font-Flaticon-crutches: "\f121";
+    $font-Flaticon-dental-drill: "\f122";
+    $font-Flaticon-dental-floss: "\f123";
+    $font-Flaticon-dna: "\f124";
+    $font-Flaticon-dropper: "\f125";
+    $font-Flaticon-drugs: "\f126";
+    $font-Flaticon-drugs-1: "\f127";
+    $font-Flaticon-drugs-2: "\f128";
+    $font-Flaticon-drugs-3: "\f129";
+    $font-Flaticon-drugs-4: "\f12a";
+    $font-Flaticon-ear: "\f12b";
+    $font-Flaticon-earbuds: "\f12c";
+    $font-Flaticon-edema: "\f12d";
+    $font-Flaticon-electric-toothbrush: "\f12e";
+    $font-Flaticon-epidermis: "\f12f";
+    $font-Flaticon-extraction: "\f130";
+    $font-Flaticon-eye: "\f131";
+    $font-Flaticon-eye-1: "\f132";
+    $font-Flaticon-eye-drops: "\f133";
+    $font-Flaticon-eye-drops-1: "\f134";
+    $font-Flaticon-fat: "\f135";
+    $font-Flaticon-femur: "\f136";
+    $font-Flaticon-finger: "\f137";
+    $font-Flaticon-finger-1: "\f138";
+    $font-Flaticon-finger-2: "\f139";
+    $font-Flaticon-first-aid-kit: "\f13a";
+    $font-Flaticon-fit: "\f13b";
+    $font-Flaticon-gum: "\f13c";
+    $font-Flaticon-gum-1: "\f13d";
+    $font-Flaticon-hammer: "\f13e";
+    $font-Flaticon-heart: "\f13f";
+    $font-Flaticon-implants: "\f140";
+    $font-Flaticon-implants-1: "\f141";
+    $font-Flaticon-implants-2: "\f142";
+    $font-Flaticon-implants-3: "\f143";
+    $font-Flaticon-implants-4: "\f144";
+    $font-Flaticon-inhalator: "\f145";
+    $font-Flaticon-intestines: "\f146";
+    $font-Flaticon-iris: "\f147";
+    $font-Flaticon-kidney: "\f148";
+    $font-Flaticon-kidney-1: "\f149";
+    $font-Flaticon-knee: "\f14a";
+    $font-Flaticon-knee-1: "\f14b";
+    $font-Flaticon-kneecap: "\f14c";
+    $font-Flaticon-liver: "\f14d";
+    $font-Flaticon-lozenge: "\f14e";
+    $font-Flaticon-lungs: "\f14f";
+    $font-Flaticon-lungs-1: "\f150";
+    $font-Flaticon-lungs-2: "\f151";
+    $font-Flaticon-medical-records: "\f152";
+    $font-Flaticon-medicine: "\f153";
+    $font-Flaticon-medicine-1: "\f154";
+    $font-Flaticon-microbe: "\f155";
+    $font-Flaticon-mirror: "\f156";
+    $font-Flaticon-molar: "\f157";
+    $font-Flaticon-molar-1: "\f158";
+    $font-Flaticon-molar-2: "\f159";
+    $font-Flaticon-molar-3: "\f15a";
+    $font-Flaticon-molar-4: "\f15b";
+    $font-Flaticon-molar-5: "\f15c";
+    $font-Flaticon-molar-6: "\f15d";
+    $font-Flaticon-molar-7: "\f15e";
+    $font-Flaticon-molar-8: "\f15f";
+    $font-Flaticon-molar-crown: "\f160";
+    $font-Flaticon-nose: "\f161";
+    $font-Flaticon-notepad: "\f162";
+    $font-Flaticon-ointment: "\f163";
+    $font-Flaticon-ointment-1: "\f164";
+    $font-Flaticon-optical: "\f165";
+    $font-Flaticon-otoscope: "\f166";
+    $font-Flaticon-pancreas: "\f167";
+    $font-Flaticon-penis: "\f168";
+    $font-Flaticon-perfusion: "\f169";
+    $font-Flaticon-periodontal-scaler: "\f16a";
+    $font-Flaticon-periodontal-scaler-1: "\f16b";
+    $font-Flaticon-periodontal-scaler-2: "\f16c";
+    $font-Flaticon-pill: "\f16d";
+    $font-Flaticon-pill-1: "\f16e";
+    $font-Flaticon-pills: "\f16f";
+    $font-Flaticon-pills-1: "\f170";
+    $font-Flaticon-pills-2: "\f171";
+    $font-Flaticon-pills-3: "\f172";
+    $font-Flaticon-pills-4: "\f173";
+    $font-Flaticon-plastered-foot: "\f174";
+    $font-Flaticon-plastered-foot-1: "\f175";
+    $font-Flaticon-premolar: "\f176";
+    $font-Flaticon-premolar-1: "\f177";
+    $font-Flaticon-premolar-2: "\f178";
+    $font-Flaticon-records: "\f179";
+    $font-Flaticon-records-1: "\f17a";
+    $font-Flaticon-records-2: "\f17b";
+    $font-Flaticon-ribbon: "\f17c";
+    $font-Flaticon-scalpel: "\f17d";
+    $font-Flaticon-scissors: "\f17e";
+    $font-Flaticon-skeleton: "\f17f";
+    $font-Flaticon-skull: "\f180";
+    $font-Flaticon-skull-1: "\f181";
+    $font-Flaticon-spinal-column: "\f182";
+    $font-Flaticon-stethoscope: "\f183";
+    $font-Flaticon-stomach: "\f184";
+    $font-Flaticon-stomach-1: "\f185";
+    $font-Flaticon-syringe: "\f186";
+    $font-Flaticon-syringe-1: "\f187";
+    $font-Flaticon-syringe-2: "\f188";
+    $font-Flaticon-syringe-3: "\f189";
+    $font-Flaticon-syringe-4: "\f18a";
+    $font-Flaticon-tablets: "\f18b";
+    $font-Flaticon-teeth: "\f18c";
+    $font-Flaticon-teeth-1: "\f18d";
+    $font-Flaticon-teeth-10: "\f18e";
+    $font-Flaticon-teeth-2: "\f18f";
+    $font-Flaticon-teeth-3: "\f190";
+    $font-Flaticon-teeth-4: "\f191";
+    $font-Flaticon-teeth-5: "\f192";
+    $font-Flaticon-teeth-6: "\f193";
+    $font-Flaticon-teeth-7: "\f194";
+    $font-Flaticon-teeth-8: "\f195";
+    $font-Flaticon-teeth-9: "\f196";
+    $font-Flaticon-thermometer: "\f197";
+    $font-Flaticon-thermometer-1: "\f198";
+    $font-Flaticon-thin: "\f199";
+    $font-Flaticon-tonsils-tester: "\f19a";
+    $font-Flaticon-tooth: "\f19b";
+    $font-Flaticon-tooth-1: "\f19c";
+    $font-Flaticon-tooth-2: "\f19d";
+    $font-Flaticon-tooth-brush: "\f19e";
+    $font-Flaticon-tooth-pliers: "\f19f";
+    $font-Flaticon-tweezers: "\f1a0";
+    $font-Flaticon-tweezers-1: "\f1a1";
+    $font-Flaticon-uterus: "\f1a2";
+    $font-Flaticon-vagina: "\f1a3";
+    $font-Flaticon-vagina-1: "\f1a4";
+    $font-Flaticon-virus: "\f1a5";
+    $font-Flaticon-wheelchair: "\f1a6";
+    $font-Flaticon-x-ray: "\f1a7";
+    $font-Flaticon-x-ray-1: "\f1a8";
+    $font-Flaticon-x-ray-2: "\f1a9";
