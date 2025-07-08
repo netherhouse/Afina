@@ -1,8 +1,6 @@
 # 🏛️ Athena — Your Personal Web Assistant
 
-**Athena** is a browser-based personal assistant, inspired by J.A.R.V.I.S.  
-from *Iron Man*. It combines a beautiful interface with powerful micro-services  
-that support your daily workflow.
+**Athena** is a browser-based personal assistant, inspired by J.A.R.V.I.S. from *Iron Man*. It combines a beautiful interface with powerful micro-services that support your daily workflow.
 
 ![demo](demo.gif)  
 <sub>⚠️ Actual performance is smoother — 
