@@ -1,0 +1,227 @@
+.music-player-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  height: 100%;
+  padding: 8px;
+
+  .album-art-container {
+    position: relative;
+    width: 160px;
+    height: 160px;
+    margin-top: 16px;
+
+    .album-art {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid rgba(255, 255, 255, 0.05);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6),
+        inset 0 0 0 2px rgba(0, 0, 0, 0.2);
+      transition: all 0.3s ease;
+
+      &.playing {
+        animation: spin 20s linear infinite;
+      }
+    }
+
+    .vinyl-center {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 20px;
+      height: 20px;
+      background: #1e293b;
+      border-radius: 50%;
+      border: 2px solid #334155;
+      box-shadow: 0 0 0 4px #475569;
+    }
+  }
+
+  .song-info {
+    text-align: center;
+    margin-bottom: 4px;
+
+    .song-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin: 0 0 8px 0;
+      color: #f8fafc;
+      letter-spacing: -0.025em;
+    }
+
+    .song-artist {
+      font-size: 1rem;
+      color: #94a3b8;
+      margin: 0 0 4px 0;
+      font-weight: 500;
+    }
+
+    .song-album {
+      font-size: 0.875rem;
+      color: #64748b;
+      margin: 0;
+    }
+  }
+
+  .progress-container {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    width: 100%;
+    font-size: 0.75rem;
+    color: #94a3b8;
+    font-weight: 500;
+
+    .progress-wrapper {
+      flex: 1;
+      position: relative;
+      height: 6px;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 6px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 3px;
+      outline: none;
+      cursor: pointer;
+      appearance: none;
+      -webkit-appearance: none;
+
+      &::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 16px;
+        height: 16px;
+        background: linear-gradient(135deg, #6366f1, #8b5cf6);
+        border-radius: 50%;
+        cursor: pointer;
+        box-shadow: 0 2px 8px rgba(99, 102, 241, 0.4);
+        transition: all 0.2s ease;
+        margin-top: -5px; /* Center thumb vertically */
+
+        &:hover {
+          transform: scale(1.2);
+          box-shadow: 0 4px 12px rgba(99, 102, 241, 0.6);
+        }
+      }
+    }
+  }
+
+  .controls {
+    display: flex;
+    gap: 24px;
+    align-items: center;
+    margin: 8px 0;
+
+    .control-btn {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      color: #f8fafc;
+      font-size: 18px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.12);
+        border-color: rgba(255, 255, 255, 0.16);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      }
+
+      &:active {
+        transform: translateY(0);
+      }
+
+      &.play-pause {
+        width: 64px;
+        height: 64px;
+        font-size: 24px;
+        background: linear-gradient(135deg, #6366f1, #8b5cf6);
+        border: none;
+        box-shadow: 0 4px 20px rgba(99, 102, 241, 0.4);
+
+        &:hover {
+          background: linear-gradient(135deg, #4f46e5, #7c3aed);
+          box-shadow: 0 8px 25px rgba(99, 102, 241, 0.5);
+        }
+      }
+    }
+  }
+
+  .volume-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    font-size: 0.75rem;
+    color: #94a3b8;
+    margin-top: auto;
+    margin-bottom: 8px;
+
+    .volume-icon {
+      width: 20px;
+      height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #94a3b8;
+    }
+
+    .volume-slider {
+      flex: 1;
+      height: 4px;
+      background: linear-gradient(
+        to right,
+        #6366f1 var(--volume-progress),
+        rgba(255, 255, 255, 0.1) var(--volume-progress)
+      );
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+      appearance: none;
+      -webkit-appearance: none;
+
+      &::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 14px;
+        height: 14px;
+        background: #f8fafc;
+        border-radius: 50%;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+
+        &:hover {
+          transform: scale(1.2);
+        }
+      }
+    }
+
+    .volume-value {
+      min-width: 40px;
+      text-align: right;
+      font-weight: 500;
+    }
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
