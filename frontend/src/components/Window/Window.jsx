@@ -27,7 +27,7 @@ const Window = ({ id, title, onClose, onMove, position: initialPosition, childre
 
       const newPos = { x: clampedX, y: clampedY };
       setPosition(newPos);
-      onMove(id, newPos); // сохранить позицию в WindowManager
+      onMove(id, newPos);
     };
 
     const handleMouseUp = () => {
