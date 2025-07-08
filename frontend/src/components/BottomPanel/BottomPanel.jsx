@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import './BottomPanel.css';
-import playIconPath from '../../assets/buttons/play.svg';
-import playnextIconPath from '../../assets/buttons/play-next.svg';
-import fullscreenIconPath from '../../assets/buttons/full-screen.svg';
-import exitFullscreenIconPath from '../../assets/buttons/fullscreen-exit.svg';
-import userIconPath from '../../assets/buttons/user.svg';
-import clockIconPath from '../../assets/buttons/clock.svg';
-import { UseFullscreen } from './useFullscreen';
-import ShowTime from './showTime.jsx';
+// import React, { useState, useEffect } from "react";
+import "./BottomPanel.scss";
+import playIconPath from "../../assets/buttons/play.svg";
+import playnextIconPath from "../../assets/buttons/play-next.svg";
+import fullscreenIconPath from "../../assets/buttons/full-screen.svg";
+import exitFullscreenIconPath from "../../assets/buttons/fullscreen-exit.svg";
+import userIconPath from "../../assets/buttons/user.svg";
+import clockIconPath from "../../assets/buttons/clock.svg";
+import { UseFullscreen } from "./useFullscreen";
+import ShowTime from "./showTime.jsx";
 
 function BottomPanel({ openWindow, activeWindows }) {
   const { isFullscreen, toggleFullscreen } = UseFullscreen();
@@ -16,8 +16,10 @@ function BottomPanel({ openWindow, activeWindows }) {
     <div className="bottom-panel">
       <div className="bottom-panel__icons">
         <div
-          className={`bottom-panel__icon-button ${activeWindows.includes('music') ? 'active' : ''}`}
-          onClick={() => openWindow('music')}
+          className={`bottom-panel__icon-button ${
+            activeWindows?.includes("music") ? "active" : ""
+          }`}
+          onClick={() => openWindow("music")}
         >
           <img src={playIconPath} alt="Play music" width={18} height={18} />
         </div>
@@ -26,8 +28,10 @@ function BottomPanel({ openWindow, activeWindows }) {
         </div>
         <div className="bottom-panel__divider"></div>
         <div
-          className={`bottom-panel__icon-button ${activeWindows.includes('pomodoro') ? 'active' : ''}`}
-          onClick={() => openWindow('pomodoro')}
+          className={`bottom-panel__icon-button ${
+            activeWindows?.includes("pomodoro") ? "active" : ""
+          }`}
+          onClick={() => openWindow("pomodoro")}
         >
           <img src={clockIconPath} alt="Clock" width={16} height={16} />
         </div>
@@ -37,15 +41,17 @@ function BottomPanel({ openWindow, activeWindows }) {
         <ShowTime />
         <div className="bottom-panel__divider"></div>
         <div
-          className={`bottom-panel__icon-button ${activeWindows.includes('user') ? 'active' : ''}`}
-          onClick={() => openWindow('user')}
+          className={`bottom-panel__icon-button ${
+            activeWindows?.includes("user") ? "active" : ""
+          }`}
+          onClick={() => openWindow("user")}
         >
           <img src={userIconPath} alt="Profile" width={18} height={18} />
         </div>
         <div className="bottom-panel__icon-button" onClick={toggleFullscreen}>
           <img
             src={isFullscreen ? exitFullscreenIconPath : fullscreenIconPath}
-            alt={isFullscreen ? 'Exit Full Screen' : 'Full Screen'}
+            alt={isFullscreen ? "Exit Full Screen" : "Full Screen"}
             width={18}
             height={18}
           />
