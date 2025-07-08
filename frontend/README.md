@@ -5,6 +5,7 @@
 cd frontend
 npm install
 npm install vite-plugin-svgr --save-dev
+npm install -D sass-embedded
 npm run dev
 ```
 
