@@ -4,7 +4,9 @@ import pictureIconPath from "../../assets/buttons/picture.svg";
 import downIconPath from "../../assets/buttons/down.svg";
 
 function VideoBackground() {
-  const [videoSrc, setVideoSrc] = useState("/video11.mp4");
+  const getRandomVideo = () => `/video${Math.floor(Math.random() * 15)}.mp4`;
+  const [videoSrc, setVideoSrc] = useState(getRandomVideo());
+
   const [isFading, setIsFading] = useState(false);
   const [isPanelOpen, setIsPanelOpen] = useState(false);
 
@@ -38,8 +40,8 @@ function VideoBackground() {
           </button>
         </div>
         <div className="video-list">
-          {Array.from({ length: 24 }, (_, i) => {
-            const num = i + 1;
+          {Array.from({ length: 14 }, (_, i) => {
+            const num = i;
             const src = `/video${num}.mp4`;
             const previewSrc = `/video-preview/video${num}.jpg`;
 
