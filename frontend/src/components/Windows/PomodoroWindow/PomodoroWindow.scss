@@ -244,6 +244,12 @@
     justify-content: center;
     flex: 1;
     min-height: 120px;
+    transition: all 0.4s ease;
+
+    &.active {
+      flex: 2; // Увеличиваем размер когда активен
+      min-height: 200px;
+    }
 
     .time-value {
       font-size: 3.5rem;
@@ -255,6 +261,12 @@
       letter-spacing: -0.02em;
       margin-bottom: 16px;
       text-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+      transition: all 0.3s ease;
+
+      .active & {
+        font-size: 4.5rem; // Увеличиваем размер шрифта для активного таймера
+        animation: pulse-glow 2s ease-in-out infinite alternate;
+      }
     }
 
     .timer-status {
@@ -262,18 +274,48 @@
       flex-direction: column;
       align-items: center;
       gap: 4px;
+      transition: all 0.3s ease;
 
       .round-info {
         font-size: 0.875rem;
+        color: #94a3b8;
         font-weight: 500;
-        color: #818cf8;
       }
 
       .mode-info {
         font-size: 0.75rem;
-        color: #94a3b8;
+        color: #818cf8;
+        font-weight: 600;
         text-transform: uppercase;
-        letter-spacing: 0.1em;
+        letter-spacing: 0.05em;
+        padding: 4px 12px;
+        background: rgba(129, 140, 248, 0.1);
+        border-radius: 12px;
+        border: 1px solid rgba(129, 140, 248, 0.2);
+      }
+    }
+
+    .progress-indicator {
+      width: 100%;
+      max-width: 300px;
+      margin-top: 24px;
+
+      .progress-bar {
+        width: 100%;
+        height: 6px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 3px;
+        overflow: hidden;
+        box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+
+        .progress-fill {
+          height: 100%;
+          background: linear-gradient(90deg, #818cf8, #6366f1);
+          border-radius: 3px;
+          transition: width 0.3s ease;
+          box-shadow: 0 0 10px rgba(129, 140, 248, 0.4);
+          animation: progress-shimmer 2s ease-in-out infinite;
+        }
       }
     }
   }
@@ -283,6 +325,13 @@
     border-radius: 16px;
     padding: 20px;
     border: 1px solid rgba(255, 255, 255, 0.06);
+    transition: all 0.4s ease;
+    transform-origin: top;
+    animation: slideIn 0.3s ease;
+
+    &.hiding {
+      animation: slideOut 0.3s ease forwards;
+    }
 
     .pomodoro-settings,
     .countdown-settings {
@@ -308,8 +357,8 @@
         gap: 12px;
 
         .setting-btn {
-          width: 32px;
-          height: 32px;
+          width: 40px;
+          height: 40px;
           border-radius: 8px;
           border: 1px solid rgba(255, 255, 255, 0.08);
           background: rgba(255, 255, 255, 0.04);
@@ -413,6 +462,62 @@
   }
 }
 
+// Анимации
+@keyframes pulse-glow {
+  0% {
+    text-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+    transform: scale(1);
+  }
+  100% {
+    text-shadow: 0 0 25px rgba(129, 140, 248, 0.3),
+      0 0 35px rgba(129, 140, 248, 0.2);
+    transform: scale(1.02);
+  }
+}
+
+@keyframes progress-shimmer {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px) scaleY(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scaleY(1);
+  }
+}
+
+@keyframes slideOut {
+  from {
+    opacity: 1;
+    transform: translateY(0) scaleY(1);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-20px) scaleY(0.8);
+  }
+}
+
+@keyframes focusIn {
+  from {
+    transform: scale(0.95);
+    opacity: 0.8;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
 // Smooth tab transitions
 .timer-content {
   .settings-panel {
@@ -421,6 +526,13 @@
 
   .timer-display .time-value {
     transition: all 0.3s ease;
+  }
+
+  // Анимация для контейнера когда таймер активен
+  &.timer-active {
+    .timer-display {
+      animation: focusIn 0.5s ease;
+    }
   }
 }
 
