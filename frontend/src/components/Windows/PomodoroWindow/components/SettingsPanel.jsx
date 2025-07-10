@@ -9,9 +9,10 @@ const SettingsPanel = ({
   getTotalPomodoroTime,
   countdownSettings,
   updateCountdownSetting,
+  isActive,
 }) => {
-  if (activeTab === "stopwatch") {
-    return null; // No settings for stopwatch
+  if (activeTab === "stopwatch" || isActive) {
+    return null; // Hide settings when timer is active or for stopwatch
   }
 
   return (

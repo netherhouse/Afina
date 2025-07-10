@@ -247,25 +247,25 @@
     transition: all 0.4s ease;
 
     &.active {
-      flex: 2; // Увеличиваем размер когда активен
-      min-height: 200px;
+      animation: focusIn 0.5s ease;
+      transform: scale(1.05);
+
+      .time-value {
+        animation: pulse-glow 2s ease-in-out infinite alternate;
+      }
     }
 
     .time-value {
       font-size: 3.5rem;
-      font-weight: 300;
-      font-family: "Inter", "SF Mono", "Monaco", "Consolas", monospace;
+      font-weight: 700;
       color: #f8fafc;
-      line-height: 1;
-      text-align: center;
-      letter-spacing: -0.02em;
-      margin-bottom: 16px;
-      text-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+      margin-bottom: 12px;
       transition: all 0.3s ease;
+      text-shadow: 0 0 20px rgba(129, 140, 248, 0.3);
 
       .active & {
-        font-size: 4.5rem; // Увеличиваем размер шрифта для активного таймера
-        animation: pulse-glow 2s ease-in-out infinite alternate;
+        font-size: 4rem;
+        color: #818cf8;
       }
     }
 
@@ -273,49 +273,39 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 4px;
-      transition: all 0.3s ease;
+      gap: 8px;
+      opacity: 0.8;
 
       .round-info {
-        font-size: 0.875rem;
+        font-size: 0.9rem;
         color: #94a3b8;
-        font-weight: 500;
       }
 
       .mode-info {
-        font-size: 0.75rem;
-        color: #818cf8;
+        font-size: 1.1rem;
         font-weight: 600;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
+        color: #e2e8f0;
         padding: 4px 12px;
-        background: rgba(129, 140, 248, 0.1);
+        background: rgba(129, 140, 248, 0.2);
         border-radius: 12px;
-        border: 1px solid rgba(129, 140, 248, 0.2);
+        border: 1px solid rgba(129, 140, 248, 0.3);
       }
     }
 
     .progress-indicator {
-      width: 100%;
-      max-width: 300px;
+      width: 200px;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 2px;
       margin-top: 24px;
+      overflow: hidden;
 
       .progress-bar {
-        width: 100%;
-        height: 6px;
-        background: rgba(255, 255, 255, 0.1);
-        border-radius: 3px;
-        overflow: hidden;
-        box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
-
-        .progress-fill {
-          height: 100%;
-          background: linear-gradient(90deg, #818cf8, #6366f1);
-          border-radius: 3px;
-          transition: width 0.3s ease;
-          box-shadow: 0 0 10px rgba(129, 140, 248, 0.4);
-          animation: progress-shimmer 2s ease-in-out infinite;
-        }
+        height: 100%;
+        background: linear-gradient(90deg, #818cf8, #6366f1);
+        border-radius: 2px;
+        animation: progress-shimmer 2s ease-in-out infinite;
+        box-shadow: 0 0 10px rgba(129, 140, 248, 0.5);
       }
     }
   }
@@ -344,11 +334,12 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      padding: 12px 0;
 
       label {
-        font-size: 0.875rem;
+        font-size: 0.9rem;
+        color: #e2e8f0;
         font-weight: 500;
-        color: #cbd5e1;
       }
 
       .setting-controls {
@@ -357,47 +348,43 @@
         gap: 12px;
 
         .setting-btn {
-          width: 40px;
-          height: 40px;
-          border-radius: 8px;
-          border: 1px solid rgba(255, 255, 255, 0.08);
-          background: rgba(255, 255, 255, 0.04);
+          width: 32px;
+          height: 32px;
+          border: 1px solid rgba(255, 255, 255, 0.1);
+          background: rgba(30, 30, 30, 0.8);
           color: #94a3b8;
+          border-radius: 8px;
           cursor: pointer;
           transition: all 0.2s ease;
           display: flex;
           align-items: center;
           justify-content: center;
-          font-size: 0.75rem;
 
           &:hover {
-            background: rgba(255, 255, 255, 0.08);
-            border-color: rgba(255, 255, 255, 0.12);
-            color: #cbd5e1;
-          }
-
-          &:active {
-            transform: scale(0.95);
+            background: rgba(129, 140, 248, 0.2);
+            color: #818cf8;
+            border-color: rgba(129, 140, 248, 0.3);
           }
         }
 
         .setting-value {
-          font-size: 1.125rem;
-          font-weight: 600;
-          color: #f8fafc;
           min-width: 40px;
           text-align: center;
+          font-weight: 600;
+          color: #f8fafc;
         }
       }
     }
 
     .total-time {
-      padding-top: 16px;
-      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      margin-top: 16px;
+      padding: 12px;
+      background: rgba(129, 140, 248, 0.1);
+      border-radius: 8px;
       text-align: center;
-      font-size: 0.875rem;
       color: #818cf8;
-      font-weight: 500;
+      font-weight: 600;
+      border: 1px solid rgba(129, 140, 248, 0.2);
     }
   }
 
@@ -513,26 +500,15 @@
     opacity: 0.8;
   }
   to {
-    transform: scale(1);
+    transform: scale(1.05);
     opacity: 1;
   }
 }
 
-// Smooth tab transitions
-.timer-content {
-  .settings-panel {
-    transition: all 0.3s ease;
-  }
-
-  .timer-display .time-value {
-    transition: all 0.3s ease;
-  }
-
-  // Анимация для контейнера когда таймер активен
-  &.timer-active {
-    .timer-display {
-      animation: focusIn 0.5s ease;
-    }
+// Анимация для контейнера когда таймер активен
+.timer-content.timer-active {
+  .timer-display {
+    flex: 1.5;
   }
 }
 
@@ -542,7 +518,11 @@
     gap: 16px;
 
     .timer-display .time-value {
-      font-size: 2.8rem;
+      font-size: 2.5rem;
+
+      .active & {
+        font-size: 3rem;
+      }
     }
 
     .settings-panel {

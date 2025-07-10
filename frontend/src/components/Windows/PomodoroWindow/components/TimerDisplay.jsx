@@ -9,9 +9,10 @@ const TimerDisplay = ({
   currentRound,
   pomodoroSettings,
   isBreak,
+  isActive,
 }) => {
   return (
-    <div className="timer-display">
+    <div className={`timer-display ${isActive ? "active" : ""}`}>
       <div className="time-value">
         {activeTab === "stopwatch"
           ? formatStopwatchTime(stopwatchTime)
@@ -24,6 +25,12 @@ const TimerDisplay = ({
             Round {currentRound}/{pomodoroSettings.rounds}
           </span>
           <span className="mode-info">{isBreak ? "Break" : "Work"}</span>
+        </div>
+      )}
+
+      {isActive && (
+        <div className="progress-indicator">
+          <div className="progress-bar"></div>
         </div>
       )}
     </div>
