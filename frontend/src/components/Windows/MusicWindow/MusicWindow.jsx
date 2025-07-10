@@ -31,10 +31,18 @@ function MusicWindow({
       maxHeight={650}
     >
       <div className="music-player-content">
-        <h3 className="music-player-content__header3">Nature Sounds</h3>
-        <SoundMixer label="Rain" src="/sounds/rain.mp3" />
-        <SoundMixer label="Forest" src="/sounds/forest.mp3" />
-        <SoundMixer label="Fire" src="/sounds/fire.mp3" />
+        <section className="music-player-content__section">
+          <h3 className="music-player-content__header">Nature & Forest</h3>
+          <SoundMixer label="Rain" src="/sounds/rain.mp3" />
+          <SoundMixer label="Forest" src="/sounds/forest.mp3" />
+          <SoundMixer label="Fire" src="/sounds/fire.mp3" />
+        </section>
+        <section className="music-player-content__section">
+          <h3 className="music-player-content__header">City & Household</h3>
+        </section>
+        <section className="music-player-content__section">
+          <h3 className="music-player-content__header">Relax & Meditation</h3>
+        </section>
       </div>
     </Window>
   );
