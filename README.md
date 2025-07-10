@@ -3,6 +3,7 @@
 **Athena** is a browser-based personal assistant that transforms your browser into a living, thinking workspace. Breathe with live wallpapers. Focus with ambient sound. Plan, track, and ship with AI-driven microservices for tasks, time, and AGILE flow.
 
 Not just productivity — presence.
+
 ![demo](demo.gif)  
 <sub>⚠️ Actual performance is smoother — 
 this GIF is limited in frame rate and color depth.</sub>
