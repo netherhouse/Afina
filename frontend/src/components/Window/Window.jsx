@@ -12,7 +12,7 @@ const Window = ({
   onFocus,
   position: initialPosition,
   size: initialSize,
-  zIndex = 1,
+  zIndex = 1000, // Убедитесь, что есть значение по умолчанию
   isActive = false,
   children,
   minWidth = 320,
@@ -228,6 +228,9 @@ const Window = ({
 
   if (!visible) return null;
 
+  // Логирование для отладки
+  console.log(`Window ${id} - zIndex: ${zIndex}, isActive: ${isActive}`);
+
   return (
     <div
       className={`window ${isActive ? "window--active" : ""}`}
@@ -237,7 +240,7 @@ const Window = ({
         left: position.x,
         width: size.width,
         height: size.height,
-        zIndex: zIndex,
+        zIndex: zIndex, // Убедитесь, что z-index применяется
       }}
       onClick={handleWindowClick}
     >

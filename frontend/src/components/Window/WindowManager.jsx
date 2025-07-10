@@ -1,44 +1,51 @@
-import React, { forwardRef, useImperativeHandle, useState } from "react";
+import React, {
+  forwardRef,
+  useImperativeHandle,
+  useState,
+  useEffect,
+} from "react";
 import UserProfileWindow from "../Windows/UserProfileWindow/UserProfileWindow.jsx";
 import MusicWindow from "../Windows/MusicWindow/MusicWindow.jsx";
 import PomodoroWindow from "../Windows/PomodoroWindow/PomodoroWindow.jsx";
 
 const getRandomPosition = () => {
   const padding = 50;
-  const width = 400;
-  const height = 300;
+  const width = 450;
+  const height = 600;
   const x = Math.random() * (window.innerWidth - width - padding);
   const y = Math.random() * (window.innerHeight - height - padding);
   return { x, y };
 };
+
+const STANDARD_WINDOW_SIZE = { width: 450, height: 600 };
+const BASE_Z_INDEX = 1000;
 
 const WindowManager = forwardRef((props, ref) => {
   const [windowStates, setWindowStates] = useState({
     user: {
       visible: false,
       position: getRandomPosition(),
-      size: { width: 400, height: 500 },
-      zIndex: 1,
+      size: STANDARD_WINDOW_SIZE,
+      zIndex: BASE_Z_INDEX,
       lastActiveTime: 0,
     },
     music: {
       visible: false,
       position: getRandomPosition(),
-      size: { width: 350, height: 450 },
-      zIndex: 1,
+      size: STANDARD_WINDOW_SIZE,
+      zIndex: BASE_Z_INDEX,
       lastActiveTime: 0,
     },
     pomodoro: {
       visible: false,
       position: getRandomPosition(),
-      size: { width: 380, height: 520 },
-      zIndex: 1,
+      size: STANDARD_WINDOW_SIZE,
+      zIndex: BASE_Z_INDEX,
       lastActiveTime: 0,
     },
   });
 
   const [activeWindow, setActiveWindow] = useState(null);
-  const [nextZIndex, setNextZIndex] = useState(1);
 
   const getActiveWindows = () => {
     return Object.keys(windowStates).filter((id) => windowStates[id].visible);
@@ -47,18 +54,29 @@ const WindowManager = forwardRef((props, ref) => {
   const bringToFront = (id) => {
     const currentTime = Date.now();
     setActiveWindow(id);
-    setNextZIndex((prev) => prev + 1);
 
-    setWindowStates((prev) => ({
-      ...prev,
-      [id]: {
-        ...prev[id],
-        zIndex: nextZIndex,
+    setWindowStates((prev) => {
+      const newStates = { ...prev };
+
+      // Находим максимальный z-index среди видимых окон
+      const maxZIndex = Math.max(
+        ...Object.values(newStates)
+          .filter((state) => state.visible)
+          .map((state) => state.zIndex),
+        BASE_Z_INDEX
+      );
+
+      // Устанавливаем активному окну максимальный z-index + 1
+      newStates[id] = {
+        ...newStates[id],
+        zIndex: maxZIndex + 1,
         lastActiveTime: currentTime,
-      },
-    }));
+      };
 
-    // Передаем информацию об активных окнах в BottomPanel
+      return newStates;
+    });
+
+    // Передаем информацию об активных окнах
     if (props.onActiveWindowsChange) {
       props.onActiveWindowsChange(getActiveWindows(), id);
     }
@@ -68,30 +86,35 @@ const WindowManager = forwardRef((props, ref) => {
     openWindow: (id) => {
       const currentTime = Date.now();
       setActiveWindow(id);
-      setNextZIndex((prev) => prev + 1);
 
-      setWindowStates((prev) => ({
-        ...prev,
-        [id]: {
-          ...prev[id],
+      setWindowStates((prev) => {
+        const newStates = { ...prev };
+
+        // Находим максимальный z-index
+        const maxZIndex = Math.max(
+          ...Object.values(newStates)
+            .filter((state) => state.visible)
+            .map((state) => state.zIndex),
+          BASE_Z_INDEX
+        );
+
+        newStates[id] = {
+          ...newStates[id],
           visible: true,
           position: prev[id]?.position || getRandomPosition(),
-          size: prev[id]?.size || { width: 400, height: 300 },
-          zIndex: nextZIndex,
+          size: STANDARD_WINDOW_SIZE,
+          zIndex: maxZIndex + 1,
           lastActiveTime: currentTime,
-        },
-      }));
+        };
+
+        return newStates;
+      });
 
       // Передаем информацию об активных окнах
       setTimeout(() => {
         if (props.onActiveWindowsChange) {
-          const activeWindows = Object.keys({
-            ...windowStates,
-            [id]: { ...windowStates[id], visible: true },
-          }).filter(
-            (windowId) => windowStates[windowId]?.visible || windowId === id
-          );
-          props.onActiveWindowsChange(activeWindows, id);
+          const activeWindows = getActiveWindows();
+          props.onActiveWindowsChange([...activeWindows, id], id);
         }
       }, 0);
     },
@@ -105,24 +128,18 @@ const WindowManager = forwardRef((props, ref) => {
       [id]: { ...prev[id], visible: false },
     }));
 
-    // Если закрываем активное окно, нужно найти новое активное
+    // Если закрываем активное окно, находим новое активное
     if (activeWindow === id) {
-      const visibleWindows = Object.keys(windowStates).filter(
-        (windowId) => windowId !== id && windowStates[windowId].visible
-      );
-
-      if (visibleWindows.length > 0) {
-        // Находим окно с самым высоким lastActiveTime
-        const newActiveWindow = visibleWindows.reduce((latest, current) =>
-          windowStates[current].lastActiveTime >
-          windowStates[latest].lastActiveTime
-            ? current
-            : latest
+      const remainingWindows = Object.keys(windowStates)
+        .filter((windowId) => windowId !== id && windowStates[windowId].visible)
+        .sort(
+          (a, b) =>
+            windowStates[b].lastActiveTime - windowStates[a].lastActiveTime
         );
-        setActiveWindow(newActiveWindow);
-      } else {
-        setActiveWindow(null);
-      }
+
+      const newActiveWindow =
+        remainingWindows.length > 0 ? remainingWindows[0] : null;
+      setActiveWindow(newActiveWindow);
     }
 
     // Обновляем информацию об активных окнах
@@ -132,11 +149,13 @@ const WindowManager = forwardRef((props, ref) => {
           (windowId) => windowId !== id && windowStates[windowId].visible
         );
         const newActiveWindow =
-          activeWindow === id
-            ? activeWindows.length > 0
-              ? activeWindows[activeWindows.length - 1]
-              : null
-            : activeWindow;
+          activeWindows.length > 0
+            ? activeWindows.sort(
+                (a, b) =>
+                  windowStates[b].lastActiveTime -
+                  windowStates[a].lastActiveTime
+              )[0]
+            : null;
         props.onActiveWindowsChange(activeWindows, newActiveWindow);
       }
     }, 0);
@@ -156,6 +175,12 @@ const WindowManager = forwardRef((props, ref) => {
     }));
   };
 
+  // Логирование для отладки
+  useEffect(() => {
+    console.log("Window states updated:", windowStates);
+    console.log("Active window:", activeWindow);
+  }, [windowStates, activeWindow]);
+
   return (
     <>
       <UserProfileWindow
@@ -169,6 +194,10 @@ const WindowManager = forwardRef((props, ref) => {
         size={windowStates.user.size}
         zIndex={windowStates.user.zIndex}
         isActive={activeWindow === "user"}
+        minWidth={450}
+        minHeight={600}
+        maxWidth={450}
+        maxHeight={600}
       />
       <MusicWindow
         id="music"
@@ -181,6 +210,10 @@ const WindowManager = forwardRef((props, ref) => {
         size={windowStates.music.size}
         zIndex={windowStates.music.zIndex}
         isActive={activeWindow === "music"}
+        minWidth={450}
+        minHeight={600}
+        maxWidth={450}
+        maxHeight={600}
       />
       <PomodoroWindow
         id="pomodoro"
@@ -193,6 +226,10 @@ const WindowManager = forwardRef((props, ref) => {
         size={windowStates.pomodoro.size}
         zIndex={windowStates.pomodoro.zIndex}
         isActive={activeWindow === "pomodoro"}
+        minWidth={450}
+        minHeight={600}
+        maxWidth={450}
+        maxHeight={600}
       />
     </>
   );
