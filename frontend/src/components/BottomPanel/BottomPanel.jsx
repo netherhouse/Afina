@@ -15,6 +15,7 @@ import financesIconPath from "../../assets/buttons/finances.svg";
 
 import { UseFullscreen } from "./useFullscreen";
 import ShowTime from "./showTime.jsx";
+import ShowLocation from "./showLocation.jsx"
 
 function BottomPanel({ openWindow, activeWindows }) {
   const { isFullscreen, toggleFullscreen } = UseFullscreen();
@@ -23,10 +24,11 @@ function BottomPanel({ openWindow, activeWindows }) {
     <div className="bottom-panel">
       <div className="bottom-panel__icons">
 
-        <!-- Left side -->
+        {/* Left side */}
         <div className="bottom-panel__icon-button">
           <img src={playIconPath} alt="Next Song" width={16} height={16} />
         </div>
+
         <div className="bottom-panel__icon-button">
           <img src={playnextIconPath} alt="Next Song" width={16} height={16} />
         </div>
@@ -66,8 +68,9 @@ function BottomPanel({ openWindow, activeWindows }) {
         </div>
       </div>
 
-      <!-- Right side -->
+      {/* Right side */}
       <div className="bottom-panel__icons">
+        <ShowLocation />
         <ShowTime />
         <div className="bottom-panel__divider"></div>
         <div

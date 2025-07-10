@@ -17,5 +17,5 @@ export default function ShowTime() {
     hour12: false,
   });
 
-  return <span>{formattedTime}</span>;
+  return <div className="bottom-panel__time">{formattedTime}</div>;
 }
