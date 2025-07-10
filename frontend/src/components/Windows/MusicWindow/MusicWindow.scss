@@ -1,27 +1,35 @@
 .music-player-content {
-  padding: 20px;
   display: flex;
   flex-direction: column;
   gap: 20px;
+
+  &__header3 {
+    font-size: 16px;
+  }
 }
 
 .sound-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 10px;
 }
 
 .sound-label {
-  width: 60px;
-  font-size: 1.2rem;
+  width: 50px;
+  font-size: 1rem;
+  flex-shrink: 0;
+  text-align: left;
 }
 
 .volume-slider {
   flex-grow: 1;
   margin: 0 10px;
+  min-width: 0;
 }
 
 .icon-button {
+  flex-shrink: 0;
   position: relative;
   background-color: rgba(36, 36, 36, 0.7);
   border-radius: 8px;
@@ -56,4 +64,3 @@
     }
   }
 }
-
