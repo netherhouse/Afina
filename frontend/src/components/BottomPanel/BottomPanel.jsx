@@ -9,7 +9,7 @@ import clockIconPath from "../../assets/buttons/clock.svg";
 import { UseFullscreen } from "./useFullscreen";
 import ShowTime from "./showTime.jsx";
 
-function BottomPanel({ openWindow, activeWindows }) {
+function BottomPanel({ openWindow, activeWindows = [], activeWindow = null }) {
   const { isFullscreen, toggleFullscreen } = UseFullscreen();
 
   return (
@@ -18,7 +18,7 @@ function BottomPanel({ openWindow, activeWindows }) {
         <div
           className={`bottom-panel__icon-button ${
             activeWindows?.includes("music") ? "active" : ""
-          }`}
+          } ${activeWindow === "music" ? "focused" : ""}`}
           onClick={() => openWindow("music")}
         >
           <img src={playIconPath} alt="Play music" width={18} height={18} />
@@ -30,7 +30,7 @@ function BottomPanel({ openWindow, activeWindows }) {
         <div
           className={`bottom-panel__icon-button ${
             activeWindows?.includes("pomodoro") ? "active" : ""
-          }`}
+          } ${activeWindow === "pomodoro" ? "focused" : ""}`}
           onClick={() => openWindow("pomodoro")}
         >
           <img src={clockIconPath} alt="Clock" width={16} height={16} />
@@ -43,7 +43,7 @@ function BottomPanel({ openWindow, activeWindows }) {
         <div
           className={`bottom-panel__icon-button ${
             activeWindows?.includes("user") ? "active" : ""
-          }`}
+          } ${activeWindow === "user" ? "focused" : ""}`}
           onClick={() => openWindow("user")}
         >
           <img src={userIconPath} alt="Profile" width={18} height={18} />
