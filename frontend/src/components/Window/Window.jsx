@@ -246,7 +246,7 @@ const Window = ({
     >
       <div className="window-header" onMouseDown={handleDragStart}>
         <div className="window-title">
-          {icon && <span className="window-icon">{icon}</span>}
+          {icon}
           {title}
         </div>
         <div className="header-controls">
