@@ -8,6 +8,10 @@ import exitFullscreenIconPath from "../../assets/buttons/fullscreen-exit.svg";
 import userIconPath from "../../assets/buttons/user.svg";
 import clockIconPath from "../../assets/buttons/clock.svg";
 import mixerIconPath from "../../assets/buttons/mixer.svg";
+import tasksIconPath from "../../assets/buttons/tasks.svg";
+import listsIconPath from "../../assets/buttons/lists.svg";
+import pictureIconPath from "../../assets/buttons/picture.svg";
+import financesIconPath from "../../assets/buttons/finances.svg";
 
 import { UseFullscreen } from "./useFullscreen";
 import ShowTime from "./showTime.jsx";
@@ -18,11 +22,13 @@ function BottomPanel({ openWindow, activeWindows }) {
   return (
     <div className="bottom-panel">
       <div className="bottom-panel__icons">
+
+        <!-- Left side -->
         <div className="bottom-panel__icon-button">
-          <img src={playIconPath} alt="Next Song" width={18} height={18} />
+          <img src={playIconPath} alt="Next Song" width={16} height={16} />
         </div>
         <div className="bottom-panel__icon-button">
-          <img src={playnextIconPath} alt="Next Song" width={18} height={18} />
+          <img src={playnextIconPath} alt="Next Song" width={16} height={16} />
         </div>
 
         <div
@@ -31,7 +37,7 @@ function BottomPanel({ openWindow, activeWindows }) {
           }`}
           onClick={() => openWindow("music")}
         >
-          <img src={mixerIconPath} alt="Play music" width={18} height={18} />
+          <img src={mixerIconPath} alt="Mixer" width={16} height={16} />
         </div>
         <div className="bottom-panel__divider"></div>
         <div
@@ -42,8 +48,25 @@ function BottomPanel({ openWindow, activeWindows }) {
         >
           <img src={clockIconPath} alt="Clock" width={16} height={16} />
         </div>
+
+        <div className="bottom-panel__icon-button">
+          <img src={tasksIconPath} alt="Tasks" width={18} height={18} />
+        </div>
+
+        <div className="bottom-panel__icon-button">
+          <img src={listsIconPath} alt="Lists" width={24} height={24} />
+        </div>
+
+        <div className="bottom-panel__icon-button">
+          <img src={pictureIconPath} alt="Gallery" width={14} height={14} />
+        </div>
+
+        <div className="bottom-panel__icon-button">
+          <img src={financesIconPath} alt="Finances" width={16} height={16} />
+        </div>
       </div>
 
+      <!-- Right side -->
       <div className="bottom-panel__icons">
         <ShowTime />
         <div className="bottom-panel__divider"></div>
