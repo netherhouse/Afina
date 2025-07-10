@@ -9,13 +9,17 @@ const Window = ({
   onClose,
   onMove,
   onResize,
+  onFocus,
   position: initialPosition,
   size: initialSize,
+  zIndex = 1,
+  isActive = false,
   children,
   minWidth = 320,
   minHeight = 240,
   maxWidth = 1200,
   maxHeight = 800,
+  visible = true,
 }) => {
   const [position, setPosition] = useState(initialPosition);
   const [size, setSize] = useState(initialSize || { width: 400, height: 300 });
@@ -33,9 +37,21 @@ const Window = ({
     }
   }, [initialSize]);
 
+  const handleWindowClick = () => {
+    if (onFocus) {
+      onFocus(id);
+    }
+  };
+
   const handleDragStart = (e) => {
     if (isResizing) return;
     e.preventDefault();
+
+    // Bring window to front when starting to drag
+    if (onFocus) {
+      onFocus(id);
+    }
+
     const offsetX = e.clientX - position.x;
     const offsetY = e.clientY - position.y;
 
@@ -67,6 +83,11 @@ const Window = ({
     e.stopPropagation();
     setIsResizing(true);
 
+    // Bring window to front when starting to resize
+    if (onFocus) {
+      onFocus(id);
+    }
+
     const startX = e.clientX;
     const startY = e.clientY;
     const startWidth = size.width;
@@ -84,7 +105,7 @@ const Window = ({
       let newY = startPosY;
 
       switch (direction) {
-        case "se": // Southeast (bottom-right)
+        case "se":
           newWidth = Math.max(
             minWidth,
             Math.min(maxWidth, startWidth + deltaX)
@@ -94,7 +115,7 @@ const Window = ({
             Math.min(maxHeight, startHeight + deltaY)
           );
           break;
-        case "sw": // Southwest (bottom-left)
+        case "sw":
           newWidth = Math.max(
             minWidth,
             Math.min(maxWidth, startWidth - deltaX)
@@ -109,7 +130,7 @@ const Window = ({
             newX = startPosX + deltaX;
           }
           break;
-        case "ne": // Northeast (top-right)
+        case "ne":
           newWidth = Math.max(
             minWidth,
             Math.min(maxWidth, startWidth + deltaX)
@@ -124,7 +145,7 @@ const Window = ({
             newY = startPosY + deltaY;
           }
           break;
-        case "nw": // Northwest (top-left)
+        case "nw":
           newWidth = Math.max(
             minWidth,
             Math.min(maxWidth, startWidth - deltaX)
@@ -144,13 +165,13 @@ const Window = ({
             newY = startPosY + deltaY;
           }
           break;
-        case "e": // East (right)
+        case "e":
           newWidth = Math.max(
             minWidth,
             Math.min(maxWidth, startWidth + deltaX)
           );
           break;
-        case "w": // West (left)
+        case "w":
           newWidth = Math.max(
             minWidth,
             Math.min(maxWidth, startWidth - deltaX)
@@ -161,13 +182,13 @@ const Window = ({
             newX = startPosX + deltaX;
           }
           break;
-        case "s": // South (bottom)
+        case "s":
           newHeight = Math.max(
             minHeight,
             Math.min(maxHeight, startHeight + deltaY)
           );
           break;
-        case "n": // North (top)
+        case "n":
           newHeight = Math.max(
             minHeight,
             Math.min(maxHeight, startHeight - deltaY)
@@ -180,7 +201,6 @@ const Window = ({
           break;
       }
 
-      // Ensure window doesn't go off screen
       const maxX = window.innerWidth - newWidth;
       const maxY = window.innerHeight - newHeight;
       newX = Math.max(0, Math.min(newX, maxX));
@@ -206,16 +226,20 @@ const Window = ({
     document.addEventListener("mouseup", handleMouseUp);
   };
 
+  if (!visible) return null;
+
   return (
     <div
-      className="window"
+      className={`window ${isActive ? "window--active" : ""}`}
       style={{
         position: "absolute",
         top: position.y,
         left: position.x,
         width: size.width,
         height: size.height,
+        zIndex: zIndex,
       }}
+      onClick={handleWindowClick}
     >
       <div className="window-header" onMouseDown={handleDragStart}>
         <div className="window-title">
@@ -230,7 +254,6 @@ const Window = ({
       </div>
       <div className="window-content">{children}</div>
 
-      {/* Resize handles */}
       <div className="resize-handles">
         <div
           className="resize-handle resize-handle-nw"
