@@ -40,10 +40,7 @@ this GIF is limited in frame rate and color depth.</sub>
 
 ```bash
 cd frontend
-npm install
-npm install vite-plugin-svgr --save-dev
-npm install -D sass-embedded
-npm install @mui/material @emotion/react @emotion/styled
+npm install i
 npm run dev
 ```
 
