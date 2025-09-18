@@ -3,6 +3,8 @@ import Window from "../../Window/Window";
 import "./PomodoroWindow.scss";
 import CompactSettings from "./components/CompactSettings";
 import CircularTimer from "./components/CircularTimer";
+import CountdownTimer from "./components/CountdownTimer";
+import StopwatchTimer from "./components/StopwatchTimer";
 import TabNavigation from "./components/TabNavigation";
 
 const tabs = [
@@ -43,47 +45,76 @@ function PomodoroWindow({
   const [isStarted, setIsStarted] = useState(false);
 
   const handleTimerComplete = useCallback(() => {
-    setIsActive(false);
-
     if (activeTab === "pomodoro") {
       if (!isBreak) {
-        // Переход к перерыву
-        setIsBreak(true);
-        setTimeLeft(pomodoroSettings.break * 60);
-      } else {
-        // Переход к следующему раунду или завершение
-        setIsBreak(false);
-        if (currentRound < pomodoroSettings.rounds) {
-          setCurrentRound((prev) => prev + 1);
-          setTimeLeft(pomodoroSettings.work * 60);
-        } else {
-          // Все раунды завершены
-          setCurrentRound(1);
-          setTimeLeft(pomodoroSettings.work * 60);
+        // Завершился рабочий период
+        if (currentRound >= pomodoroSettings.rounds) {
+          // Это был последний раунд - полностью завершаем
+          setIsActive(false);
           setIsStarted(false);
+          setCurrentRound(1);
+          setIsBreak(false);
+          setTimeLeft(pomodoroSettings.work * 60);
 
           if (Notification.permission === "granted") {
             new Notification("Pomodoro Complete!", {
-              body: "All rounds completed! Time for a long break.",
-              icon: "⏰",
+              body: "All rounds completed! Great job!",
+              icon: "🎉",
             });
           }
+          return;
+        } else {
+          // Переход к перерыву, таймер продолжает работать
+          setIsBreak(true);
+          setTimeLeft(pomodoroSettings.break * 60);
+          // НЕ останавливаем таймер - setIsActive(true) остается
         }
+      } else {
+        // Завершился перерыв - переходим к следующему раунду
+        setIsBreak(false);
+        setCurrentRound((prev) => prev + 1);
+        setTimeLeft(pomodoroSettings.work * 60);
+        // НЕ останавливаем таймер - setIsActive(true) остается
+      }
+
+      // Уведомления о переходах
+      if (Notification.permission === "granted") {
+        new Notification("Timer Complete!", {
+          body: isBreak
+            ? "Break over! Time for work!"
+            : "Work done! Time for a break!",
+          icon: "🔔",
+        });
+      }
+    } else if (activeTab === "countdown") {
+      // Countdown finished: stop and return to settings view
+      setIsActive(false);
+      setIsStarted(false);
+      // reset display to configured countdown settings
+      setTimeLeft(
+        countdownSettings.hours * 3600 +
+          countdownSettings.minutes * 60 +
+          countdownSettings.seconds
+      );
+      if (Notification.permission === "granted") {
+        new Notification("Countdown Complete!", {
+          body: "Timer finished.",
+          icon: "🔔",
+        });
+      }
+    } else if (activeTab === "stopwatch") {
+      // Stopwatch finished/stop: return to initial state
+      setIsActive(false);
+      setIsStarted(false);
+      setStopwatchTime(0);
+      if (Notification.permission === "granted") {
+        new Notification("Stopwatch Stopped", {
+          body: "Stopwatch reset.",
+          icon: "⏱️",
+        });
       }
     }
-
-    if (Notification.permission === "granted") {
-      new Notification("Timer Complete!", {
-        body:
-          activeTab === "pomodoro"
-            ? isBreak
-              ? "Time for work!"
-              : "Time for a break!"
-            : "Timer finished!",
-        icon: "🔔",
-      });
-    }
-  }, [activeTab, isBreak, currentRound, pomodoroSettings]);
+  }, [activeTab, isBreak, currentRound, pomodoroSettings, countdownSettings]);
 
   useEffect(() => {
     let interval = null;
@@ -302,20 +333,43 @@ function PomodoroWindow({
             onStart={handleStart}
           />
         ) : (
-          <CircularTimer
-            activeTab={activeTab}
-            timeLeft={timeLeft}
-            totalTime={getTotalTime()}
-            currentRound={currentRound}
-            totalRounds={pomodoroSettings.rounds}
-            isBreak={isBreak}
-            formatTime={formatTime}
-            formatStopwatchTime={formatStopwatchTime}
-            stopwatchTime={stopwatchTime}
-            onPause={handlePause}
-            onStop={handleStop}
-            isActive={isActive}
-          />
+          <>
+            {activeTab === "pomodoro" && (
+              <CircularTimer
+                activeTab={activeTab}
+                timeLeft={timeLeft}
+                totalTime={getTotalTime()}
+                currentRound={currentRound}
+                totalRounds={pomodoroSettings.rounds}
+                isBreak={isBreak}
+                formatTime={formatTime}
+                formatStopwatchTime={formatStopwatchTime}
+                stopwatchTime={stopwatchTime}
+                onPause={handlePause}
+                onStop={handleStop}
+                isActive={isActive}
+              />
+            )}
+            {activeTab === "countdown" && (
+              <CountdownTimer
+                timeLeft={timeLeft}
+                totalTime={getTotalTime()}
+                formatTime={formatTime}
+                onPause={handlePause}
+                onStop={handleStop}
+                isActive={isActive}
+              />
+            )}
+            {activeTab === "stopwatch" && (
+              <StopwatchTimer
+                stopwatchTime={stopwatchTime}
+                formatStopwatchTime={formatStopwatchTime}
+                onPause={handlePause}
+                onStop={handleStop}
+                isActive={isActive}
+              />
+            )}
+          </>
         )}
       </div>
     </Window>
