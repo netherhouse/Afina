@@ -3,8 +3,7 @@
   flex-direction: column;
   height: 100%;
   background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 100%);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
+
   color: white;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   padding: 8px;
@@ -334,16 +333,105 @@
   align-items: center;
   height: 100%;
   justify-content: center;
-  gap: 24px;
+  gap: 16px; /* reduced gap for larger circle */
+
+  /* Controls above the circle */
+  .top-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+
+    .control-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      border: 3px solid #ffffff;
+      cursor: pointer;
+      font-size: 18px;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+
+      &.pause-btn {
+        background: linear-gradient(
+          135deg,
+          rgba(16, 185, 129, 0.18),
+          rgba(16, 185, 129, 0.1)
+        );
+        color: #10b981;
+        box-shadow: 0 6px 16px rgba(16, 185, 129, 0.25);
+        &:hover {
+          transform: translateY(-2px) scale(1.03);
+        }
+      }
+
+      &.stop-btn {
+        background: linear-gradient(
+          135deg,
+          rgba(239, 68, 68, 0.18),
+          rgba(239, 68, 68, 0.1)
+        );
+        color: #ef4444;
+        box-shadow: 0 6px 16px rgba(239, 68, 68, 0.25);
+        &:hover {
+          transform: translateY(-2px) scale(1.03);
+        }
+      }
+    }
+  }
 
   .timer-circle {
     position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
+    width: 280px;
+    height: 280px;
 
     .progress-ring {
       filter: drop-shadow(0 0 4px rgba(16, 185, 129, 0.2));
+    }
+
+    /* Radial ring based on line segments */
+    .radial-ring {
+      position: relative;
+      width: 280px;
+      height: 280px;
+      pointer-events: none;
+    }
+
+    .radial-segment {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 4px; /* thickness */
+      height: 16px; /* length */
+      border-radius: 4px;
+      background: rgba(255, 255, 255, 0.08);
+      box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+      transform-origin: center center;
+      transition: background 0.3s ease, box-shadow 0.3s ease, opacity 0.3s ease;
+
+      &.cardinal {
+        width: 6px; /* thicker for cardinal directions */
+        height: 24px; /* longer for cardinal directions */
+        border-radius: 6px;
+        background: rgba(255, 255, 255, 0.15);
+      }
+
+      &.active {
+        background: #10b981;
+        box-shadow: 0 0 10px rgba(16, 185, 129, 0.6);
+
+        &.cardinal {
+          background: #10b981;
+          box-shadow: 0 0 16px rgba(16, 185, 129, 0.8);
+        }
+      }
     }
 
     .timer-content {
@@ -354,7 +442,7 @@
       gap: 8px;
 
       .action-text {
-        font-size: 15px;
+        font-size: 18px;
         font-weight: 700;
         color: #10b981;
         letter-spacing: 1px;
@@ -369,12 +457,12 @@
 
       .dots-indicator {
         display: flex;
-        gap: 6px;
-        margin: 6px 0 16px 0;
+        gap: 8px;
+        margin: 8px 0 16px 0;
 
         .round-dot {
-          width: 6px;
-          height: 6px;
+          width: 8px;
+          height: 8px;
           border-radius: 50%;
           background: rgba(255, 255, 255, 0.2);
           transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -395,7 +483,7 @@
       }
 
       .time-display {
-        font-size: 32px;
+        font-size: 36px;
         font-weight: 300;
         color: #ffffff;
         font-family: -apple-system, BlinkMacSystemFont, "SF Mono", "Monaco",
@@ -406,6 +494,13 @@
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
+      }
+
+      .rounds-text {
+        margin-top: 6px;
+        font-size: 15px;
+        color: rgba(255, 255, 255, 0.7);
+        font-weight: 500;
       }
     }
   }

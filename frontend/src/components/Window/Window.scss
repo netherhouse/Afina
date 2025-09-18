@@ -187,3 +187,24 @@
     }
   }
 }
+
+/* modifier: when window is not resizable, hide handles and disable resize cursors */
+.window.not-resizable {
+  .resize-handles {
+    display: none !important;
+    pointer-events: none !important;
+  }
+
+  /* ensure no resize cursors leak through */
+  .resize-handle,
+  .resize-handle-nw,
+  .resize-handle-ne,
+  .resize-handle-sw,
+  .resize-handle-se,
+  .resize-handle-n,
+  .resize-handle-s,
+  .resize-handle-w,
+  .resize-handle-e {
+    cursor: default !important;
+  }
+}

@@ -15,68 +15,83 @@ const CircularTimer = ({
   isActive,
 }) => {
   const progress =
-    activeTab === "stopwatch" ? 0 : ((totalTime - timeLeft) / totalTime) * 100;
-  const radius = 80;
-  const circumference = 2 * Math.PI * radius;
-  const strokeOffset = circumference - (progress / 100) * circumference;
+    activeTab === "stopwatch" || !totalTime
+      ? 0
+      : ((totalTime - timeLeft) / totalTime) * 100;
 
-  const getDisplayText = () => {
-    if (activeTab === "pomodoro") {
-      return isBreak ? "BREAK" : "FOCUS";
-    } else if (activeTab === "countdown") {
-      return "COUNTDOWN";
-    } else if (activeTab === "stopwatch") {
-      return "STOPWATCH";
-    }
+  const SEGMENTS = 48; // number of line segments in the ring
+  const RING_SIZE = 280; // visual box for the ring - much larger
+  const RADIUS = 110; // distance from center to segments - increased
+  const activeSegments = Math.round((progress / 100) * SEGMENTS);
+
+  // Cardinal directions (0°, 90°, 180°, 270°)
+  const isCardinal = (index) => {
+    const segmentsPerQuarter = SEGMENTS / 4;
+    return (
+      index === 0 ||
+      index === segmentsPerQuarter ||
+      index === segmentsPerQuarter * 2 ||
+      index === segmentsPerQuarter * 3
+    );
   };
 
-  const getTimeDisplay = () => {
-    if (activeTab === "stopwatch") {
-      return formatStopwatchTime(stopwatchTime);
-    } else {
-      return formatTime(timeLeft);
-    }
-  };
+  const actionText =
+    activeTab === "pomodoro"
+      ? isBreak
+        ? "BREAK"
+        : "FOCUS"
+      : activeTab === "countdown"
+      ? "COUNTDOWN"
+      : "STOPWATCH";
+
+  const timeText =
+    activeTab === "stopwatch"
+      ? formatStopwatchTime(stopwatchTime)
+      : formatTime(timeLeft);
 
   return (
     <div className="circular-timer">
+      {/* Controls on top */}
+      <div className="top-controls">
+        <button className="control-btn stop-btn" onClick={onStop} title="Stop">
+          ⏹
+        </button>
+        <button
+          className="control-btn pause-btn"
+          onClick={onPause}
+          title={isActive ? "Pause" : "Start/Pause"}
+        >
+          {isActive ? "⏸" : "▶"}
+        </button>
+      </div>
+
       <div className="timer-circle">
-        <svg width="180" height="180" className="progress-ring">
-          {/* Background circle */}
-          <circle
-            cx="90"
-            cy="90"
-            r={radius}
-            stroke="rgba(255, 255, 255, 0.1)"
-            strokeWidth="4"
-            fill="none"
-          />
-          {/* Progress circle - только для таймеров */}
-          {activeTab !== "stopwatch" && (
-            <circle
-              cx="90"
-              cy="90"
-              r={radius}
-              stroke="#10b981"
-              strokeWidth="4"
-              fill="none"
-              strokeLinecap="round"
-              strokeDasharray={circumference}
-              strokeDashoffset={strokeOffset}
-              className="progress-circle"
-              style={{
-                transform: "rotate(-90deg)",
-                transformOrigin: "90px 90px",
-                transition: "stroke-dashoffset 1s ease",
-              }}
-            />
-          )}
-        </svg>
+        {/* Radial ring made of short lines */}
+        <div
+          className="radial-ring"
+          style={{ width: RING_SIZE, height: RING_SIZE }}
+        >
+          {Array.from({ length: SEGMENTS }).map((_, i) => {
+            const angle = (360 / SEGMENTS) * i;
+            const isActiveSeg = activeTab !== "stopwatch" && i < activeSegments;
+            const isCardinalSeg = isCardinal(i);
+            return (
+              <div
+                key={i}
+                className={`radial-segment ${isActiveSeg ? "active" : ""} ${
+                  isCardinalSeg ? "cardinal" : ""
+                }`}
+                style={{
+                  transform: `translate(-50%, -50%) rotate(${angle}deg) translateY(-${RADIUS}px)`,
+                }}
+              />
+            );
+          })}
+        </div>
 
+        {/* Inner content */}
         <div className="timer-content">
-          <div className="action-text">{getDisplayText()}</div>
-
-          {/* Индикатор раундов только для Pomodoro */}
+          <div className="action-text">{actionText}</div>
           {activeTab === "pomodoro" && (
             <div className="dots-indicator">
               {Array.from({ length: totalRounds }).map((_, index) => (
@@ -93,18 +108,13 @@ const CircularTimer = ({
               ))}
             </div>
           )}
-
-          <div className="time-display">{getTimeDisplay()}</div>
+          <div className="time-display">{timeText}</div>
+          {activeTab === "pomodoro" && (
+            <div className="rounds-text">
+              Round {currentRound}/{totalRounds}
+            </div>
+          )}
         </div>
-      </div>
-
-      <div className="pause-stop-buttons">
-        <button className="control-btn pause-btn" onClick={onPause}>
-          {isActive ? "⏸" : "▶"}
-        </button>
-        <button className="control-btn stop-btn" onClick={onStop}>
-          ⏹
-        </button>
       </div>
     </div>
   );

@@ -11,6 +11,7 @@ const Window = ({
   onResize,
   position: initialPosition,
   size: initialSize,
+  isResizable = false,
   children,
   minWidth = 320,
   minHeight = 240,
@@ -63,6 +64,9 @@ const Window = ({
   };
 
   const handleResizeStart = (e, direction) => {
+    // No-op if resizing is disabled for this window
+    if (!isResizable) return;
+
     e.preventDefault();
     e.stopPropagation();
     setIsResizing(true);
@@ -208,7 +212,7 @@ const Window = ({
 
   return (
     <div
-      className="window"
+      className={`window ${!isResizable ? "not-resizable" : ""}`}
       style={{
         position: "absolute",
         top: position.y,
