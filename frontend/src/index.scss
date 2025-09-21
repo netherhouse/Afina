@@ -17,7 +17,13 @@
 }
 
 /* Re-enable selection for inputs, textareas, selects, and contenteditable regions */
-input, textarea, select, button, a, [contenteditable], .allow-select {
+input,
+textarea,
+select,
+button,
+a,
+[contenteditable],
+.allow-select {
   -webkit-user-select: text;
   -moz-user-select: text;
   -ms-user-select: text;

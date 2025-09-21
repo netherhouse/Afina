@@ -17,35 +17,37 @@ const SliderWithDots = ({
   const sliderRef = useRef(null);
   const handleRef = useRef(null);
 
-  // Создаем точки
-  const dots = useMemo(() => {
+  // Визуальные точки: всегда показываем фиксированное количество маркеров
+  // (например 30), но реальные значения рассчитываются независимо и
+  // привязываются к шагу (step). Это позволяет иметь видимые точки,
+  // между которыми можно выбирать значения по единице (или по step).
+  const VISUAL_DOTS = 30;
+  const visualDots = useMemo(() => {
     if (values) {
-      // Используем предопределенные значения
-      return values;
-    } else {
-      // Создаем равномерно распределенные точки
-      const dotCount = Math.min(15, Math.ceil((max - min) / step) + 1);
-      const result = [];
-
-      for (let i = 0; i < dotCount; i++) {
-        const dotValue = min + (i * (max - min)) / (dotCount - 1);
-        result.push(Math.round(dotValue / step) * step);
-      }
-
-      return [...new Set(result)]; // Убираем дубликаты
+      // Если передан массив значений, используем их (равномерно распределив по визуальным позициям)
+      const denom = Math.max(1, values.length - 1);
+      return values.map((v, i) => ({
+        leftPercent: (i / denom) * 100,
+        value: v,
+      }));
     }
-  }, [min, max, step, values]);
 
-  // Найти ближайшую точку
-  const findNearestDot = useCallback(
-    (currentValue) => {
-      return dots.reduce((nearest, dot) => {
-        return Math.abs(dot - currentValue) < Math.abs(nearest - currentValue)
-          ? dot
-          : nearest;
-      });
+    const arr = [];
+    for (let i = 0; i < VISUAL_DOTS; i++) {
+      const leftPercent = (i / (VISUAL_DOTS - 1)) * 100;
+      const exactValue = min + (leftPercent / 100) * (max - min);
+      arr.push({ leftPercent, value: exactValue });
+    }
+    return arr;
+  }, [min, max, values]);
+
+  // Round a raw value to nearest selectable step and clamp to [min, max]
+  const roundToStep = useCallback(
+    (raw) => {
+      const stepped = Math.round(raw / step) * step;
+      return Math.min(max, Math.max(min, stepped));
     },
-    [dots]
+    [min, max, step]
   );
 
   // Получить позицию ползунка (0-100%)
@@ -104,8 +106,7 @@ const SliderWithDots = ({
   const getCurrentTooltipValue = () => {
     if (isDragging && dragPercent !== null) {
       const dragValue = min + (dragPercent / 100) * (max - min);
-      const nearestDot = findNearestDot(dragValue);
-      return nearestDot;
+      return roundToStep(dragValue);
     }
     return value;
   };
@@ -135,17 +136,17 @@ const SliderWithDots = ({
 
   const handleMouseUp = useCallback(() => {
     if (isDragging && dragPercent !== null) {
-      // Только при отпускании мыши фиксируем значение к ближайшей точке
+      // При отпускании мыши фиксируем значение к ближайшему шагу (step).
       const newValue = min + (dragPercent / 100) * (max - min);
-      const nearestDot = findNearestDot(newValue);
-      onChange(nearestDot);
+      const nearest = roundToStep(newValue);
+      onChange(nearest);
     }
 
     setIsDragging(false);
     setDragPercent(null);
     // Скрываем tooltip немедленно при отпускании
     setShowTooltip(false);
-  }, [isDragging, dragPercent, min, max, findNearestDot, onChange]);
+  }, [isDragging, dragPercent, min, max, onChange, roundToStep]);
 
   // Добавляем обработчики hover
   // Touch event handlers для мобильных устройств
@@ -179,15 +180,15 @@ const SliderWithDots = ({
   const handleTouchEnd = useCallback(() => {
     if (isDragging && dragPercent !== null) {
       const newValue = min + (dragPercent / 100) * (max - min);
-      const nearestDot = findNearestDot(newValue);
-      onChange(nearestDot);
+      const nearest = roundToStep(newValue);
+      onChange(nearest);
     }
 
     setIsDragging(false);
     setDragPercent(null);
     // Скрываем tooltip немедленно при отпускании touch
     setShowTooltip(false);
-  }, [isDragging, dragPercent, min, max, findNearestDot, onChange]);
+  }, [isDragging, dragPercent, min, max, onChange, roundToStep]);
 
   React.useEffect(() => {
     if (isDragging) {
@@ -223,12 +224,15 @@ const SliderWithDots = ({
   }, [hideTooltipTimeout]);
 
   const handleDotClick = (dotValue) => {
-    onChange(dotValue);
+    // dotValue here might be an exact value (from visualDots). Map it to nearest step
+    const nearest = roundToStep(dotValue);
+    onChange(nearest);
   };
 
-  // Определяем, является ли точка завершенной (слева от активной)
+  // Определяем, является ли визуальная точка завершенной (слева от активной позиции)
   const isDotCompleted = (dotValue) => {
-    return dotValue < value;
+    // dotValue here may be exact position value (not rounded). Compare raw values for visual fill.
+    return value > dotValue;
   };
 
   return (
@@ -247,26 +251,24 @@ const SliderWithDots = ({
       >
         <div className="slider-track">
           {/* Точки на треке */}
-          {dots.map((dot, index) => {
-            // Если передан массив предопределенных значений (values),
-            // рисуем точки равномерно по индексу, чтобы не было плотных кластеров.
-            const denom = Math.max(1, dots.length - 1);
-            const leftPercent = values
-              ? (index / denom) * 100
-              : ((dot - min) / (max - min)) * 100;
+          {visualDots.map((dot, index) => {
+            const leftPercent = dot.leftPercent;
+            // Determine active if rounded value equals current value
+            const roundedDot = roundToStep(dot.value);
+            const isActiveDot = roundedDot === value;
 
             return (
               <div
                 key={index}
                 className={`slider-dot ${
-                  value === dot
+                  isActiveDot
                     ? "active"
-                    : isDotCompleted(dot)
+                    : isDotCompleted(dot.value)
                     ? "completed"
                     : ""
                 }`}
                 style={{ left: `${leftPercent}%` }}
-                onClick={() => handleDotClick(dot)}
+                onClick={() => handleDotClick(dot.value)}
               />
             );
           })}

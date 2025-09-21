@@ -1,12 +1,6 @@
 import React from "react";
 
-const StopwatchTimer = ({
-  stopwatchTime,
-  formatStopwatchTime,
-  onPause,
-  onStop,
-  isActive,
-}) => {
+const StopwatchTimer = ({ stopwatchTime, onPause, onStop, isActive }) => {
   const hours = Math.floor(stopwatchTime / 3600);
   const minutes = Math.floor((stopwatchTime % 3600) / 60);
   const seconds = Math.floor(stopwatchTime % 60);
@@ -20,7 +14,7 @@ const StopwatchTimer = ({
           onClick={onStop}
           title="Reset"
         >
-          🔄
+          ⏹
         </button>
         <button
           className="control-btn pause-btn"
@@ -32,9 +26,6 @@ const StopwatchTimer = ({
       </div>
 
       <div className="stopwatch-display">
-        {/* Main time display */}
-        <div className="time-display">{formatStopwatchTime(stopwatchTime)}</div>
-
         {/* Breakdown display */}
         <div className="time-breakdown">
           <div className="time-unit">

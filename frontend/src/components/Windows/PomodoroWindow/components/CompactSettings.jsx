@@ -37,24 +37,6 @@ const CompactSettings = ({
     roundsValues.push(i);
   }
 
-  // Предопределенные значения для часов (0-23, 20 точек)
-  const hourValues = [];
-  for (let i = 0; i < 20; i++) {
-    hourValues.push(Math.floor((i / 19) * 23));
-  }
-
-  // Предопределенные значения для минут (0-59, 20 точек)
-  const minuteValues = [];
-  for (let i = 0; i < 20; i++) {
-    minuteValues.push(Math.floor((i / 19) * 59));
-  }
-
-  // Предопределенные значения для секунд (0-59, 20 точек)
-  const secondValues = [];
-  for (let i = 0; i < 20; i++) {
-    secondValues.push(Math.floor((i / 19) * 59));
-  }
-
   return (
     <div className="compact-settings">
       {activeTab === "pomodoro" && (
@@ -111,7 +93,6 @@ const CompactSettings = ({
             min={0}
             max={23}
             step={1}
-            values={hourValues}
           />
 
           <SliderWithDots
@@ -121,7 +102,6 @@ const CompactSettings = ({
             min={0}
             max={59}
             step={1}
-            values={minuteValues}
           />
 
           <SliderWithDots
@@ -131,7 +111,6 @@ const CompactSettings = ({
             min={0}
             max={59}
             step={1}
-            values={secondValues}
           />
 
           <div className="start-section">

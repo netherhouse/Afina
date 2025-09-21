@@ -102,17 +102,6 @@ function PomodoroWindow({
           icon: "🔔",
         });
       }
-    } else if (activeTab === "stopwatch") {
-      // Stopwatch finished/stop: return to initial state
-      setIsActive(false);
-      setIsStarted(false);
-      setStopwatchTime(0);
-      if (Notification.permission === "granted") {
-        new Notification("Stopwatch Stopped", {
-          body: "Stopwatch reset.",
-          icon: "⏱️",
-        });
-      }
     }
   }, [activeTab, isBreak, currentRound, pomodoroSettings, countdownSettings]);
 
@@ -137,8 +126,15 @@ function PomodoroWindow({
   }, [isActive, activeTab, handleTimerComplete]);
 
   const formatTime = (seconds) => {
-    const mins = Math.floor(seconds / 60);
+    const hours = Math.floor(seconds / 3600);
+    const mins = Math.floor((seconds % 3600) / 60);
     const secs = seconds % 60;
+
+    if (hours > 0) {
+      return `${hours.toString().padStart(2, "0")}:${mins
+        .toString()
+        .padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
+    }
     return `${mins.toString().padStart(2, "0")}:${secs
       .toString()
       .padStart(2, "0")}`;
@@ -255,17 +251,38 @@ function PomodoroWindow({
   };
 
   const handleStop = () => {
+    // Уведомление только для секундомера при ручной остановке
+    if (
+      activeTab === "stopwatch" &&
+      stopwatchTime > 0 &&
+      Notification.permission === "granted"
+    ) {
+      new Notification("Stopwatch Stopped", {
+        body: "Stopwatch reset.",
+        icon: "⏱️",
+      });
+    }
+
     setIsActive(false);
     setIsStarted(false);
     setCurrentRound(1);
     setIsBreak(false);
     setTimeLeft(pomodoroSettings.work * 60);
+
+    // Сбрасываем время секундомера
+    if (activeTab === "stopwatch") {
+      setStopwatchTime(0);
+    }
   };
 
   useEffect(() => {
     // Инициализация времени для разных режимов
     if (activeTab === "countdown") {
-      setTimeLeft(countdownSettings.minutes * 60 + countdownSettings.seconds);
+      setTimeLeft(
+        countdownSettings.hours * 3600 +
+          countdownSettings.minutes * 60 +
+          countdownSettings.seconds
+      );
     } else if (activeTab === "pomodoro") {
       setTimeLeft(pomodoroSettings.work * 60);
     }
@@ -363,7 +380,6 @@ function PomodoroWindow({
             {activeTab === "stopwatch" && (
               <StopwatchTimer
                 stopwatchTime={stopwatchTime}
-                formatStopwatchTime={formatStopwatchTime}
                 onPause={handlePause}
                 onStop={handleStop}
                 isActive={isActive}

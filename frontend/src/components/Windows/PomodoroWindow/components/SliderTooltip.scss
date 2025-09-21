@@ -5,7 +5,7 @@
   pointer-events: none;
 
   /* vertical offset above the slider handle — configurable via CSS */
-  --tooltip-top: -40px; /* default, can be overridden by parent/context */
+  --tooltip-top: -50px; /* default, can be overridden by parent/context */
 
   /* Place tooltip vertically using top; JS will set only the horizontal left */
   top: var(--tooltip-top);
@@ -38,7 +38,7 @@
   &__arrow {
     position: absolute;
     top: 100%;
-    left: 50%;
+    left: 30%;
     transform: translateX(-50%);
     width: 0;
     height: 0;
