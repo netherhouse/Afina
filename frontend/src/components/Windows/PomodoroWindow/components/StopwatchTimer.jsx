@@ -20,7 +20,7 @@ const StopwatchTimer = ({
           onClick={onStop}
           title="Reset"
         >
-          ⏹
+          🔄
         </button>
         <button
           className="control-btn pause-btn"
