@@ -13,7 +13,10 @@ const SliderWithDots = ({
   const [isDragging, setIsDragging] = useState(false);
   const [dragPercent, setDragPercent] = useState(null); // Локальная позиция во время перетаскивания
   const [showTooltip, setShowTooltip] = useState(false);
-  const [hideTooltipTimeout, setHideTooltipTimeout] = useState(null);
+  // Use a ref for the hide-tooltip timeout to avoid triggering re-renders
+  // when the timeout ID changes (which previously caused the maximum
+  // update depth exceeded error).
+  const hideTooltipTimeoutRef = useRef(null);
   const sliderRef = useRef(null);
   const handleRef = useRef(null);
 
@@ -61,18 +64,21 @@ const SliderWithDots = ({
 
   // Управление tooltip
   const showTooltipWithDelay = useCallback(() => {
-    if (hideTooltipTimeout) {
-      clearTimeout(hideTooltipTimeout);
-      setHideTooltipTimeout(null);
+    if (hideTooltipTimeoutRef.current) {
+      clearTimeout(hideTooltipTimeoutRef.current);
+      hideTooltipTimeoutRef.current = null;
     }
     setShowTooltip(true);
-  }, [hideTooltipTimeout]);
+  }, []);
 
   const hideTooltipWithDelay = useCallback((delay = 200) => {
-    const timeout = setTimeout(() => {
+    if (hideTooltipTimeoutRef.current) {
+      clearTimeout(hideTooltipTimeoutRef.current);
+    }
+    hideTooltipTimeoutRef.current = setTimeout(() => {
       setShowTooltip(false);
+      hideTooltipTimeoutRef.current = null;
     }, delay);
-    setHideTooltipTimeout(timeout);
   }, []);
 
   const shouldShowTooltip = isDragging; // Показываем tooltip только во время перетаскивания
@@ -217,11 +223,11 @@ const SliderWithDots = ({
   // Cleanup timeout при unmount
   React.useEffect(() => {
     return () => {
-      if (hideTooltipTimeout) {
-        clearTimeout(hideTooltipTimeout);
+      if (hideTooltipTimeoutRef.current) {
+        clearTimeout(hideTooltipTimeoutRef.current);
       }
     };
-  }, [hideTooltipTimeout]);
+  }, []);
 
   const handleDotClick = (dotValue) => {
     // dotValue here might be an exact value (from visualDots). Map it to nearest step
