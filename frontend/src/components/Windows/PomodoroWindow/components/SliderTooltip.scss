@@ -3,6 +3,13 @@
   position: absolute;
   z-index: 1000;
   pointer-events: none;
+
+  /* vertical offset above the slider handle — configurable via CSS */
+  --tooltip-top: -40px; /* default, can be overridden by parent/context */
+
+  /* Place tooltip vertically using top; JS will set only the horizontal left */
+  top: var(--tooltip-top);
+
   opacity: 0;
   transform: translate(-50%, 0) scale(0.8);
   transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
@@ -26,9 +33,6 @@
       0 4px 8px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2);
     border: 2px solid rgba(255, 255, 255, 0.15);
     backdrop-filter: blur(8px);
-
-    // Градиентный текст для лучшей читаемости
-    color: white;
   }
 
   &__arrow {

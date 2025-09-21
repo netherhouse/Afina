@@ -20,14 +20,12 @@ const SliderTooltip = ({
       const containerRect = containerRef.current.getBoundingClientRect();
       const handleRect = handleRef.current.getBoundingClientRect();
 
-      // Позиция tooltip относительно контейнера слайдера
+      // Позиция tooltip относительно контейнера слайдера (только по горизонтали)
       const relativeLeft =
         handleRect.left - containerRect.left + handleRect.width / 2;
-      const relativeTop = -40; // Фиксированная высота над слайдером
 
       setTooltipPosition({
         left: relativeLeft,
-        top: relativeTop,
       });
     };
 
@@ -45,7 +43,6 @@ const SliderTooltip = ({
       className={`slider-tooltip ${visible ? "slider-tooltip--visible" : ""}`}
       style={{
         left: `${tooltipPosition.left}px`,
-        top: `${tooltipPosition.top}px`,
       }}
       aria-live="polite"
       role="tooltip"
