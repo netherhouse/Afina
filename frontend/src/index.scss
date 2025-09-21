@@ -4,6 +4,26 @@
   box-sizing: border-box;
 }
 
+/* Disable user selection globally to prevent accidental text highlighting.
+   Allow selection for interactive/form elements and any element explicitly
+   marked with the .allow-select class or [contenteditable]. */
+*,
+*:before,
+*:after {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Re-enable selection for inputs, textareas, selects, and contenteditable regions */
+input, textarea, select, button, a, [contenteditable], .allow-select {
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
+}
+
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
