@@ -6,8 +6,6 @@ const TimerDisplay = ({
   timeLeft,
   formatStopwatchTime,
   formatTime,
-  currentRound,
-  pomodoroSettings,
   isBreak,
 }) => {
   return (
@@ -20,9 +18,7 @@ const TimerDisplay = ({
 
       {activeTab === "pomodoro" && (
         <div className="timer-status">
-          <span className="round-info">
-            Round {currentRound}/{pomodoroSettings.rounds}
-          </span>
+          {/* round info removed from UI while keeping rounds logic */}
           <span className="mode-info">{isBreak ? "Break" : "Work"}</span>
         </div>
       )}

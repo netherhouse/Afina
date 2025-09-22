@@ -109,11 +109,7 @@ const CircularTimer = ({
             </div>
           )}
           <div className="time-display">{timeText}</div>
-          {activeTab === "pomodoro" && (
-            <div className="rounds-text">
-              Round {currentRound}/{totalRounds}
-            </div>
-          )}
+          {/* rounds count removed from visual UI - logic preserved elsewhere */}
         </div>
       </div>
     </div>
