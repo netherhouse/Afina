@@ -322,6 +322,7 @@ function PomodoroWindow({
     <Window
       id={id}
       title="Timer"
+      className="pomodoro-window"
       onClose={onClose}
       onMove={onMove}
       onResize={onResize}

@@ -17,6 +17,7 @@ const Window = ({
   minHeight = 240,
   maxWidth = 1200,
   maxHeight = 800,
+  className = "",
 }) => {
   const [position, setPosition] = useState(initialPosition);
   const [size, setSize] = useState(initialSize || { width: 400, height: 300 });
@@ -212,7 +213,7 @@ const Window = ({
 
   return (
     <div
-      className={`window ${!isResizable ? "not-resizable" : ""}`}
+      className={`window ${!isResizable ? "not-resizable" : ""} ${className}`}
       style={{
         position: "absolute",
         top: position.y,
