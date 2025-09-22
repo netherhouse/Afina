@@ -279,8 +279,8 @@
       box-shadow: 0 6px 20px rgba(16, 185, 129, 0.25),
         0 6px 12px rgba(0, 0, 0, 0.45);
 
-      /* не даём ручке выходить за границы контейнера */
-      left: clamp(0%, var(--progress, 0%), 100%);
+      /* Позиция ручки основана на значении слайдера (0-100%) */
+      left: clamp(0%, var(--handle-position, 0%), 100%);
 
       &:active {
         cursor: grabbing;

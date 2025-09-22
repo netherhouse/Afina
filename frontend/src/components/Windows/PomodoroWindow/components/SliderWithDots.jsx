@@ -53,13 +53,50 @@ const SliderWithDots = ({
     [min, max, step]
   );
 
-  // Получить позицию ползунка (0-100%)
+  // Получить позицию ползунка (0-100%) для центра ручки
   const getSliderPosition = () => {
     // Во время перетаскивания используем локальную позицию
     if (isDragging && dragPercent !== null) {
       return dragPercent;
     }
     return ((value - min) / (max - min)) * 100;
+  };
+
+  // Вычислить корректную позицию для CSS --progress с учетом размеров ручки
+  // Цель: заполнение должно доходить до центра ручки на промежуточных позициях.
+  // Доп. требование: если активна первая точка — 0%, если последняя — 100%.
+  const getProgressPercent = () => {
+    const basePercent = getSliderPosition();
+
+    if (!sliderRef.current) {
+      return basePercent;
+    }
+
+    // Жестко выставляем 0%/100% на крайних значениях
+    // 1) Когда значение слайдера равно минимуму/максимуму (щелчок по первой/последней точке)
+    if (!isDragging) {
+      if (value === min) return 0;
+      if (value === max) return 100;
+    } else if (isDragging && dragPercent !== null) {
+      // 2) Во время перетаскивания — если дошли до визуальных краев
+      if (dragPercent <= 0.5) return 0; // допускаем небольшой порог
+      if (dragPercent >= 99.5) return 100;
+    }
+
+    // Получаем размеры трека (эффективная область без padding)
+    const containerPadding = 12; // padding: 6px 12px в CSS
+    const containerWidth = sliderRef.current.getBoundingClientRect().width;
+    const trackWidth = containerWidth - containerPadding * 2;
+
+    // Позиция центра ручки в пикселях внутри трека
+    const handleCenterPx = (basePercent / 100) * trackWidth;
+
+    // Позиция для градиента: от левого края контейнера до центра ручки
+    // Учитываем padding + позицию центра ручки
+    const fillToCenterPx = containerPadding + handleCenterPx;
+    const fillPercent = (fillToCenterPx / containerWidth) * 100;
+
+    return Math.max(0, Math.min(100, fillPercent));
   };
 
   // Управление tooltip
@@ -247,7 +284,10 @@ const SliderWithDots = ({
       <div
         className="slider-container"
         ref={sliderRef}
-        style={{ "--progress": `${getSliderPosition()}%` }}
+        style={{
+          "--progress": `${getProgressPercent()}%`,
+          "--handle-position": `${getSliderPosition()}%`,
+        }}
         tabIndex={0}
         role="slider"
         aria-valuemin={min}
