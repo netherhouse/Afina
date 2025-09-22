@@ -1,4 +1,10 @@
-import React, { useState, useCallback, useRef, useMemo } from "react";
+import React, {
+  useState,
+  useCallback,
+  useRef,
+  useMemo,
+  useLayoutEffect,
+} from "react";
 import SliderTooltip from "./SliderTooltip";
 
 const SliderWithDots = ({
@@ -54,18 +60,18 @@ const SliderWithDots = ({
   );
 
   // Получить позицию ползунка (0-100%) для центра ручки
-  const getSliderPosition = () => {
+  const getSliderPosition = useCallback(() => {
     // Во время перетаскивания используем локальную позицию
     if (isDragging && dragPercent !== null) {
       return dragPercent;
     }
     return ((value - min) / (max - min)) * 100;
-  };
+  }, [isDragging, dragPercent, value, min, max]);
 
   // Вычислить корректную позицию для CSS --progress с учетом размеров ручки
   // Цель: заполнение должно доходить до центра ручки на промежуточных позициях.
   // Доп. требование: если активна первая точка — 0%, если последняя — 100%.
-  const getProgressPercent = () => {
+  const getProgressPercent = useCallback(() => {
     const basePercent = getSliderPosition();
 
     if (!sliderRef.current) {
@@ -97,7 +103,7 @@ const SliderWithDots = ({
     const fillPercent = (fillToCenterPx / containerWidth) * 100;
 
     return Math.max(0, Math.min(100, fillPercent));
-  };
+  }, [getSliderPosition, sliderRef, isDragging, dragPercent, value, min, max]);
 
   // Управление tooltip
   const showTooltipWithDelay = useCallback(() => {
@@ -266,6 +272,40 @@ const SliderWithDots = ({
     };
   }, []);
 
+  // На каждом изменении value/границ/перетаскивания и при изменении размера контейнера
+  // обновляем CSS-переменные, чтобы начальная отрисовка была корректной без кликов
+  useLayoutEffect(() => {
+    const el = sliderRef.current;
+    if (!el) return;
+
+    // Выставляем переменные
+    const progress = getProgressPercent();
+    const handlePos = getSliderPosition();
+    el.style.setProperty("--progress", `${progress}%`);
+    el.style.setProperty("--handle-position", `${handlePos}%`);
+
+    // Следим за ресайзом контейнера, чтобы пересчитать прогресс
+    const ro = new ResizeObserver(() => {
+      const p = getProgressPercent();
+      const h = getSliderPosition();
+      el.style.setProperty("--progress", `${p}%`);
+      el.style.setProperty("--handle-position", `${h}%`);
+    });
+    ro.observe(el);
+
+    return () => {
+      ro.disconnect();
+    };
+  }, [
+    value,
+    min,
+    max,
+    isDragging,
+    dragPercent,
+    getProgressPercent,
+    getSliderPosition,
+  ]);
+
   const handleDotClick = (dotValue) => {
     // dotValue here might be an exact value (from visualDots). Map it to nearest step
     const nearest = roundToStep(dotValue);
@@ -284,10 +324,6 @@ const SliderWithDots = ({
       <div
         className="slider-container"
         ref={sliderRef}
-        style={{
-          "--progress": `${getProgressPercent()}%`,
-          "--handle-position": `${getSliderPosition()}%`,
-        }}
         tabIndex={0}
         role="slider"
         aria-valuemin={min}
