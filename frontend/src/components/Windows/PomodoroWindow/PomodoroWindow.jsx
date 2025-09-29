@@ -339,6 +339,7 @@ function PomodoroWindow({
           tabs={tabs}
           activeTab={activeTab}
           onTabSwitch={switchTab}
+          isTimerRunning={isStarted}
         />
 
         {!isStarted ? (

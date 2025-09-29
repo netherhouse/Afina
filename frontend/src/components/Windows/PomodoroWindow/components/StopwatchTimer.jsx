@@ -9,11 +9,7 @@ const StopwatchTimer = ({ stopwatchTime, onPause, onStop, isActive }) => {
     <div className="stopwatch-timer">
       {/* Top controls */}
       <div className="top-controls">
-        <button
-          className="control-btn reset-btn"
-          onClick={onStop}
-          title="Reset"
-        >
+        <button className="control-btn stop-btn" onClick={onStop} title="Reset">
           ⏹
         </button>
         <button
