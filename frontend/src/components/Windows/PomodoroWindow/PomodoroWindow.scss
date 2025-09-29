@@ -143,42 +143,102 @@
       flex: 0 0 auto;
       width: 56px;
       height: 56px;
-      background: linear-gradient(135deg, #10b981, #059669);
-      border: 3px solid #ffffff;
+      background: linear-gradient(
+        135deg,
+        #10b981 0%,
+        #059669 50%,
+        #047857 100%
+      );
+      border: none;
       border-radius: 12px;
       color: white;
       font-size: 20px;
       font-weight: 700;
       cursor: pointer;
-      transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 8px 20px rgba(16, 185, 129, 0.25),
-        0 4px 8px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+      box-shadow: 0 8px 25px rgba(16, 185, 129, 0.3),
+        0 4px 15px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.3);
       position: relative;
       overflow: hidden;
+      transform: translateZ(0);
+
+      &::before {
+        content: "";
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: conic-gradient(
+          from 0deg,
+          transparent 0deg,
+          rgba(255, 255, 255, 0.2) 90deg,
+          transparent 180deg
+        );
+        transform: rotate(-45deg);
+        transition: transform 0.8s ease;
+        opacity: 0;
+      }
+
+      &::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: 12px;
+        background: linear-gradient(
+          45deg,
+          transparent 30%,
+          rgba(255, 255, 255, 0.1) 50%,
+          transparent 70%
+        );
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
 
       &.large {
         width: auto;
         height: 46px;
         padding: 0 20px;
         font-size: 15px;
-        border-radius: 20px;
+        border-radius: 8px;
       }
 
       &:hover {
-        transform: translateY(-2px) scale(1.03);
-        box-shadow: 0 14px 32px rgba(16, 185, 129, 0.4);
+        transform: translateY(-3px) scale(1.08) rotateX(5deg);
+        box-shadow: 0 15px 40px rgba(16, 185, 129, 0.5),
+          0 8px 20px rgba(0, 0, 0, 0.3), inset 0 2px 0 rgba(255, 255, 255, 0.4);
+        background: linear-gradient(
+          135deg,
+          #0ecf87 0%,
+          #10b981 50%,
+          #059669 100%
+        );
+
+        &::before {
+          opacity: 1;
+          transform: rotate(315deg);
+        }
+
+        &::after {
+          opacity: 1;
+        }
       }
 
       &:active {
-        transform: translateY(-1px) scale(1.01);
+        transform: translateY(-1px) scale(1.05);
+        box-shadow: 0 6px 20px rgba(16, 185, 129, 0.6),
+          0 3px 10px rgba(0, 0, 0, 0.4), inset 0 2px 4px rgba(0, 0, 0, 0.1);
+        transition: all 0.15s ease;
       }
 
       &:focus-visible {
         outline: none;
-        box-shadow: var(--ring-green), 0 14px 32px rgba(16, 185, 129, 0.4);
+        box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.5),
+          0 15px 40px rgba(16, 185, 129, 0.5), 0 8px 20px rgba(0, 0, 0, 0.3),
+          inset 0 2px 0 rgba(255, 255, 255, 0.4);
       }
 
       &:disabled {
@@ -366,19 +426,36 @@
     gap: 16px;
 
     .control-btn {
-      width: 44px;
-      height: 44px;
-      border-radius: 14px;
-      border: 3px solid #ffffff;
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      border: none;
       cursor: pointer;
       font-size: 18px;
-      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
       display: flex;
       align-items: center;
       justify-content: center;
       position: relative;
       overflow: hidden;
-      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
+
+      &::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: 12px;
+        background: linear-gradient(
+          45deg,
+          transparent 30%,
+          rgba(255, 255, 255, 0.1) 50%,
+          transparent 70%
+        );
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
 
       &:active {
         transform: translateY(-1px) scale(1.02);
@@ -398,15 +475,26 @@
       &.pause-btn {
         background: linear-gradient(
           135deg,
-          rgba(16, 185, 129, 0.2),
-          rgba(16, 185, 129, 0.12)
+          rgba(16, 185, 129, 0.25),
+          rgba(16, 185, 129, 0.15)
         );
         color: #10b981;
-        box-shadow: 0 6px 16px rgba(16, 185, 129, 0.25);
+        box-shadow: 0 6px 20px rgba(16, 185, 129, 0.2),
+          inset 0 1px 0 rgba(255, 255, 255, 0.3);
 
         &:hover {
-          transform: translateY(-2px) scale(1.05);
-          box-shadow: 0 8px 20px rgba(16, 185, 129, 0.35);
+          transform: translateY(-3px) scale(1.1) rotateX(5deg);
+          background: linear-gradient(
+            135deg,
+            rgba(16, 185, 129, 0.35),
+            rgba(16, 185, 129, 0.25)
+          );
+          box-shadow: 0 10px 30px rgba(16, 185, 129, 0.4),
+            inset 0 2px 0 rgba(255, 255, 255, 0.4);
+
+          &::before {
+            opacity: 1;
+          }
         }
 
         &:focus-visible {
@@ -417,15 +505,26 @@
       &.stop-btn {
         background: linear-gradient(
           135deg,
-          rgba(239, 68, 68, 0.2),
-          rgba(239, 68, 68, 0.12)
+          rgba(239, 68, 68, 0.25),
+          rgba(239, 68, 68, 0.15)
         );
         color: #ef4444;
-        box-shadow: 0 6px 16px rgba(239, 68, 68, 0.25);
+        box-shadow: 0 6px 20px rgba(239, 68, 68, 0.2),
+          inset 0 1px 0 rgba(255, 255, 255, 0.3);
 
         &:hover {
-          transform: translateY(-2px) scale(1.05);
-          box-shadow: 0 8px 20px rgba(239, 68, 68, 0.35);
+          transform: translateY(-3px) scale(1.1) rotateX(5deg);
+          background: linear-gradient(
+            135deg,
+            rgba(239, 68, 68, 0.35),
+            rgba(239, 68, 68, 0.25)
+          );
+          box-shadow: 0 10px 30px rgba(239, 68, 68, 0.4),
+            inset 0 2px 0 rgba(255, 255, 255, 0.4);
+
+          &::before {
+            opacity: 1;
+          }
         }
 
         &:focus-visible {
