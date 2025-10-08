@@ -5,11 +5,13 @@ import TabNavigation from "./components/TabNavigation";
 import TimerDisplay from "./components/TimerDisplay";
 import SettingsPanel from "./components/SettingsPanel";
 import ControlButtons from "./components/ControlButtons";
+import { GiTomato } from "react-icons/gi";
+import { MdTimer, MdAccessTime, MdAlarm } from "react-icons/md";
 
 const tabs = [
-  { id: "pomodoro", label: "Pomodoro", icon: "🍅" },
-  { id: "countdown", label: "Countdown", icon: "⏰" },
-  { id: "stopwatch", label: "Stopwatch", icon: "⏱️" },
+  { id: "pomodoro", label: "Pomodoro", icon: <GiTomato /> },
+  { id: "countdown", label: "Countdown", icon: <MdTimer /> },
+  { id: "stopwatch", label: "Stopwatch", icon: <MdAccessTime /> },
 ];
 
 function PomodoroWindow({
@@ -68,7 +70,6 @@ function PomodoroWindow({
               ? "Time for a break!"
               : "Back to work!"
             : "Timer finished!",
-        icon: "🔔",
       });
     }
   }, [activeTab, isBreak, currentRound, pomodoroSettings]);
@@ -180,7 +181,7 @@ function PomodoroWindow({
     <Window
       id={id}
       title="Timer"
-      icon="⏰"
+      icon={<MdAlarm />}
       onClose={onClose}
       onMove={onMove}
       onResize={onResize}
@@ -207,6 +208,7 @@ function PomodoroWindow({
           currentRound={currentRound}
           pomodoroSettings={pomodoroSettings}
           isBreak={isBreak}
+          isActive={isActive}
         />
 
         <SettingsPanel
@@ -216,6 +218,7 @@ function PomodoroWindow({
           getTotalPomodoroTime={getTotalPomodoroTime}
           countdownSettings={countdownSettings}
           updateCountdownSetting={updateCountdownSetting}
+          isActive={isActive}
         />
 
         <ControlButtons

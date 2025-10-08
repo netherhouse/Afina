@@ -15,15 +15,14 @@ import financesIconPath from "../../assets/buttons/finances.svg";
 
 import { UseFullscreen } from "./useFullscreen";
 import ShowTime from "./showTime.jsx";
-import ShowLocation from "./showLocation.jsx"
+import ShowLocation from "./showLocation.jsx";
 
-function BottomPanel({ openWindow, activeWindows }) {
+function BottomPanel({ openWindow, activeWindows = [], activeWindow = null }) {
   const { isFullscreen, toggleFullscreen } = UseFullscreen();
 
   return (
     <div className="bottom-panel">
       <div className="bottom-panel__icons">
-
         {/* Left side */}
         <div className="bottom-panel__icon-button">
           <img src={playIconPath} alt="Next Song" width={16} height={16} />
@@ -36,7 +35,7 @@ function BottomPanel({ openWindow, activeWindows }) {
         <div
           className={`bottom-panel__icon-button ${
             activeWindows?.includes("music") ? "active" : ""
-          }`}
+          } ${activeWindow === "music" ? "focused" : ""}`}
           onClick={() => openWindow("music")}
         >
           <img src={mixerIconPath} alt="Mixer" width={16} height={16} />
@@ -45,7 +44,7 @@ function BottomPanel({ openWindow, activeWindows }) {
         <div
           className={`bottom-panel__icon-button ${
             activeWindows?.includes("pomodoro") ? "active" : ""
-          }`}
+          } ${activeWindow === "pomodoro" ? "focused" : ""}`}
           onClick={() => openWindow("pomodoro")}
         >
           <img src={clockIconPath} alt="Clock" width={16} height={16} />
@@ -76,7 +75,7 @@ function BottomPanel({ openWindow, activeWindows }) {
         <div
           className={`bottom-panel__icon-button ${
             activeWindows?.includes("user") ? "active" : ""
-          }`}
+          } ${activeWindow === "user" ? "focused" : ""}`}
           onClick={() => openWindow("user")}
         >
           <img src={userIconPath} alt="Profile" width={18} height={18} />
