@@ -12,14 +12,11 @@ const Window = ({
   onFocus,
   position: initialPosition,
   size: initialSize,
-  zIndex = 1000, // Убедитесь, что есть значение по умолчанию
-  isActive = false,
   children,
   minWidth = 320,
   minHeight = 240,
   maxWidth = 1200,
   maxHeight = 800,
-  visible = true,
 }) => {
   const [position, setPosition] = useState(initialPosition);
   const [size, setSize] = useState(initialSize || { width: 400, height: 300 });
@@ -79,6 +76,9 @@ const Window = ({
   };
 
   const handleResizeStart = (e, direction) => {
+    // No-op if resizing is disabled for this window
+    if (!isResizable) return;
+
     e.preventDefault();
     e.stopPropagation();
     setIsResizing(true);
@@ -233,7 +233,7 @@ const Window = ({
 
   return (
     <div
-      className={`window ${isActive ? "window--active" : ""}`}
+      className="window"
       style={{
         position: "absolute",
         top: position.y,
