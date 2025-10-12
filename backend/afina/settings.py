@@ -104,3 +104,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_REDIRECT_URL = "/afina"
 LOGOUT_REDIRECT_URL = "/accounts/login/"
 CRISPY_TEMPLATE_PACK = 'bootstrap5'
+
+# Increase maximum accepted request/upload sizes to 50MB to avoid 413 "Request Entity Too Large"
+# Adjust these values according to your deployment needs. Setting to None delegates limits to the
+# web server / reverse proxy (nginx, etc.). Default DATA_UPLOAD_MAX_MEMORY_SIZE is ~2.5MB.
+DATA_UPLOAD_MAX_MEMORY_SIZE = 50 * 1024 * 1024  # 50 MB
+FILE_UPLOAD_MAX_MEMORY_SIZE = 50 * 1024 * 1024  # 50 MB

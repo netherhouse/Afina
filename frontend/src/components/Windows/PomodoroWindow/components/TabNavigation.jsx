@@ -1,4 +1,6 @@
 import React from "react";
+import { GiTomato } from "react-icons/gi";
+import { MdAccessTime, MdTimer } from "react-icons/md";
 
 const TabNavigation = ({ tabs, activeTab, onTabSwitch, isTimerRunning }) => {
   const handleTabClick = (tabId) => {

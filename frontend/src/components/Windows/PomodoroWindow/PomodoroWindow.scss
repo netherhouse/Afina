@@ -325,6 +325,7 @@
 // Ползунок с точками
 .slider-with-dots {
   display: flex;
+  gap: 10px;
   flex-direction: column;
 
   .slider-label {
@@ -1127,6 +1128,77 @@
     justify-content: center;
     flex: 1;
     min-height: 120px;
+    gap: 20px;
+
+    .time-breakdown {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 24px;
+
+      .time-unit {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+        padding: 12px 16px;
+        background: rgba(255, 255, 255, 0.03);
+        border-radius: 12px;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        min-width: 70px;
+
+        .unit-value {
+          font-size: 2rem;
+          font-weight: 600;
+          font-family: "Inter", "SF Mono", "Monaco", "Consolas", monospace;
+          color: #f8fafc;
+          line-height: 1;
+          text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .unit-label {
+          font-size: 0.75rem;
+          color: rgba(255, 255, 255, 0.5);
+          text-transform: uppercase;
+          letter-spacing: 0.1em;
+          font-weight: 500;
+        }
+      }
+    }
+
+    .status-indicator {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      background: rgba(255, 255, 255, 0.02);
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+
+      .status-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        transition: all 0.3s ease;
+
+        &.active {
+          background: #10b981;
+          box-shadow: 0 0 12px rgba(16, 185, 129, 0.8);
+          animation: pulse 2s infinite;
+        }
+
+        &.paused {
+          background: rgba(255, 255, 255, 0.4);
+        }
+      }
+
+      .status-text {
+        font-size: 13px;
+        color: rgba(255, 255, 255, 0.7);
+        font-weight: 500;
+        text-transform: capitalize;
+      }
+    }
 
     .time-value {
       font-size: 3.5rem;
@@ -1321,5 +1393,18 @@
     .stopwatch-display .time-display {
       font-size: 32px;
     }
+  }
+}
+
+// Animations
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.1);
   }
 }

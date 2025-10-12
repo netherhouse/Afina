@@ -6,9 +6,8 @@ import CircularTimer from "./components/CircularTimer";
 import CountdownTimer from "./components/CountdownTimer";
 import StopwatchTimer from "./components/StopwatchTimer";
 import TabNavigation from "./components/TabNavigation";
-import TimerDisplay from "./components/TimerDisplay";
-import SettingsPanel from "./components/SettingsPanel";
-import ControlButtons from "./components/ControlButtons";
+import { GiTomato } from "react-icons/gi";
+import { MdAccessTime, MdTimer } from "react-icons/md";
 
 const tabs = [
   { id: "pomodoro", label: "Pomodoro", icon: <GiTomato /> },
@@ -75,28 +74,36 @@ function PomodoroWindow({
       } else {
         // Завершился перерыв - переходим к следующему раунду
         setIsBreak(false);
-        if (currentRound < pomodoroSettings.rounds) {
-          setCurrentRound((prev) => prev + 1);
-          setTimeLeft(pomodoroSettings.work * 60);
-        } else {
-          setCurrentRound(1);
-          setTimeLeft(pomodoroSettings.work * 60);
-        }
+        setCurrentRound((prev) => prev + 1);
+        setTimeLeft(pomodoroSettings.work * 60);
+      }
+
+      if (Notification.permission === "granted") {
+        new Notification("Timer Complete!", {
+          body: isBreak
+            ? "Break over! Time for work!"
+            : "Work done! Time for a break!",
+          icon: "🔔",
+        });
+      }
+    } else if (activeTab === "countdown") {
+      // Countdown finished: stop and return to settings view
+      setIsActive(false);
+      setIsStarted(false);
+      // reset display to configured countdown settings
+      setTimeLeft(
+        countdownSettings.hours * 3600 +
+          countdownSettings.minutes * 60 +
+          countdownSettings.seconds
+      );
+      if (Notification.permission === "granted") {
+        new Notification("Countdown Complete!", {
+          body: "Timer finished.",
+          icon: "🔔",
+        });
       }
     }
-
-    if (Notification.permission === "granted") {
-      new Notification("Timer Complete!", {
-        body:
-          activeTab === "pomodoro"
-            ? isBreak
-              ? "Time for a break!"
-              : "Back to work!"
-            : "Timer finished!",
-        icon: "🔔",
-      });
-    }
-  }, [activeTab, isBreak, currentRound, pomodoroSettings]);
+  }, [activeTab, isBreak, currentRound, pomodoroSettings, countdownSettings]);
 
   useEffect(() => {
     let interval = null;
@@ -146,7 +153,6 @@ function PomodoroWindow({
     setPomodoroSettings((prev) => {
       let newValue = prev[key] + delta;
 
-      // Применяем ограничения для каждого параметра
       if (key === "work") {
         newValue = Math.max(5, Math.min(150, newValue));
       } else if (key === "break") {
@@ -157,7 +163,6 @@ function PomodoroWindow({
 
       const newSettings = { ...prev, [key]: newValue };
 
-      // Обновляем время только если таймер не запущен и мы в рабочем режиме
       if (!isStarted && !isBreak && key === "work") {
         setTimeLeft(newValue * 60);
       }
@@ -244,7 +249,6 @@ function PomodoroWindow({
   };
 
   const handleStop = () => {
-    // Уведомление только для секундомера при ручной остановке
     if (
       activeTab === "stopwatch" &&
       stopwatchTime > 0 &&
@@ -262,14 +266,12 @@ function PomodoroWindow({
     setIsBreak(false);
     setTimeLeft(pomodoroSettings.work * 60);
 
-    // Сбрасываем время секундомера
     if (activeTab === "stopwatch") {
       setStopwatchTime(0);
     }
   };
 
   useEffect(() => {
-    // Инициализация времени для разных режимов
     if (activeTab === "countdown") {
       setTimeLeft(
         countdownSettings.hours * 3600 +
@@ -315,7 +317,7 @@ function PomodoroWindow({
     <Window
       id={id}
       title="Timer"
-      icon="⏰"
+      className="pomodoro-window"
       onClose={onClose}
       onMove={onMove}
       onResize={onResize}
@@ -335,32 +337,53 @@ function PomodoroWindow({
           isTimerRunning={isStarted}
         />
 
-        <TimerDisplay
-          activeTab={activeTab}
-          stopwatchTime={stopwatchTime}
-          timeLeft={timeLeft}
-          formatStopwatchTime={formatStopwatchTime}
-          formatTime={formatTime}
-          currentRound={currentRound}
-          pomodoroSettings={pomodoroSettings}
-          isBreak={isBreak}
-        />
-
-        <SettingsPanel
-          activeTab={activeTab}
-          pomodoroSettings={pomodoroSettings}
-          updatePomodoroSetting={updatePomodoroSetting}
-          getTotalPomodoroTime={getTotalPomodoroTime}
-          countdownSettings={countdownSettings}
-          updateCountdownSetting={updateCountdownSetting}
-        />
-
-        <ControlButtons
-          isActive={isActive}
-          onToggle={toggleTimer}
-          onReset={resetTimer}
-          activeTab={activeTab}
-        />
+        {!isStarted ? (
+          <CompactSettings
+            activeTab={activeTab}
+            settings={pomodoroSettings}
+            countdownSettings={countdownSettings}
+            onUpdate={updatePomodoroSetting}
+            onUpdateCountdown={updateCountdownSetting}
+            onStart={handleStart}
+          />
+        ) : (
+          <>
+            {activeTab === "pomodoro" && (
+              <CircularTimer
+                activeTab={activeTab}
+                timeLeft={timeLeft}
+                totalTime={getTotalTime()}
+                currentRound={currentRound}
+                totalRounds={pomodoroSettings.rounds}
+                isBreak={isBreak}
+                formatTime={formatTime}
+                formatStopwatchTime={formatStopwatchTime}
+                stopwatchTime={stopwatchTime}
+                onPause={handlePause}
+                onStop={handleStop}
+                isActive={isActive}
+              />
+            )}
+            {activeTab === "countdown" && (
+              <CountdownTimer
+                timeLeft={timeLeft}
+                totalTime={getTotalTime()}
+                formatTime={formatTime}
+                onPause={handlePause}
+                onStop={handleStop}
+                isActive={isActive}
+              />
+            )}
+            {activeTab === "stopwatch" && (
+              <StopwatchTimer
+                stopwatchTime={stopwatchTime}
+                onPause={handlePause}
+                onStop={handleStop}
+                isActive={isActive}
+              />
+            )}
+          </>
+        )}
       </div>
     </Window>
   );
