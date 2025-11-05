@@ -58,7 +58,6 @@ const WindowManager = forwardRef((props, ref) => {
     setWindowStates((prev) => {
       const newStates = { ...prev };
 
-      // Находим максимальный z-index среди видимых окон
       const maxZIndex = Math.max(
         ...Object.values(newStates)
           .filter((state) => state.visible)
@@ -66,7 +65,6 @@ const WindowManager = forwardRef((props, ref) => {
         BASE_Z_INDEX
       );
 
-      // Устанавливаем активному окну максимальный z-index + 1
       newStates[id] = {
         ...newStates[id],
         zIndex: maxZIndex + 1,
@@ -76,7 +74,6 @@ const WindowManager = forwardRef((props, ref) => {
       return newStates;
     });
 
-    // Передаем информацию об активных окнах
     if (props.onActiveWindowsChange) {
       props.onActiveWindowsChange(getActiveWindows(), id);
     }
@@ -90,7 +87,6 @@ const WindowManager = forwardRef((props, ref) => {
       setWindowStates((prev) => {
         const newStates = { ...prev };
 
-        // Находим максимальный z-index
         const maxZIndex = Math.max(
           ...Object.values(newStates)
             .filter((state) => state.visible)
@@ -110,7 +106,6 @@ const WindowManager = forwardRef((props, ref) => {
         return newStates;
       });
 
-      // Передаем информацию об активных окнах
       setTimeout(() => {
         if (props.onActiveWindowsChange) {
           const activeWindows = getActiveWindows();
@@ -128,7 +123,6 @@ const WindowManager = forwardRef((props, ref) => {
       [id]: { ...prev[id], visible: false },
     }));
 
-    // Если закрываем активное окно, находим новое активное
     if (activeWindow === id) {
       const remainingWindows = Object.keys(windowStates)
         .filter((windowId) => windowId !== id && windowStates[windowId].visible)
@@ -142,7 +136,6 @@ const WindowManager = forwardRef((props, ref) => {
       setActiveWindow(newActiveWindow);
     }
 
-    // Обновляем информацию об активных окнах
     setTimeout(() => {
       if (props.onActiveWindowsChange) {
         const activeWindows = Object.keys(windowStates).filter(
@@ -175,7 +168,6 @@ const WindowManager = forwardRef((props, ref) => {
     }));
   };
 
-  // Логирование для отладки
   useEffect(() => {
     console.log("Window states updated:", windowStates);
     console.log("Active window:", activeWindow);

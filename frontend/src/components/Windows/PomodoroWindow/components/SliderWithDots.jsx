@@ -307,14 +307,11 @@ const SliderWithDots = ({
   ]);
 
   const handleDotClick = (dotValue) => {
-    // dotValue here might be an exact value (from visualDots). Map it to nearest step
     const nearest = roundToStep(dotValue);
     onChange(nearest);
   };
 
-  // Определяем, является ли визуальная точка завершенной (слева от активной позиции)
   const isDotCompleted = (dotValue) => {
-    // dotValue here may be exact position value (not rounded). Compare raw values for visual fill.
     return value > dotValue;
   };
 
@@ -335,7 +332,6 @@ const SliderWithDots = ({
           {/* Точки на треке */}
           {visualDots.map((dot, index) => {
             const leftPercent = dot.leftPercent;
-            // Determine active if rounded value equals current value
             const roundedDot = roundToStep(dot.value);
             const isActiveDot = roundedDot === value;
 

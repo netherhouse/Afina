@@ -244,7 +244,7 @@ const Window = ({
         left: position.x,
         width: size.width,
         height: size.height,
-        zIndex: zIndex, // Убедитесь, что z-index применяется
+        zIndex: zIndex, 
       }}
       onClick={handleWindowClick}
     >

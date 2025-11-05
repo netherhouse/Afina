@@ -12,7 +12,7 @@ const SettingsPanel = ({
   isActive,
 }) => {
   if (activeTab === "stopwatch" || isActive) {
-    return null; // Hide settings when timer is active or for stopwatch
+    return null;
   }
 
   return (

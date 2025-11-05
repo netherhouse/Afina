@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 
 const ShowLocation = () => {
   const [city, setCity] = useState(null);
@@ -7,7 +7,7 @@ const ShowLocation = () => {
 
   useEffect(() => {
     if (!navigator.geolocation) {
-      setError('Geolocation not supported.');
+      setError("Geolocation not supported.");
       return;
     }
 
@@ -21,10 +21,14 @@ const ShowLocation = () => {
           );
           if (!res1.ok) throw new Error(`Location HTTP ${res1.status}`);
           const json1 = await res1.json();
-          const cityName = json1.city || json1.locality || json1.principalSubdivision || 'Unknown';
+          const cityName =
+            json1.city ||
+            json1.locality ||
+            json1.principalSubdivision ||
+            "Unknown";
           setCity(cityName);
         } catch {
-          setError('Failed to fetch city.');
+          setError("Failed to fetch city.");
           return;
         }
 
@@ -36,10 +40,10 @@ const ShowLocation = () => {
           const json2 = await res2.json();
           setWeather(json2.current_weather); // { temperature, weathercode, ... }
         } catch {
-          setError('Failed to fetch weather.');
+          setError("Failed to fetch weather.");
         }
       },
-      (err) => setError('Geolocation error: ' + err.message),
+      (err) => setError("Geolocation error: " + err.message),
       { timeout: 5000 }
     );
   }, []);
@@ -49,7 +53,8 @@ const ShowLocation = () => {
 
   return (
     <div className="bottom-panel__location">
-      {city} {weather && (
+      {city}{" "}
+      {weather && (
         <span className="bottom-panel__weather">
           {Math.round(weather.temperature)}°C
         </span>

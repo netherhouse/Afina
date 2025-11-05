@@ -4,7 +4,6 @@ import { MdAccessTime, MdTimer } from "react-icons/md";
 
 const TabNavigation = ({ tabs, activeTab, onTabSwitch, isTimerRunning }) => {
   const handleTabClick = (tabId) => {
-    // Блокируем переключение если таймер запущен
     if (isTimerRunning) {
       return;
     }

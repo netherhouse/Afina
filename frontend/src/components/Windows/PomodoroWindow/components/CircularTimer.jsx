@@ -19,12 +19,11 @@ const CircularTimer = ({
       ? 0
       : ((totalTime - timeLeft) / totalTime) * 100;
 
-  const SEGMENTS = 48; // number of line segments in the ring
-  const RING_SIZE = 280; // visual box for the ring - much larger
-  const RADIUS = 110; // distance from center to segments - increased
+  const SEGMENTS = 48;
+  const RING_SIZE = 280;
+  const RADIUS = 110;
   const activeSegments = Math.round((progress / 100) * SEGMENTS);
 
-  // Cardinal directions (0°, 90°, 180°, 270°)
   const isCardinal = (index) => {
     const segmentsPerQuarter = SEGMENTS / 4;
     return (

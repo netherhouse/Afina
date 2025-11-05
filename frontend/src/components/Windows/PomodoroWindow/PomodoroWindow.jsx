@@ -49,9 +49,7 @@ function PomodoroWindow({
   const handleTimerComplete = useCallback(() => {
     if (activeTab === "pomodoro") {
       if (!isBreak) {
-        // Завершился рабочий период
         if (currentRound >= pomodoroSettings.rounds) {
-          // Это был последний раунд - полностью завершаем
           setIsActive(false);
           setIsStarted(false);
           setCurrentRound(1);
@@ -66,13 +64,10 @@ function PomodoroWindow({
           }
           return;
         } else {
-          // Переход к перерыву, таймер продолжает работать
           setIsBreak(true);
           setTimeLeft(pomodoroSettings.break * 60);
-          // НЕ останавливаем таймер - setIsActive(true) остается
         }
       } else {
-        // Завершился перерыв - переходим к следующему раунду
         setIsBreak(false);
         setCurrentRound((prev) => prev + 1);
         setTimeLeft(pomodoroSettings.work * 60);
@@ -87,10 +82,8 @@ function PomodoroWindow({
         });
       }
     } else if (activeTab === "countdown") {
-      // Countdown finished: stop and return to settings view
       setIsActive(false);
       setIsStarted(false);
-      // reset display to configured countdown settings
       setTimeLeft(
         countdownSettings.hours * 3600 +
           countdownSettings.minutes * 60 +

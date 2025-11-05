@@ -19,19 +19,16 @@ const CompactSettings = ({
 
   const totalTime = settings.rounds * (settings.work + settings.break);
 
-  // Предопределенные значения для Work (шаг 5, от 5 до 150)
   const workValues = [];
   for (let i = 5; i <= 150; i += 5) {
     workValues.push(i);
   }
 
-  // Предопределенные значения для Break (шаг 1, от 1 до 30)
   const breakValues = [];
   for (let i = 1; i <= 30; i += 1) {
     breakValues.push(i);
   }
 
-  // Предопределенные значения для Rounds (шаг 1, от 2 до 10)
   const roundsValues = [];
   for (let i = 2; i <= 10; i += 1) {
     roundsValues.push(i);

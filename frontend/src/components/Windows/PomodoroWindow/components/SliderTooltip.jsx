@@ -20,7 +20,6 @@ const SliderTooltip = ({
       const containerRect = containerRef.current.getBoundingClientRect();
       const handleRect = handleRef.current.getBoundingClientRect();
 
-      // Позиция tooltip относительно контейнера слайдера (только по горизонтали)
       const relativeLeft =
         handleRect.left - containerRect.left + handleRect.width / 2;
 
@@ -31,7 +30,6 @@ const SliderTooltip = ({
 
     updatePosition();
 
-    // Обновляем позицию при изменении размера окна
     window.addEventListener("resize", updatePosition);
     return () => window.removeEventListener("resize", updatePosition);
   }, [visible, position, containerRef, handleRef]);
