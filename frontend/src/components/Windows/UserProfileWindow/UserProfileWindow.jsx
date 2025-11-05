@@ -22,10 +22,11 @@ function UserProfileWindow({
       onResize={onResize}
       position={position}
       size={size}
-      minWidth={400}
-      minHeight={500}
-      maxWidth={700}
-      maxHeight={900}
+      minWidth={320}
+      minHeight={480}
+      maxWidth={320}
+      maxHeight={480}
+      isResizable={false}
     >
       <div className="user-profile-content">
         {/* Пустое окно - контент будет добавлен позже */}
