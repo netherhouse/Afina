@@ -230,10 +230,8 @@ const Window = ({
     document.addEventListener("mouseup", handleMouseUp);
   };
 
-  if (!visible) return null;
 
-  // Логирование для отладки
-  console.log(`Window ${id} - zIndex: ${zIndex}, isActive: ${isActive}`);
+  console.log(`Window ${id} - zIndex: ${zIndex}, isActive: ${isActive}, visible: ${visible}`);
 
   return (
     <div
@@ -244,8 +242,10 @@ const Window = ({
         left: position.x,
         width: size.width,
         height: size.height,
-        zIndex: zIndex, 
+        zIndex: zIndex,
+        display: visible ? "block" : "none",
       }}
+      aria-hidden={!visible}
       onClick={handleWindowClick}
     >
       <div className="window-header" onMouseDown={handleDragStart}>

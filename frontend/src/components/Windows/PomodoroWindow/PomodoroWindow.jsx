@@ -288,7 +288,7 @@ function PomodoroWindow({
     }
   }, []);
 
-  if (!visible) return null;
+  // Не размонтируем окно при скрытии: таймер продолжает работать (keep-alive)
 
   const getTotalTime = () => {
     if (activeTab === "pomodoro") {
@@ -311,6 +311,7 @@ function PomodoroWindow({
       id={id}
       title="Timer"
       className="pomodoro-window"
+      visible={visible}
       onClose={onClose}
       onMove={onMove}
       onResize={onResize}

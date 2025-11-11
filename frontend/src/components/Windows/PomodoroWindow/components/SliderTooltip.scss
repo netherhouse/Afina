@@ -72,7 +72,7 @@
     }
   }
 
-  // Улучшенная анимация для touch устройств
+
   @media (hover: none) and (pointer: coarse) {
     transition: all 0.15s ease-out;
 
@@ -89,7 +89,7 @@
     }
   }
 
-  // Высококонтрастная тема (accessibility)
+  // Высококонтрастная тема
   @media (prefers-contrast: high) {
     &__content {
       background: #000;
@@ -103,7 +103,6 @@
     }
   }
 
-  // Уменьшенная анимация для пользователей с ограничениями
   @media (prefers-reduced-motion: reduce) {
     transition: opacity 0.1s ease;
 

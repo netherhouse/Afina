@@ -9,15 +9,35 @@ const CompactSettings = ({
   onUpdateCountdown,
   onStart,
 }) => {
+  const [tempSettings, setTempSettings] = React.useState(settings);
+  const [tempCountdownSettings, setTempCountdownSettings] =
+    React.useState(countdownSettings);
+
+  React.useEffect(() => {
+    setTempSettings(settings);
+  }, [settings]);
+
+  React.useEffect(() => {
+    setTempCountdownSettings(countdownSettings);
+  }, [countdownSettings]);
+
   const handlePomodoroChange = (key) => (value) => {
     onUpdate(key, value - settings[key]);
+  };
+
+  const handlePomodoroLiveChange = (key) => (value) => {
+    setTempSettings((prev) => ({ ...prev, [key]: value }));
   };
 
   const handleCountdownChange = (key) => (value) => {
     onUpdateCountdown(key, value - countdownSettings[key]);
   };
 
-  const totalTime = settings.rounds * (settings.work + settings.break);
+  const handleCountdownLiveChange = (key) => (value) => {
+    setTempCountdownSettings((prev) => ({ ...prev, [key]: value }));
+  };
+
+  const totalTime = tempSettings.rounds * (tempSettings.work + tempSettings.break);
 
   const workValues = [];
   for (let i = 5; i <= 150; i += 5) {
@@ -42,6 +62,7 @@ const CompactSettings = ({
             label="Work"
             value={settings.work}
             onChange={handlePomodoroChange("work")}
+            onLiveChange={handlePomodoroLiveChange("work")}
             min={5}
             max={150}
             step={5}
@@ -52,6 +73,7 @@ const CompactSettings = ({
             label="Break"
             value={settings.break}
             onChange={handlePomodoroChange("break")}
+            onLiveChange={handlePomodoroLiveChange("break")}
             min={1}
             max={30}
             step={1}
@@ -62,6 +84,7 @@ const CompactSettings = ({
             label="Rounds"
             value={settings.rounds}
             onChange={handlePomodoroChange("rounds")}
+            onLiveChange={handlePomodoroLiveChange("rounds")}
             min={2}
             max={10}
             step={1}
@@ -87,6 +110,7 @@ const CompactSettings = ({
             label="Hours"
             value={countdownSettings.hours}
             onChange={handleCountdownChange("hours")}
+            onLiveChange={handleCountdownLiveChange("hours")}
             min={0}
             max={23}
             step={1}
@@ -96,6 +120,7 @@ const CompactSettings = ({
             label="Minutes"
             value={countdownSettings.minutes}
             onChange={handleCountdownChange("minutes")}
+            onLiveChange={handleCountdownLiveChange("minutes")}
             min={0}
             max={59}
             step={1}
@@ -105,6 +130,7 @@ const CompactSettings = ({
             label="Seconds"
             value={countdownSettings.seconds}
             onChange={handleCountdownChange("seconds")}
+            onLiveChange={handleCountdownLiveChange("seconds")}
             min={0}
             max={59}
             step={1}
@@ -115,9 +141,9 @@ const CompactSettings = ({
               ▶
             </button>
             <span className="total-time">
-              {countdownSettings.hours > 0 && `${countdownSettings.hours}:`}
-              {countdownSettings.minutes.toString().padStart(2, "0")}:
-              {countdownSettings.seconds.toString().padStart(2, "0")}
+              {tempCountdownSettings.hours > 0 && `${tempCountdownSettings.hours}:`}
+              {tempCountdownSettings.minutes.toString().padStart(2, "0")}:
+              {tempCountdownSettings.seconds.toString().padStart(2, "0")}
             </span>
           </div>
         </>

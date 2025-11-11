@@ -46,7 +46,7 @@ function MusicWindow({
   position,
   size,
 }) {
-  if (!visible) return null;
+  // Не размонтируем окно при скрытии: звук продолжает играть (keep-alive)
 
   return (
     <Window
@@ -59,6 +59,7 @@ function MusicWindow({
           style={{ width: 14, height: 14 }}
         />
       }
+      visible={visible}
       onClose={onClose}
       onMove={onMove}
       onResize={onResize}
