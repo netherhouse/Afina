@@ -1,5 +1,5 @@
 import React from "react";
-import SliderWithDots from "./SliderWithDots";
+import SliderWithDots from "../ui/SliderWithDots";
 
 const CompactSettings = ({
   activeTab,

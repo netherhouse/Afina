@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useCallback } from "react";
 import Window from "../../Window/Window";
 import "./PomodoroWindow.scss";
-import CompactSettings from "./components/CompactSettings";
-import CircularTimer from "./components/CircularTimer";
-import CountdownTimer from "./components/CountdownTimer";
-import StopwatchTimer from "./components/StopwatchTimer";
-import TabNavigation from "./components/TabNavigation";
+import CompactSettings from "./components/settings/CompactSettings";
+import CircularTimer from "./components/timers/CircularTimer";
+import CountdownTimer from "./components/timers/CountdownTimer";
+import StopwatchTimer from "./components/timers/StopwatchTimer";
+import TabNavigation from "./components/navigation/TabNavigation";
 import { GiTomato } from "react-icons/gi";
 import { MdAccessTime, MdTimer } from "react-icons/md";
 
@@ -288,7 +288,7 @@ function PomodoroWindow({
     }
   }, []);
 
-  // Не размонтируем окно при скрытии: таймер продолжает работать (keep-alive)
+  
 
   const getTotalTime = () => {
     if (activeTab === "pomodoro") {
