@@ -1,6 +1,11 @@
-// Стили контента окна Pomodoro
 .pomodoro-content {
-  gap: 8px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  /* shared tokens */
+  --ring-green: 0 0 0 3px rgba(16, 185, 129, 0.45);
+  --ring-white: 0 0 0 3px rgba(255, 255, 255, 0.3);
 }
 
 // Вкладки навигации

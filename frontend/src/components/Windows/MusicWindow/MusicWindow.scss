@@ -1,6 +1,12 @@
-// Стили контента окна Mixer
 .mixer-content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
   gap: 16px;
+
+  /* shared tokens */
+  --ring-green: 0 0 0 3px rgba(16, 185, 129, 0.45);
+  --ring-white: 0 0 0 3px rgba(255, 255, 255, 0.3);
 }
 
 // Mixer section with header
